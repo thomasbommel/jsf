@@ -1,20 +1,19 @@
 //the OpenGL context
 var gl = null;
 
-//camera constancts
-const defaultCameraRotX = 0, defaultCameraRotY = 0;
-const defaultCameraPosX = 0, defaultCameraPosY = 15, defaultCameraPosZ = -30;
-//actual camera struct
+//camera struct
 const camera = {
-  rotation: {   //access with e.g. camera.rotation.x
-    x: defaultCameraRotX,
-    y: defaultCameraRotY
-  },
-  //access with e.g. camera.position[i]
-  position: [defaultCameraPosX, defaultCameraPosY, defaultCameraPosZ],
-  target: [0, 0, 0],
+  //access with camera.rotation.x and camera.rotation.y
+  rotation: getDefaultCameraRotation(),
+  //access with camera.position[i] and camera.target[i] ;; i-values: 0=x, 1=y, 2=z
+  position: getDefaultCameraPosition(),
+  target: getDefaultCameraTarget(),
   isPerformingFlight: false     //true during an animated camera flight (TODO!)
 };
+//camera default-values (as functions)
+function getDefaultCameraRotation() {return {x: 0, y:0};}
+function getDefaultCameraPosition() {return [0,15,-30];}
+function getDefaultCameraTarget() {return [0,0,0];}
 
 //scene graph nodes
 var root = null;
@@ -95,10 +94,10 @@ function initInteraction(canvas) {
     if (camera.isPerformingFlight) return;  //disable controls during flight
     displayText(event.code);    //TODO: debugging --> remove
 
-    if (event.code === 'KeyR') {    //reset camera (rotation & position)
-      camera.rotation.x = defaultCameraRotX;
-      camera.rotation.y = defaultCameraRotY;
-      camera.position = [defaultCameraPosX, defaultCameraPosY, defaultCameraPosZ];
+    if (event.code === 'KeyR') {    //reset camera to defaults
+      camera.rotation = getDefaultCameraRotation();
+      camera.position = getDefaultCameraPosition();
+      camera.target = getDefaultCameraTarget();
     }
     else if (event.code == 'KeyX'){   //"x-tra" (additional) camera flight
       //TODO: trigger additional animated cameraflight
