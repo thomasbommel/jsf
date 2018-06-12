@@ -12,7 +12,6 @@ When implementing an effect, take a look at the exact Specification in Google Dr
 - Create three independent scenes
 - Exactly 30 second camera flight
 - Always have at least 1 animated object during entire flight
-- Control Camera with WASD+Mouse
 - Trigger Animations of individual scenes when manually controlling Camera close to them
 - Use displayText(text) to display all currently visible basic & special effects
 
