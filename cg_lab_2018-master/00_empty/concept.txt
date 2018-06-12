@@ -1,0 +1,20 @@
+
+Concept: 
+The camera flight will show an entire day in a medieval world. 
+Beginning from sunrise three different scenes will be shown that reflect fantasies of how life was back in the days. 
+One scene will be in the morning, one at lunchtime and one in the evening. 
+Between the scenes the camera will move forward while looking at the sun which will move at a high speed to the next "stage" of the day. The sun will be our moving lightsource. 
+
+What we thought our scenes will be: 
+Morning: Multiple farmers performing different tasks on a field 
+Lunch: A big feast inside of a building (a barn, ballroom or something along those lines) 
+Evening: Fishers at a lake 
+
+Each scene should last about seven seconds giving us 9 seconds in total for the (high-speed) camera-flights and sun-moments before, after and in-between the scenes. 
+After the camera flight is over the daytime will be set to lunchtime and the camera will be set to the starting position and from then on the user can navigate the world. 
+We thought about maybe binding key-controls for the sun movement so the user can choose between different sun-stages that were implemented in the flight. 
+
+Special effects (3x easy): 
+- Terrain from heightmap: So our world isn't just flat 
+- Multi texturing: E.g. for walking paths, bricks for the building, ... 
+- Level of detail: For the mountains (+forest) at the horizon where the sun goes up and down (since we continuously move towards it between the scenes)
