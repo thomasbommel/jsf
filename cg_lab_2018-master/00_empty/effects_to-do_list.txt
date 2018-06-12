@@ -9,11 +9,12 @@ When implementing an effect, take a look at the exact Specification in Google Dr
 
 --- Minimal requirements --- (algorithmic effects description NOT required)
 
-- Create three independent scenes
+- Create three independent scenes, all part of the same world
 - Exactly 30 second camera flight
 - Always have at least 1 animated object during entire flight
 - Trigger Animations of individual scenes when manually controlling Camera close to them
 - Use displayText(text) to display all currently visible basic & special effects
+- Create separate document with algorithmic effects description of basic & special effects
 
 --- Basic movie effects ---
 

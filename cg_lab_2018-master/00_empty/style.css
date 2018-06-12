@@ -1,3 +1,8 @@
+canvas {
+    width: 98vw;
+    height: 98vh;
+}
+
 p {
   position: relative;
   margin-top: -1.5em;
