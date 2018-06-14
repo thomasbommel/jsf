@@ -7,13 +7,12 @@ const camera = {
   rotation: getDefaultCameraRotation(),
   //access with camera.position[i] and camera.target[i] ;; i-values: 0=x, 1=y, 2=z
   position: getDefaultCameraPosition(),
-  target: getDefaultCameraTarget(),
+  target: [0,0,0],   //calculated by utils.setCameraTarget(camera) in init and when camera is moved
   isPerformingFlight: false     //true during an animated camera flight (TODO!)
 };
 //camera default-values (as functions)
-function getDefaultCameraRotation() {return {x: 0, y:0};}
-function getDefaultCameraPosition() {return [0,15,-30];}
-function getDefaultCameraTarget() {return [0,0,0];}
+function getDefaultCameraRotation() { return {x: 0, y:-30}; }
+function getDefaultCameraPosition() { return [0,15,-30]; }
 
 //scene graph nodes
 var root = null;
@@ -34,20 +33,22 @@ loadResources({
  */
 function init(resources) {
   //create a GL context
-  gl = createContext(400 /*width*/, 400 /*height*/);
+  gl = createContext();
+
+  //set initial target for camera
+  setCameraTarget(camera);
 
   //create scenegraph
   root = createSceneGraph(gl, resources);
 
-  //TODO: only enable interaction after initial cameraflight is done
-  initInteraction(gl.canvas);
+  initCameraInteraction(gl.canvas);
 }
 
 /**
  * initialize camera control
  * camera control is automatically disabled while camera.isPerformingFlight == true
  */
-function initInteraction(canvas) {
+function initCameraInteraction(canvas) {
   const mouse = {
     pos: { x : 0, y : 0},
     leftButtonDown: false
@@ -78,6 +79,17 @@ function initInteraction(canvas) {
       //add the relative movement of the mouse to the rotation variables
   		camera.rotation.x += delta.x * mouseSensitivity;
   		camera.rotation.y += delta.y * mouseSensitivity;
+
+      //keep rotation.x in interval ]-180,180]
+      if (camera.rotation.x <= -180) camera.rotation.x += 360;
+      else if (camera.rotation.x > 180) camera.rotation.x -= 360;
+
+      //keep rotation.y in interval ]-180,180]
+      if (camera.rotation.y <= -180) camera.rotation.y += 360;
+      else if (camera.rotation.y > 180) camera.rotation.y -= 360;
+
+      //TODO: OMAS?!?! folgendes machn ja oder nein? i glaub eig. nein aber wenn is ned mach is alles (noch) kaputt(er)/buggy(-ier)
+      setCameraTarget(camera);
     }
     mouse.pos = pos;
   });
@@ -97,20 +109,26 @@ function initInteraction(canvas) {
     if (event.code === 'KeyR') {    //reset camera to defaults
       camera.rotation = getDefaultCameraRotation();
       camera.position = getDefaultCameraPosition();
-      camera.target = getDefaultCameraTarget();
+      setCameraTarget(camera);
     }
     else if (event.code == 'KeyX'){   //"x-tra" (additional) camera flight
       //TODO: trigger additional animated cameraflight
 
     }
     else if (event.code == 'ArrowUp' || event.code == 'KeyW'){
-      //TODO: move camera forwards
-      camera.position[1] += 1; //TODO: remove testcode
+      let direction = getCameraDirection(camera);
+      for (let i in direction){
+        camera.position[i] += direction[i];
+      }
+      setCameraTarget(camera);
       displayText("new pos: " + camera.position);
     }
     else if (event.code == 'ArrowDown' || event.code == 'KeyS'){
-      //TODO: move camera backwards
-      camera.position[1] -= 1; //TODO: remove testcode
+      let direction = getCameraDirection(camera);
+      for (let i in direction){
+        camera.position[i] -= direction[i];
+      }
+      setCameraTarget(camera);
       displayText("new pos: " + camera.position);
     }
   });
@@ -127,18 +145,20 @@ function createSceneGraph(gl, resources) {
 
   }
 
-  { //create floor
-    let floor = new RenderSGNode(makeRect(10, 10));
-
-    //rotate floor, then append it to root
-    root.append(new TransformationSGNode(glm.rotateX(-90), floor));
-  }
+  root.append(createFloor());
 
   { //TODO: create mountains
 
   }
 
   return root;
+}
+
+function createFloor(){
+  let floor = new RenderSGNode(makeRect(10, 10));
+
+  //rotate floor, then return it
+  return new TransformationSGNode(glm.rotateX(-90), floor);
 }
 
 /**
