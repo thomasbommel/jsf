@@ -2,6 +2,7 @@
 Points with "-" in front are still TO-Do
 Points with "?" in front are already implemented, but not yet described
 Points with "x" in front are completely done (impleneted + "algorithmic effects description" done)
+Points with "x" in front are completely done (implemented + "algorithmic effects description" done)
 
 --- Attention! ---
 This list DOES NOT specify all details needed for an effect implementation, it only summarizes them to give an overview.

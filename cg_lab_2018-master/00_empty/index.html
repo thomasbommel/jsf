@@ -14,5 +14,16 @@
     <script src="main.js"></script>
     <!-- include utils script -->
     <script src="utils.js"></script>
+
+    <script src="stats.js"></script>
+
+    <!-- TODO remove this two status panels -->
+    <div style="float:left;">
+      <div id="oldstats"  class="statusPanel">old</div>
+      <div id="stats"     class="statusPanel">new</div>
+      <button onclick="makeSnapshot()" style="margin-left:10px;">Snapshot</button>
+      <div id="snapshot"  class="statusPanel">snapshot</div>
+    </div>
+
 </body>
 </html>

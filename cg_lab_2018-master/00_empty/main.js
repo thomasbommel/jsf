@@ -90,6 +90,7 @@ function initCameraInteraction(canvas) {
 
       //TODO: OMAS?!?! folgendes machn ja oder nein? i glaub eig. nein aber wenn is ned mach is alles (noch) kaputt(er)/buggy(-ier)
       setCameraTarget(camera);
+      updateStats();
     }
     mouse.pos = pos;
   });
@@ -121,7 +122,7 @@ function initCameraInteraction(canvas) {
         camera.position[i] += direction[i];
       }
       setCameraTarget(camera);
-      displayText("new pos: " + camera.position);
+      displayText("up - new pos: " +  vectorToString(camera.position));
     }
     else if (event.code == 'ArrowDown' || event.code == 'KeyS'){
       let direction = getCameraDirection(camera);
@@ -129,8 +130,9 @@ function initCameraInteraction(canvas) {
         camera.position[i] -= direction[i];
       }
       setCameraTarget(camera);
-      displayText("new pos: " + camera.position);
+      displayText("down - new pos: " +  vectorToString(camera.position));
     }
+      updateStats();
   });
 }
 
@@ -155,7 +157,7 @@ function createSceneGraph(gl, resources) {
 }
 
 function createFloor(){
-  let floor = new RenderSGNode(makeRect(10, 10));
+  let floor = new RenderSGNode(makeRect(5, 10));
 
   //rotate floor, then return it
   return new TransformationSGNode(glm.rotateX(-90), floor);

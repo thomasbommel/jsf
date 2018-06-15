@@ -78,7 +78,7 @@ function setCameraTarget(camera){
   for (let i in cameraDirection){
     target[i] = camera.position[i] + cameraDirection[i] * distance;
   }
-  
+
   camera.target = target;
-  displayText("New camera target: " + camera.target); //TODO: remove this line
+  displayText("New camera target: " + vectorToString(camera.target)); //TODO: remove this line
 }

@@ -1,6 +1,6 @@
 canvas {
-    width: 98vw;
-    height: 98vh;
+    width: 80vw;
+    height: 80vh;
 }
 
 p {
@@ -10,4 +10,14 @@ p {
   color: #2F4F4F;
   letter-spacing: 1px;
   text-align: center;
+}
+
+/* TODO deleteme */
+.statusPanel{
+  width:17vW;
+  height:25vH;
+  font-size:1.1em;
+  margin:10px;
+  padding:5px;
+  border:1px solid grey;
 }
