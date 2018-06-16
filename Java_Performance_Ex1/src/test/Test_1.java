@@ -15,7 +15,11 @@ public class Test_1 {
 	}
 	
 	public static void testmethod() {
-		
+		try {
+			Thread.sleep(1000);
+		} catch (InterruptedException e) {
+			e.printStackTrace();
+		}
 		String text = new String("test");
 		
 		System.out.println("yolo " + text);
