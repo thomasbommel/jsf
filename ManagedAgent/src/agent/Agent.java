@@ -10,10 +10,10 @@ public class Agent {
 		String classname = args.substring(0, args.indexOf("::")).replace('.', '/');
 		String methodname = args.substring(args.indexOf("::") + 2);
 		
-		//instrumentation.addTransformer(new MyHighLevelTransformer(classname, methodname), true);
-		instrumentation.addTransformer(new MyLowLevelTransformer(classname, methodname), true);
+		instrumentation.addTransformer(new MyHighLevelTransformer(classname, methodname), true);
+		//instrumentation.addTransformer(new MyLowLevelTransformer(classname, methodname), true);
 		Class<?>[] classes = instrumentation.getAllLoadedClasses();
-
+		
 		for(Class<?> clazz : classes) {
 			if(!instrumentation.isModifiableClass(clazz)) {
 				continue;
