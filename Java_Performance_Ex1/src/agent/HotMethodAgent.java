@@ -1,8 +1,8 @@
-package ue01;
+package agent;
 
 import java.lang.instrument.Instrumentation;
 
-public class SpecialAgent {
+public class HotMethodAgent {
 	
 	public static void premain(String args, Instrumentation instrumentation) {
 		/*String classname = args.substring(0, args.indexOf("::")).replace('.', '/');

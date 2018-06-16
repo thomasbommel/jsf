@@ -1,0 +1,8 @@
+Manifest-Version: 1.0
+Premain-Class: ue01.SpecialAgent
+Agent-Class: ue01.SpecialAgent
+Boot-Class-Path: javassist.jar
+Can-Redefine-Classes: true
+Can-Retransform-Classes: true
+Can-Set-Native-Method-Prefix: false
+
