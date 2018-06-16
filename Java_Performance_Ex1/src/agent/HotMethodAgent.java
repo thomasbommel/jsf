@@ -1,26 +1,25 @@
 package agent;
 
 import java.lang.instrument.Instrumentation;
+import java.lang.instrument.UnmodifiableClassException;
 
 public class HotMethodAgent {
 	
+	//CPU time: ManagementFactory.getThreadMXBean().getThreadCpuTime(new Thread().getId());
+	
 	public static void premain(String args, Instrumentation instrumentation) {
-		/*String classname = args.substring(0, args.indexOf("::")).replace('.', '/');
-		String methodname = args.substring(args.indexOf("::") + 2);
+		String[] includedPackages = args.split(";");
+		instrumentation.addTransformer(new HotMethodFinder(includedPackages));
 		
-		instrumentation.addTransformer(new MyHighLevelTransformer(classname, methodname), true);
-		//instrumentation.addTransformer(new MyLowLevelTransformer(classname, methodname), true);
 		Class<?>[] classes = instrumentation.getAllLoadedClasses();
-		
 		for(Class<?> clazz : classes) {
-			if(!instrumentation.isModifiableClass(clazz)) {
-				continue;
+			if(instrumentation.isModifiableClass(clazz)) {
+				try {
+					instrumentation.retransformClasses(clazz);
+				} catch (UnmodifiableClassException e) { e.printStackTrace(); }
 			}
-			instrumentation.retransformClasses(clazz);
-		}	*/
+		}
 		
-		
-		System.out.println(args);
+		//TODO: swing Window: LoggerWindow();
 	}
-
 }

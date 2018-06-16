@@ -1,6 +1,6 @@
 Manifest-Version: 1.0
-Premain-Class: ue01.SpecialAgent
-Agent-Class: ue01.SpecialAgent
+Premain-Class: agent.HotMethodAgent
+Agent-Class: agent.HotMethodAgent
 Boot-Class-Path: javassist.jar
 Can-Redefine-Classes: true
 Can-Retransform-Classes: true
