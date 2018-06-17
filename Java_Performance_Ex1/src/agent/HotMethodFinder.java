@@ -1,6 +1,7 @@
 package agent;
 
 import java.io.ByteArrayInputStream;
+import java.io.FileOutputStream;
 import java.io.IOException;
 import java.lang.instrument.ClassFileTransformer;
 import java.lang.instrument.IllegalClassFormatException;
@@ -27,7 +28,7 @@ public class HotMethodFinder implements ClassFileTransformer {
 
 	private static final String thisClassName;
 	private static CtClass thisClass;
-	
+
 	static {
 		thisClassName = HotMethodFinder.class.getName();
 		try {
@@ -36,28 +37,30 @@ public class HotMethodFinder implements ClassFileTransformer {
 			e.printStackTrace();
 		}
 	}
-	
+
 	public final List<String> includedPackages;
 
 	private final Map<String, Integer> methodCounter;
 	public static final Map<String, Long> methodTimer = new ConcurrentHashMap<>();
 
+	
 	public static void startTrackingMethod(String key) {
 		key = key.trim();
-		
+
 		methodTimer.put(key, System.nanoTime());
-		
+		// System.out.println("Thread id: "+Thread.currentThread().getId());
+
 		System.out.printf("-> %-20s%n", key);
-		
+
 	}
 
 	public static void stopTrackingMethod(String key) {
 		key = key.trim();
-		
+
 		Long startTime = methodTimer.get(key);
 		long timeNeededForExecution = System.nanoTime() - startTime;
 		System.out.printf("<- %-20s: %10.2f [ms]%n", key, (float) timeNeededForExecution / 1000000.0f);
-		
+
 	}
 
 	public HotMethodFinder(String[] includedPackages) {
@@ -71,41 +74,51 @@ public class HotMethodFinder implements ClassFileTransformer {
 		try {
 			ClassPool pool = ClassPool.getDefault(); // TODO
 			CtClass clazz = pool.makeClass(new ByteArrayInputStream(classfile));
-			
+
 			if (!includedPackages.contains(clazz.getPackageName()))
 				return classfile; // only transform classes in included packages
-			
-			transformClass(clazz);	//TODO: needed?
-			
+
+			//transformClass(clazz); // TODO: needed?
+
 			for (CtMethod method : clazz.getDeclaredMethods()) {
 				transform(method); // transform methods
 			}
-			
+
 			for (CtConstructor constructor : clazz.getDeclaredConstructors()) {
 				transform(constructor.toMethod(constructor.getName(), clazz)); // transform constructors
 			}
 			
-			return clazz.toBytecode();	//return transformed class
+			clazz.debugWriteFile("class");
+			
+			byte[] data = clazz.toBytecode();
+//			try (FileOutputStream out = new FileOutputStream(clazz.getName().replace('/', '.') + ".txt")) {
+//				out.write(clazz.toString().getBytes());
+//			}
+			return data;
+
+//			return clazz.toBytecode(); // return transformed class
 		} catch (IOException | RuntimeException | CannotCompileException e) {
 			e.printStackTrace();
 			return null;
 		}
 	}
-	
+
 	private void transformClass(CtClass clazz) {
-//		try {
-//			
-//			
-//			clazz.addMethod(CtMethod.make(String.format(
-//					"public static void "
-//					),
-//				clazz)
-//			);
-//		} catch (CannotCompileException e) {
-//			e.printStackTrace();
-//		}
+		 try {
+		
+		
+		 clazz.addMethod(CtMethod.make(String.format(
+		 "public static void test(){ agent.Globals.test();} "
+		 ),
+		 clazz)
+		 );
+		 } catch (CannotCompileException e) {
+		 e.printStackTrace();
+		 }
 	}
 
+	static CtMethod ref;
+	
 	private void transform(CtMethod method) {
 		if (isNative(method) || isAbstract(method))
 			return;
@@ -119,21 +132,46 @@ public class HotMethodFinder implements ClassFileTransformer {
 					// methodCounter.put(m.getMethodName(), methodCounter.get(m.getMethodName()) ==
 					// null ? 1 : methodCounter.get(m.getMethodName()) + 1);
 					
-					method.insertAt(m.getLineNumber(),String.format(
-							"%s.startTrackingMethod( java.lang.Thread.currentThread().getId() + \"_%s\" );", 
-							thisClassName, m.getMethodName())
-					);
+				
+					if(ref != null) {
+						try {
+							System.out.println("equal: "+ (ref==m.getMethod()));
+						} catch (NotFoundException e) {
+							// TODO Auto-generated catch block
+							e.printStackTrace();
+						}
+						
+					}
 
-					method.insertAt(m.getLineNumber() + 1, String.format(
+					try {
+						ref = m.getMethod();
+					} catch (NotFoundException e) {
+						e.printStackTrace();
+					}
+					
+					
+					String insert = String.format(
+							"%s.startTrackingMethod(  \"_%s\" );", 
+							thisClassName, m.getMethodName());
+					
+					insert = "test();";
+					
+					int ln = m.getLineNumber();
+					
+					int x = method.insertAt(ln,true,insert);
+
+					int y = method.insertAt(m.getLineNumber() + 1, String.format(
 							"%s.stopTrackingMethod( java.lang.Thread.currentThread().getId() + \"_%s\" );",
 							thisClassName, m.getMethodName())
 					);
 					
+					//System.out.println("XXXXXXXXXXXXXXXXXXXXXXXXXX "+x+","+m.getLineNumber());
+					
 //					try {
 //						System.err.println(thisClass.getDeclaredMethod("startTrackingMethod").getSignature());
-//						
+						
 //						conv.insertBeforeMethod(m.getMethod(), thisClass.getDeclaredMethod("startTrackingMethod"));
-//						//conv.insertAfterMethod(m.getMethod(), thisClass.getDeclaredMethod("stopTrackingMethod"));
+//						conv.insertAfterMethod(m.getMethod(), thisClass.getDeclaredMethod("stopTrackingMethod"));
 //						
 //					} catch (NotFoundException e) {
 //						e.printStackTrace();
