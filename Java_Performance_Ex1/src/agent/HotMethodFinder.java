@@ -5,40 +5,63 @@ import java.io.IOException;
 import java.lang.instrument.ClassFileTransformer;
 import java.lang.instrument.IllegalClassFormatException;
 import java.security.ProtectionDomain;
+import java.util.Arrays;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
+import java.util.concurrent.ConcurrentHashMap;
 
 import javassist.CannotCompileException;
 import javassist.ClassPool;
+import javassist.CodeConverter;
 import javassist.CtClass;
 import javassist.CtConstructor;
 import javassist.CtMethod;
 import javassist.Modifier;
+import javassist.NotFoundException;
 import javassist.expr.ExprEditor;
 import javassist.expr.MethodCall;
+import test.Test_1;
 
 public class HotMethodFinder implements ClassFileTransformer {
 
-	public final String[] includedPackages;
+	private static final String thisClassName;
+	private static CtClass thisClass;
+	
+	static {
+		thisClassName = HotMethodFinder.class.getName();
+		try {
+			thisClass = ClassPool.getDefault().get(thisClassName);
+		} catch (NotFoundException e) {
+			e.printStackTrace();
+		}
+	}
+	
+	public final List<String> includedPackages;
 
 	private final Map<String, Integer> methodCounter;
-	public static final HashMap<String, Long> methodTimer = new HashMap<>();
+	public static final Map<String, Long> methodTimer = new ConcurrentHashMap<>();
 
 	public static void startTrackingMethod(String key) {
-
-		methodTimer.put(key.trim(), System.nanoTime());
-
+		key = key.trim();
+		
+		methodTimer.put(key, System.nanoTime());
+		
+		System.out.printf("-> %-20s%n", key);
+		
 	}
 
 	public static void stopTrackingMethod(String key) {
-		Long startTime = methodTimer.get(key.trim());
+		key = key.trim();
+		
+		Long startTime = methodTimer.get(key);
 		long timeNeededForExecution = System.nanoTime() - startTime;
-		System.out.println(key + " " + timeNeededForExecution);
-
+		System.out.printf("<- %-20s: %10.2f [ms]%n", key, (float) timeNeededForExecution / 1000000.0f);
+		
 	}
 
 	public HotMethodFinder(String[] includedPackages) {
-		this.includedPackages = includedPackages;
+		this.includedPackages = Arrays.asList(includedPackages);
 		methodCounter = new HashMap<>();
 	}
 
@@ -48,63 +71,80 @@ public class HotMethodFinder implements ClassFileTransformer {
 		try {
 			ClassPool pool = ClassPool.getDefault(); // TODO
 			CtClass clazz = pool.makeClass(new ByteArrayInputStream(classfile));
-
-			boolean isIncluded = false;
-			for (String packageName : includedPackages) {
-				if (clazz.getPackageName().startsWith(packageName)) {
-					isIncluded = true;
-					break;
-				}
-			}
-			if (!isIncluded)
+			
+			if (!includedPackages.contains(clazz.getPackageName()))
 				return classfile; // only transform classes in included packages
-
+			
+			transformClass(clazz);	//TODO: needed?
+			
 			for (CtMethod method : clazz.getDeclaredMethods()) {
 				transform(method); // transform methods
 			}
+			
 			for (CtConstructor constructor : clazz.getDeclaredConstructors()) {
 				transform(constructor.toMethod(constructor.getName(), clazz)); // transform constructors
 			}
-			return clazz.toBytecode();
+			
+			return clazz.toBytecode();	//return transformed class
 		} catch (IOException | RuntimeException | CannotCompileException e) {
 			e.printStackTrace();
 			return null;
 		}
+	}
+	
+	private void transformClass(CtClass clazz) {
+//		try {
+//			
+//			
+//			clazz.addMethod(CtMethod.make(String.format(
+//					"public static void "
+//					),
+//				clazz)
+//			);
+//		} catch (CannotCompileException e) {
+//			e.printStackTrace();
+//		}
 	}
 
 	private void transform(CtMethod method) {
 		if (isNative(method) || isAbstract(method))
 			return;
 		System.out.println("TRANSFORMING " + method.getName());
-
+		CodeConverter conv = new CodeConverter();
+		
 		try {
 			method.instrument(new ExprEditor() {
 				@Override
 				public void edit(MethodCall m) throws CannotCompileException {
 					// methodCounter.put(m.getMethodName(), methodCounter.get(m.getMethodName()) ==
 					// null ? 1 : methodCounter.get(m.getMethodName()) + 1);
-					method.insertAt(m.getLineNumber(),
-							"agent.HotMethodFinder.startTrackingMethod( java.lang.Thread.currentThread().getId() + \"_"
-									+ m.getMethodName() + "\" );");
+					
+					method.insertAt(m.getLineNumber(),String.format(
+							"%s.startTrackingMethod( java.lang.Thread.currentThread().getId() + \"_%s\" );", 
+							thisClassName, m.getMethodName())
+					);
 
-					method.insertAt(m.getLineNumber() + 1,
-							"agent.HotMethodFinder.stopTrackingMethod( java.lang.Thread.currentThread().getId() + \"_"
-									+ m.getMethodName() + "\" );");
+					method.insertAt(m.getLineNumber() + 1, String.format(
+							"%s.stopTrackingMethod( java.lang.Thread.currentThread().getId() + \"_%s\" );",
+							thisClassName, m.getMethodName())
+					);
+					
+//					try {
+//						System.err.println(thisClass.getDeclaredMethod("startTrackingMethod").getSignature());
+//						
+//						conv.insertBeforeMethod(m.getMethod(), thisClass.getDeclaredMethod("startTrackingMethod"));
+//						//conv.insertAfterMethod(m.getMethod(), thisClass.getDeclaredMethod("stopTrackingMethod"));
+//						
+//					} catch (NotFoundException e) {
+//						e.printStackTrace();
+//					}
 
-					// method.insertAt(m.getLineNumber(), String.format(
-					// "agent.HotMethodFinder.getMethodTimer().put(\"%s\"+Thread.currentThread().getId(),
-					// new Long(System.nanoTime()));",
-					// m.getMethodName())
-					// );
-					// method.insertAt(m.getLineNumber()+1, String.format(
-					// "System.out.println(new Long(System.nanoTime()) -
-					// agent.HotMethodFinder.getMethodTimer().get(\"%s\"+Thread.currentThread().getId()));",
-					// m.getMethodName())
-					// );
-					System.out.printf("%s wird von %s von Zeile %d aufgerufen.%n", m.getMethodName(), method.getName(),
-							m.getLineNumber());
+					System.out.printf("%s wird von %s von Zeile %d aufgerufen.%n", 
+							m.getMethodName(), method.getName(), m.getLineNumber());
 				}
 			});
+			
+			method.instrument(conv);
 		} catch (CannotCompileException e) {
 			e.printStackTrace();
 		}

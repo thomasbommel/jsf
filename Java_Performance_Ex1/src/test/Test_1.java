@@ -5,13 +5,14 @@ public class Test_1 {
 	public static void main(String[] args) {
 		//for (int i = 0; i < 1000000; i++);
 		
-		
+		testmethod2();
 		System.currentTimeMillis();
 
 		testmethod();
 		
 		Test_1 x = new Test_1("");
 		
+		testmethod2();
 	}
 	
 	public static void testmethod() {
@@ -35,6 +36,10 @@ public class Test_1 {
 		
 		System.out.println("test constr2");
 		
+	}
+	
+	private static void testmethod2() {
+		System.out.println("hi");
 	}
 	
 }
