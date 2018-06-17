@@ -1,7 +1,6 @@
 package agent;
 
 import java.io.ByteArrayInputStream;
-import java.io.FileOutputStream;
 import java.io.IOException;
 import java.lang.instrument.ClassFileTransformer;
 import java.lang.instrument.IllegalClassFormatException;
@@ -83,7 +82,7 @@ public class HotMethodFinder implements ClassFileTransformer {
 			for (CtMethod method : clazz.getDeclaredMethods()) {
 				transform(method); // transform methods
 			}
-
+			
 			for (CtConstructor constructor : clazz.getDeclaredConstructors()) {
 				transform(constructor.toMethod(constructor.getName(), clazz)); // transform constructors
 			}
@@ -132,7 +131,7 @@ public class HotMethodFinder implements ClassFileTransformer {
 					// methodCounter.put(m.getMethodName(), methodCounter.get(m.getMethodName()) ==
 					// null ? 1 : methodCounter.get(m.getMethodName()) + 1);
 					
-				
+					
 					if(ref != null) {
 						try {
 							System.out.println("equal: "+ (ref==m.getMethod()));
@@ -142,7 +141,7 @@ public class HotMethodFinder implements ClassFileTransformer {
 						}
 						
 					}
-
+					
 					try {
 						ref = m.getMethod();
 					} catch (NotFoundException e) {

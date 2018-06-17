@@ -4,7 +4,7 @@ public class Fib {
 	
 	public static void main(String[] args) {
 		foo(new Object(), "Hello", 'C', false, (byte) 1, (short) 2, 3, 4L, 5F, 6D, new boolean[] { false, true, false });
-		System.out.println(fib(20));
+		System.out.println(fib(10));
 	}
 
 	private static int fib(int n) {

@@ -10,7 +10,8 @@ public class HotMethodAgent {
 	public static void premain(String args, Instrumentation instrumentation) {
 		String[] includedPackages = args.split(";");
 		//instrumentation.addTransformer(new HotMethodFinder(includedPackages));
-		instrumentation.addTransformer(new LowLvlTransformer(includedPackages));
+		//instrumentation.addTransformer(new LowLvlTransformer(includedPackages));
+		instrumentation.addTransformer(new MixedTransformer(includedPackages));
 		
 		Class<?>[] classes = instrumentation.getAllLoadedClasses();
 		for(Class<?> clazz : classes) {
