@@ -3,39 +3,64 @@ package test;
 public class Test_1 {
 
 	public static void main(String[] args) {
-		//for (int i = 0; i < 1000000; i++);
+		for (int i = 0; i < 1000000; i++);
 		
-		testmethod2();
-		//System.currentTimeMillis();
+		Test_1 x = new Test_1("hello", ": hello 2");
+		x.nonStaticEmpty("objectref call");
+		
+		return5();
+		
+		testmethod2('k');
+		System.currentTimeMillis();
+		
+		recursive(3);
 
-		testmethod();
+		System.out.println(new StringBuilder("tezzt").append(" test"));
 		
-		//Test_1 x = new Test_1("");
+		new Test_1();
 		
-		//testmethod2();
+		testmethod2('x');
 	}
 	
-	public static void testmethod() {
-		
-		String text = new String("test");
-		
-		System.err.println("yolo " + text);
+	private static int recursive(int n) {
+		if (n > 0) {
+			recursive(n-1);
+		}
+		return n;
+	}
+	
+	public static int return5() {
+		return 5;
 	}
 	
 	public Test_1() {
 		
-		System.err.println("test constr");
+		try {
+			//only allowed since not transformed for some reason?
+			Thread.sleep(1000);
+		} catch (InterruptedException e) {
+			e.printStackTrace();
+		}
+		
+		System.out.println("test constr");
+		nonStaticEmpty("call nonStaticEmpty");
 		
 	}
 	
-	public Test_1(String x) {
+	public Test_1(String x, String y) {
 		
-		System.err.println("test constr2");
+		System.out.println("test constr2: " + x + y);
 		
 	}
 	
-	private static void testmethod2() {
-		System.err.println("hi");
+	protected static void testmethod2(char c) {
+		
+		
+		System.out.println(c);
+	}
+	
+	private void nonStaticEmpty(String x) {
+		
 	}
 	
 }

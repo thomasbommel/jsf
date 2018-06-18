@@ -5,6 +5,7 @@ import java.lang.instrument.UnmodifiableClassException;
 
 public class HotMethodAgent {
 	
+	protected static final boolean DEBUG = false;
 	//CPU time: ManagementFactory.getThreadMXBean().getThreadCpuTime(new Thread().getId());
 	
 	public static void premain(String args, Instrumentation instrumentation) {
