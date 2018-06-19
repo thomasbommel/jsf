@@ -37,40 +37,13 @@ function updateStat(tag,text){
  * this function updates all the relevant stats in the old+new stats panel
  */
 function updateStats(){
-  updateStat("camera.position",vectorToString(camera.position));
-  updateStat("camera.rotation",vectorToString(camera.rotation));
-  updateStat("camera.target",vectorToString(camera.target));
-  updateStat("pos-targ",getDistanceBetweenPoints(camera.position,camera.target));
+  updateStat("camera.position", vectorToString(camera.position));
+  updateStat("camera.rotation", vectorToString(camera.rotation));
+  updateStat("camera.target", vectorToString(camera.target));
+  updateStat("pos-targ", getVec3EuclideanDistance(camera.position,camera.target));
 }
 
-/**
- * this method displays a Vector using the displayText method from the framework
- * @param  {[type]} vec3 [the vector itself]
- * @param  {[type]} name [>>optional<<, prefix for the vector]
- */
-function vectorToString(vec3,name){
-  var str = "{";
-  for(let i in vec3){
-    str+= vec3[i].toFixed(2)+", ";
-  }
-  str+="}";
-  str = str.replace(", }","}");
-  return str;
-}
 
-/** this method returns the distance between two Points */
-// XXX TODO FIXME not tested yet (especially think about the 'z' part)
-function getDistanceBetweenPoints(aa,bb){
-  let a = getXYZVector(aa);
-  let b = getXYZVector(bb);
-
-  let deltaX = (typeof a.x === 'undefined' || typeof b.x === 'undefined') ? 0 : a.x - b.x;
-  let deltaY = (typeof a.y === 'undefined' || typeof b.y === 'undefined') ? 0 : a.y - b.y;
-  let deltaZ = (typeof a.z === 'undefined' || typeof b.z === 'undefined') ? 0 : a.z - b.z;
-  distance = Math.sqrt( Math.abs(  deltaX * deltaX + deltaY * deltaY + deltaZ * deltaZ));
-
-  return distance.toFixed(2);
-}
 
 // TODO modify/test/delete this method
 function getXYZVector(vec3){
