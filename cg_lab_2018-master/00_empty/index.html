@@ -5,7 +5,7 @@
     <title>Medieval Fantasy</title>
     <link rel="stylesheet" href="style.css">
 </head>
-<body>
+<body class="fullscreen">
     <!-- include helper library for matrix computation -->
     <script src="../libs/gl-matrix.js"></script>
     <!-- include our framework with utilities -->
@@ -22,8 +22,7 @@
     <script src="customsgnodes.js"></script>
     <script src="sceneelementfactory.js"></script>
 
-    <!-- TODO add option to hide/show me via keyboard binding -->
-    <div style="float:left;">
+    <div id="statsDiv" style="float:left;">
       <div id="oldstats"  class="statusPanel">old</div>
       <div id="stats"     class="statusPanel">new</div>
       <button onclick="makeSnapshot()" style="margin-left:10px;">Snapshot</button>

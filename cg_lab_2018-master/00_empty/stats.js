@@ -2,6 +2,11 @@
 <!-- TODO remove this script, only for debugging -->
 
 
+function toggleStats(){
+  console.log("toggleStats");
+  document.getElementsByTagName('body')[0].classList.toggle('fullscreen');
+}
+
 
 var list = [];
 /**

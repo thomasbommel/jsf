@@ -93,8 +93,8 @@ function initCameraInteraction(canvas) {
     else if (event.code == 'KeyC'){   //redo main camera flight
       performMainCameraFlight();
     }
-    else if (event.Code == 'KeyT'){   //toggle debugging panels
-      //TODO
+    else if (event.code == 'KeyT'){   //toggle debugging panels
+      toggleStats();
     }
     else if (event.code == 'ArrowUp' || event.code == 'KeyW'){
       let direction = getCameraDirection();
