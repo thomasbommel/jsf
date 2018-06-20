@@ -12,7 +12,7 @@ loadResources({
   init(resources);
 
   //render one frame
-  render();
+  render(0);
 });
 
 /**
@@ -43,20 +43,17 @@ function createSceneGraph(gl, resources) {
 
   }
 
-  root.append(createFloor());
+  root.append(createFloor(5, 10));
+
+
+  root.append(createFarmHouse(5, 3, 2));
+
 
   { //TODO: create mountains
 
   }
 
   return root;
-}
-
-function createFloor(){
-  let floor = new RenderSGNode(makeRect(5, 10));
-
-  //rotate floor, then return it
-  return new TransformationSGNode(glm.rotateX(-90), floor);
 }
 
 /**
