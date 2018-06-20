@@ -12,9 +12,8 @@ import java.util.List;
 
 import javassist.CannotCompileException;
 import javassist.ClassPool;
+import javassist.CtBehavior;
 import javassist.CtClass;
-import javassist.CtConstructor;
-import javassist.CtMethod;
 import javassist.Modifier;
 import javassist.NotFoundException;
 import javassist.bytecode.BadBytecode;
@@ -33,23 +32,23 @@ public class MixedTransformer implements ClassFileTransformer {
 			Opcode.INVOKEDYNAMIC, Opcode.INVOKEINTERFACE, Opcode.INVOKESPECIAL, Opcode.INVOKESTATIC, Opcode.INVOKEVIRTUAL
 	});
 	
-	protected final List<String> includedPackages;
+	protected final List<String> includedClasses;
 	
-	public MixedTransformer(String[] includedPackages) {
-		this.includedPackages = Collections.unmodifiableList(Arrays.asList(includedPackages));
+	public MixedTransformer(List<String> includedPackages) {
+		final ArrayList<String> includedClasses = new ArrayList<>();
+		for (String clazz : includedPackages) {
+			includedClasses.add(clazz.replace('.', '/'));
+		}
+		this.includedClasses = Collections.unmodifiableList(includedClasses);
 	}
 	
 	@Override
 	public byte[] transform(ClassLoader loader, String name, Class<?> ___, ProtectionDomain __, byte[] classfile)
 			throws IllegalClassFormatException {
 		try {
-			for (int i = 0; i < includedPackages.size(); i++) {
-				if (name.startsWith(includedPackages.get(i)))
-					break;	//class included -> transform
-				if (i == includedPackages.size() - 1) 
-					return classfile;	//not included -> do not transform
+			if (name == null || !includedClasses.contains(name)) {
+				return classfile;	//not included -> do not transform
 			}
-			
 			
 			ClassPool cp = ClassPool.getDefault();
 			cp.importPackage("agent");
@@ -57,12 +56,8 @@ public class MixedTransformer implements ClassFileTransformer {
 			
 			if (HotMethodAgent.DEBUG) System.out.printf("----------------------------- START TRANSFORMING %s -----------------------------%n", clazz.getName());
 			
-			for (CtMethod method : clazz.getDeclaredMethods()) {
-				transform(method); // transform methods
-			}
-			
-			for (CtConstructor constructor : clazz.getDeclaredConstructors()) {
-				transform(constructor.toMethod(constructor.getName(), clazz)); // transform constructors
+			for (CtBehavior method : clazz.getDeclaredBehaviors()) {
+				transform(method); // transform behaviors (=methods and constructors)
 			}
 			
 			if (HotMethodAgent.DEBUG) System.out.printf("----------------------------- STOP TRANSFORMING %s -----------------------------%n", clazz.getName());
@@ -73,7 +68,7 @@ public class MixedTransformer implements ClassFileTransformer {
 		}
 	}
 	
-	private void transform(CtMethod method) {
+	private void transform(CtBehavior method) {
 		if (isNative(method) || isAbstract(method))
 			return;
 		if (HotMethodAgent.DEBUG) System.out.printf("----- TRANSFORMING METHOD %s%s -----%n", method.getName(), method.getSignature());
@@ -81,18 +76,17 @@ public class MixedTransformer implements ClassFileTransformer {
 		CodeIterator codeIterator = methodInfo.getCodeAttribute().iterator();
 		
 		try {
-			final QueueMap<Integer, CtMethod> lineToCalledMethods = new QueueMap<>();
+			final QueueMap<Integer, CtBehavior> lineToCalledMethods = new QueueMap<>();
 			
 			method.instrument(new ExprEditor() {
 				@Override
 				public void edit(NewExpr expr) throws CannotCompileException {
 					try {
-						CtConstructor constructor = expr.getConstructor();
 						if (HotMethodAgent.DEBUG) {
 							System.out.printf("INFO: Constructor \"%s\" is being called by \"%s\" from line number %d. [bytecode index=%d]%n", 
-									constructor.getName(), method.getName(), expr.getLineNumber(), expr.indexOfBytecode());
+									expr.getConstructor().getName(), method.getName(), expr.getLineNumber(), expr.indexOfBytecode());
 						}
-						lineToCalledMethods.add(expr.getLineNumber(), constructor.toMethod(constructor.getName(), constructor.getDeclaringClass()));
+						lineToCalledMethods.add(expr.getLineNumber(), expr.getConstructor());
 					} catch (NotFoundException e) {
 						e.printStackTrace();
 					}
@@ -119,7 +113,7 @@ public class MixedTransformer implements ClassFileTransformer {
 				int lineNumber = methodInfo.getLineNumber(nextInstrIndex);
 				
 				if (methodCallOpcodes.contains(nextInstrOpcode)) {
-					CtMethod calledMethod = lineToCalledMethods.remove(lineNumber);
+					CtBehavior calledMethod = lineToCalledMethods.remove(lineNumber);
 					
 					if (calledMethod != null) {		//only include methods that were detected by the ExprEditor
 						if (HotMethodAgent.DEBUG) {
@@ -135,10 +129,6 @@ public class MixedTransformer implements ClassFileTransformer {
 						codeIterator.insert(getCodeAfter(method, calledMethod));
 						continue;
 					}
-					else {
-						if (HotMethodAgent.DEBUG)
-							System.err.printf("ERROR! Detected method call at [bytecode=%d, linenum = %d]%n", nextInstrIndex, lineNumber);
-					}
 				}
 				codeIterator.next();
 			}
@@ -151,16 +141,21 @@ public class MixedTransformer implements ClassFileTransformer {
 		}
 	}
 
-	private boolean isNative(CtMethod method) {
+	private boolean isNative(CtBehavior method) {
 		return Modifier.isNative(method.getModifiers());
 	}
-
-	private boolean isAbstract(CtMethod method) {
+	
+	private boolean isAbstract(CtBehavior method) {
 		return Modifier.isAbstract(method.getModifiers());
 	}
 	
-	protected byte[] getCodeBefore(CtMethod callSite, CtMethod calledMethod) {
+	protected byte[] getCodeBefore(CtBehavior callSite, CtBehavior calledMethod) {
+		CtClass calledClass = calledMethod.getDeclaringClass();
+		boolean calledClassWasFrozen = calledClass.isFrozen();
+		if (calledClassWasFrozen) calledClass.defrost();
+		
 		MethodInfo callerInfo = callSite.getMethodInfo();
+		calledMethod.getDeclaringClass().defrost();
 		MethodInfo calleeInfo = calledMethod.getMethodInfo();
 		
 		List<String> argTypes = getArgumentTypes(calleeInfo.getDescriptor());
@@ -169,17 +164,22 @@ public class MixedTransformer implements ClassFileTransformer {
 		// [
 		pushArgumentsArray(code, argTypes);
 		// [ args
-		code.addLdc(callSite.getDeclaringClass().getPackageName() + "." + callSite.getName());
+		code.addLdc(callSite.getDeclaringClass().getName() + "." + callSite.getName());
 		// [ args, callSite
 		code.addLdc(calledMethod.getName());
 		// [ args, callSite, calledMethodName
 		code.addInvokestatic(loggerClassName, "startTrackingMethod", "([Ljava/lang/Object;Ljava/lang/String;Ljava/lang/String;)V");
 		// [
 		
+		if (calledClassWasFrozen) calledClass.freeze();
 		return code.get();
 	}
 	
-	private byte[] getCodeAfter(CtMethod callSite, CtMethod calledMethod) {
+	private byte[] getCodeAfter(CtBehavior callSite, CtBehavior calledMethod) {
+		CtClass calledClass = calledMethod.getDeclaringClass();
+		boolean calledClassWasFrozen = calledClass.isFrozen();
+		if (calledClassWasFrozen) calledClass.defrost();
+		
 		MethodInfo callerInfo = callSite.getMethodInfo();
 		MethodInfo calleeInfo = calledMethod.getMethodInfo();
 		
@@ -189,13 +189,14 @@ public class MixedTransformer implements ClassFileTransformer {
 		// [ 
 		duplicateReturnValue(code, returnType);
 		// [ return-value
-		code.addLdc(callSite.getDeclaringClass().getPackageName() + "." + callSite.getName());
+		code.addLdc(callSite.getDeclaringClass().getName() + "." + callSite.getName());
 		// [ return-value, callSite
 		code.addLdc(calledMethod.getName());
 		// [ return-value, callSite, calledMethodName
 		code.addInvokestatic(loggerClassName, "stopTrackingMethod", "(Ljava/lang/Object;Ljava/lang/String;Ljava/lang/String;)V");
 		// [
 		
+		if (calledClassWasFrozen) calledClass.freeze();
 		return code.get();
 	}
 	

@@ -1,28 +1,35 @@
 package agent;
 
 import java.lang.instrument.Instrumentation;
-import java.lang.instrument.UnmodifiableClassException;
+import java.util.ArrayList;
+import java.util.List;
 
 public class HotMethodAgent {
 	
 	protected static final boolean DEBUG = false;
-	//CPU time: ManagementFactory.getThreadMXBean().getThreadCpuTime(new Thread().getId());
 	
 	public static void premain(String args, Instrumentation instrumentation) {
-		String[] includedPackages = args.split(";");
-		//instrumentation.addTransformer(new HotMethodFinder(includedPackages));
-		//instrumentation.addTransformer(new LowLvlTransformer(includedPackages));
-		instrumentation.addTransformer(new MixedTransformer(includedPackages));
-		
-		Class<?>[] classes = instrumentation.getAllLoadedClasses();
-		for(Class<?> clazz : classes) {
-			if(instrumentation.isModifiableClass(clazz)) {
-				try {
-					instrumentation.retransformClasses(clazz);
-				} catch (UnmodifiableClassException e) { e.printStackTrace(); }
+		//filter out classes to transform from args-String
+		String[] packageStrings = args.split(";");
+		List<String> includedClasses = new ArrayList<>();
+		for (String p : packageStrings) {
+			int colonIndex = p.indexOf(':');
+			String packageName = p.substring(0, colonIndex);
+			String classesString = p.substring(colonIndex + 1);
+			for (String className : classesString.split(",")) {
+				includedClasses.add(packageName + "." + className);
 			}
 		}
+		//add a transformer with the specified classes (automatically transforms classes that are being loaded)
+		instrumentation.addTransformer(new MixedTransformer(includedClasses));
 		
-		//TODO: swing Window: LoggerWindow();
+		//load all classes that should be transformed
+		ClassLoader loader = ClassLoader.getSystemClassLoader();
+		for (String className : includedClasses) {
+			try {
+				if (DEBUG) System.out.printf("------------------------------------> LOADING CLASS \"%s\" <------------------------------------%n", className);
+				Class.forName(className, true, loader);		//load and therefore transform class
+			} catch (ClassNotFoundException e) { e.printStackTrace(); }
+		}
 	}
 }
