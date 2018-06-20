@@ -50,5 +50,5 @@ function getVec3VectorDistance(vecA, vecB){
 
 /** returns the euclidean distance between two Points, rounded to 2 decimal places */
 function getVec3EuclideanDistance(vecA, vecB){
-  return getVectorLength(getVec3VectorDistance(vecA, vecB)).toFixed(2);
+  return getVectorLength(getVec3VectorDistance(vecA, vecB));
 }

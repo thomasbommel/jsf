@@ -66,7 +66,7 @@ function initCameraInteraction(canvas) {
       else if (camera.rotation.y > 180) camera.rotation.y -= 360;
 
       //TODO: OMAS?!?! folgendes machn ja oder nein? i glaub eig. nein aber wenn is ned mach is alles (noch) kaputt(er)/buggy(-ier)
-      setCameraTarget();
+      //setCameraTarget();
       updateStats();
     }
     mouse.pos = pos;
@@ -117,7 +117,8 @@ function initCameraInteraction(canvas) {
 
 
 function setCameraTarget(){
-  const distance = 20; //how many units the target should be away from the camera
+  camera.target = [camera.position[0], 0, camera.position[2] + 20];
+  /*const distance = 20; //how many units the target should be away from the camera
   let cameraDirection = getCameraDirection();
 
   //calculate target
@@ -127,7 +128,7 @@ function setCameraTarget(){
   }
 
   camera.target = target;
-  displayText("New camera target: " + vectorToString(camera.target)); //TODO: remove this line
+  displayText("New camera target: " + vectorToString(camera.target)); //TODO: remove this line*/
 }
 
 
@@ -138,7 +139,8 @@ function setCameraTarget(){
  * The returned vector is a normalized unit vector.
  */
 function getCameraDirection(){
-  let isCameraAustralian = false;   //bool to identify if camera is "standing on it's head"
+  return [0,0,1]; //TODO
+  /*let isCameraAustralian = false;   //bool to identify if camera is "standing on it's head"
   let isXAngleGreater90 = false;    //true if camera.rotation.x < -90 or > 90
 
   //calculate x (in interval [-1,1])
@@ -176,5 +178,5 @@ function getCameraDirection(){
     zDirection *= -1;
   }
 
-  return normalizeVec3([xDirection, yDirection, zDirection]);
+  return normalizeVec3([xDirection, yDirection, zDirection]);*/
 }
