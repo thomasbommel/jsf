@@ -6,11 +6,11 @@ const camera = {
   //access with camera.position[i] and camera.target[i] ;; i-values: 0=x, 1=y, 2=z
   position: getDefaultCameraPosition(),
   target: [0,0,0],   //calculated by utils.setCameraTarget() in init and when camera is moved
-  isPerformingFlight: false     //true during an animated camera flight (TODO!)
+  isPerformingFlight: false,     //true during an animated camera flight
 };
 //camera default-values (as functions)
-function getDefaultCameraRotation() { return {x: 0, y:-30}; }
-function getDefaultCameraPosition() { return [0,15,-30]; }
+function getDefaultCameraRotation() { return { x: 0, y: 10 }; }
+function getDefaultCameraPosition() { return [0,15,-25]; }
 
 
 function setCameraToDefaultValues() {
@@ -93,6 +93,9 @@ function initCameraInteraction(canvas) {
     else if (event.code == 'KeyC'){   //redo main camera flight
       performMainCameraFlight();
     }
+    else if (event.Code == 'KeyT'){   //toggle debugging panels
+      //TODO
+    }
     else if (event.code == 'ArrowUp' || event.code == 'KeyW'){
       let direction = getCameraDirection();
       for (let i in direction){
@@ -100,6 +103,7 @@ function initCameraInteraction(canvas) {
       }
       setCameraTarget();
       displayText("up - new pos: " +  vectorToString(camera.position));
+
     }
     else if (event.code == 'ArrowDown' || event.code == 'KeyS'){
       let direction = getCameraDirection();
@@ -109,7 +113,7 @@ function initCameraInteraction(canvas) {
       setCameraTarget();
       displayText("down - new pos: " +  vectorToString(camera.position));
     }
-      updateStats();
+    updateStats();
   });
 }
 
@@ -117,7 +121,7 @@ function initCameraInteraction(canvas) {
 
 
 function setCameraTarget(){
-  camera.target = [camera.position[0], 0, camera.position[2] + 20];
+  camera.target = [camera.position[0], 0, camera.position[2] + 20]; //TODO
   /*const distance = 20; //how many units the target should be away from the camera
   let cameraDirection = getCameraDirection();
 

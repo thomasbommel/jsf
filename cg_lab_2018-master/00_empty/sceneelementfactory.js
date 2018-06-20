@@ -19,5 +19,5 @@ function createFarmHouse(width, length, height) {
 
   farmhouse.diffuse = [0.6,0.6,0.6,1];
 
-  return new TransformationSGNode(glm.translate(10,0,0), farmhouse);
+  return new TransformationSGNode(glm.translate(10, height/2, 0), farmhouse);
 }
