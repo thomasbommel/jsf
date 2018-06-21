@@ -44,6 +44,7 @@ function init(resources) {
   //perform main camera flight, then initialise camera interaction
   performMainCameraFlight();
   initCameraInteraction(gl.canvas);
+  updatePannelFromCamera();
 }
 
 

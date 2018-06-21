@@ -30,5 +30,30 @@
       <div id="snapshot"  class="statusPanel">snapshot</div>
     </div>
 
+    <div id="controlDiv" style="float:left;">
+      <table>
+        <tr>
+          <td>pos x</td>  <td><input id="positionx" type="number" oninput="updateCameraFromPannel()" value="0"/></td>
+          <td>y</td>      <td><input id="positiony" type="number" oninput="updateCameraFromPannel()" value="0"/></td>
+          <td>z</td>      <td><input id="positionz" type="number" oninput="updateCameraFromPannel()" value="0"/></td>
+          <td/>
+        </tr>
+        <tr>
+          <td>target x</td>   <td><input id="targetx" type="number" oninput="updateCameraFromPannel()" value="0"/></td>
+          <td>y</td>          <td><input id="targety" type="number" oninput="updateCameraFromPannel()" value="0"/></td>
+          <td>z</td>          <td><input id="targetz" type="number" oninput="updateCameraFromPannel()" value="0"/></td>
+          <td/>
+        <tr>
+        <tr>
+          <td>rotation x</td>  <td><input id="rotationx" type="number" oninput="updateCameraFromPannel()" value="0"/></td>
+          <td>y</td>           <td><input id="rotationy" type="number" oninput="updateCameraFromPannel()" value="0"/></td>
+          <td colspan = "2">  <button id="updateCameraFromPannel" onclick="updateCameraFromPannel()" style="margin-left:10px;">update Camera</button></td>
+          <td> <button id="updatePannelFromCamera" onclick="updatePannelFromCamera()" style="margin-left:10px;">update Pannel</button></td>
+        </tr>
+        <tr>
+      </table>
+
+    </div>
+
 </body>
 </html>

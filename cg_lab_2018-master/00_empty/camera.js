@@ -68,6 +68,7 @@ function initCameraInteraction(canvas) {
       //TODO: OMAS?!?! folgendes machn ja oder nein? i glaub eig. nein aber wenn is ned mach is alles (noch) kaputt(er)/buggy(-ier)
       //setCameraTarget();
       updateStats();
+      updatePannelFromCamera();
     }
     mouse.pos = pos;
   });
@@ -114,6 +115,7 @@ function initCameraInteraction(canvas) {
       displayText("down - new pos: " +  vectorToString(camera.position));
     }
     updateStats();
+    updatePannelFromCamera();
   });
 }
 

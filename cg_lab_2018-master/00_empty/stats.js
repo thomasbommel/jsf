@@ -50,6 +50,61 @@ function updateStats(){
 
 
 
+function updatePannelFromCamera(){
+  document.getElementById('updatePannelFromCamera').innerHTML = "updating";
+  let positionx = document.getElementById('positionx');
+  let positiony = document.getElementById('positiony');
+  let positionz = document.getElementById('positionz');
+
+  positionx.value = camera.position[0];
+  positiony.value = camera.position[1];
+  positionz.value = camera.position[2];
+
+  let targetx = document.getElementById('targetx');
+  let targety = document.getElementById('targety');
+  let targetz = document.getElementById('targetz');
+
+  targetx.value = camera.target[0];
+  targety.value = camera.target[1];
+  targetz.value = camera.target[2];
+
+  let rotx = document.getElementById('rotationx');
+  let roty = document.getElementById('rotationy');
+
+  rotx.value = camera.rotation.x;
+  roty.value = camera.rotation.y;
+
+  setTimeout(() => {
+    document.getElementById('updatePannelFromCamera').innerHTML = "updatePannelFromCamera"
+  }, 200)
+}
+
+
+function updateCameraFromPannel(){
+  document.getElementById('updateCameraFromPannel').innerHTML = "updating";
+  let positionx = parseFloat(document.getElementById('positionx').value);
+  let positiony = parseFloat(document.getElementById('positiony').value);
+  let positionz = parseFloat(document.getElementById('positionz').value);
+  let pos = [positionx,positiony,positionz];
+  camera.position = pos;
+
+  let targetx = parseFloat(document.getElementById('targetx').value);
+  let targety = parseFloat(document.getElementById('targety').value);
+  let targetz = parseFloat(document.getElementById('targetz').value);
+  let tar = [targetx,targety,targetz];
+  camera.target = tar;
+
+  let rotx = parseFloat(document.getElementById('rotationx').value);
+  let roty = parseFloat(document.getElementById('rotationy').value);
+  camera.rotation.x = rotx;
+  camera.rotation.y = roty;
+
+  setTimeout(() => {
+    document.getElementById('updateCameraFromPannel').innerHTML = "updateCameraFromPannel"
+  }, 200)
+}
+
+
 // TODO modify/test/delete this method
 function getXYZVector(vec3){
   if( typeof vec3.x  !== "undefined" && typeof vec3.y  !== "undefined"){
