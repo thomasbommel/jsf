@@ -52,7 +52,7 @@ function createSceneGraph(gl, resources) {
   }
 
   root.append(createFloor(100, 100));
-  root.append(createFarmHouse(16, 8, 6));
+  root.append(createFarmHouse(16, 8, 6, 60, 10, -105));
 
   farmHuman1 = createHuman(resources, 0.5);
   root.append(farmHuman1.root);

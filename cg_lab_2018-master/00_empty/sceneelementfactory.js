@@ -12,32 +12,20 @@ function createFloor(width, length){
 }
 
 
-function createFarmHouse(width, length, height) {
+function createFarmHouse(width, length, height, xPos, zPos, yRotation) {
   let farmhouse = new MaterialSGNode(
     new FarmhouseSGNode(width, length, height)
   );
 
   farmhouse.diffuse = [0.6,0.6,0.6,1];
 
-  let placement = mat4.multiply(mat4.create(), glm.translate(60, height/2, 10), glm.rotateY(-105));
+  let placement = mat4.multiply(mat4.create(), glm.translate(xPos, height/2, zPos), glm.rotateY(yRotation));
   return new TransformationSGNode(placement, farmhouse);
 }
 
 
-/* Human struct:
-var human = {
-  root: null,
-  head: null,
-  body: null,
-  right_arm: null,
-  left_arm: null,
-  tool: null,
-  right_leg: null,
-  left_leg: null
-}
-*/
 function createHuman(resources, scaleFactor) {
-  //TODO: apply material/texture
+  //TODO: apply materials/textures
   let root = new TransformationSGNode(glm.scale(scaleFactor,scaleFactor,scaleFactor));
 
   let head = new TransformationSGNode(glm.translate(0,0,0), new RenderSGNode(resources.human_head));
