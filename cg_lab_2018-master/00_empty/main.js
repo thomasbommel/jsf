@@ -10,8 +10,6 @@ var sun,lamp;
 
 //load the shader resources using a utility function
 loadResources({
-  vs: 'shader/empty.vs.glsl',
-  fs: 'shader/empty.fs.glsl',
   vs_phong: 'shader/phong.vs.glsl',
   fs_phong: 'shader/phong.fs.glsl',
   vs_single: 'shader/single.vs.glsl',
@@ -99,18 +97,18 @@ function render(/*float*/ timeInMilliseconds){
   gl.clear(gl.COLOR_BUFFER_BIT | gl.DEPTH_BUFFER_BIT);
 
   //create and setup context to use when rendering SceneGraph
-  const context = createSGContext(gl);
+  const context = createSGContext(gl, mat4.perspective(mat4.create(), glm.deg2rad(30), gl.drawingBufferWidth / gl.drawingBufferHeight, 0.01, 1000));
   //arguments: matOut, viewerPos, pointToLookAt, up_Vector
   let lookAtMatrix = mat4.lookAt(mat4.create(), camera.position, camera.target, [0,1,0]);
-  //rotate scene according to camera rotation
-  let mouseRotateMatrix = mat4.multiply(mat4.create(),
-                          glm.rotateX(camera.rotation.y),
-                          glm.rotateY(camera.rotation.x));
-  context.viewMatrix = mat4.multiply(mat4.create(), lookAtMatrix, mouseRotateMatrix);
+
+
+  context.viewMatrix = lookAtMatrix;
 
   //TODO: animate objects by rotating/translating nodes using timeInMilliseconds
   sun.move(timeInMilliseconds,0.05);
-  lamp.move(timeInMilliseconds,0.4);
+  lamp.move(timeInMilliseconds,0.04);
+
+  //lamp.moveTo(camera.target);
 
   //combination example: farmHuman1.root.matrix = mat4.multiply(mat4.create(), glm.translate(0.001 * timeInMilliseconds, 0, 0), glm.rotateY(timeInMilliseconds*0.05));
 

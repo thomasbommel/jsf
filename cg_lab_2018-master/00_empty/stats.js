@@ -45,7 +45,9 @@ function updateStats(){
   updateStat("camera.position", vectorToString(camera.position));
   updateStat("camera.rotation", vectorToString(camera.rotation));
   updateStat("camera.target", vectorToString(camera.target));
-  updateStat("camera.direction", vectorToString(getCameraDirection()));
+
+updateStat("dist", vectorToString(dist));
+
 }
 
 
@@ -102,6 +104,7 @@ function updateCameraFromPannel(){
   setTimeout(() => {
     document.getElementById('updateCameraFromPannel').innerHTML = "updateCameraFromPannel"
   }, 200)
+  updateStats();
 }
 
 

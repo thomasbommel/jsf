@@ -1,4 +1,9 @@
 
+
+var dist = [0,0,0]; //TODO removeme
+var horizontalangle = 0;
+var verticalangle = 0;
+
 //camera struct
 const camera = {
   //access with camera.rotation.x and camera.rotation.y
@@ -9,14 +14,14 @@ const camera = {
   isPerformingFlight: false,     //true during an animated camera flight
 };
 //camera default-values (as functions)
-function getDefaultCameraRotation() { return { x: 0, y: 10 }; }
-function getDefaultCameraPosition() { return [0,30,-25]; }
+function getDefaultCameraRotation() { return { x: 0, y: 0 }; }
+function getDefaultCameraPosition() { return [0,10,-25]; }
 
 
 function setCameraToDefaultValues() {
   camera.rotation = getDefaultCameraRotation();
   camera.position = getDefaultCameraPosition();
-  setCameraTarget();
+  setCameraTarget({x:0,y:0});
   camera.isPerformingFlight = false;
 }
 
@@ -50,23 +55,11 @@ function initCameraInteraction(canvas) {
   canvas.addEventListener('mousemove', function(event) {
     const pos = toPos(event);
     const delta = { x : mouse.pos.x - pos.x, y: mouse.pos.y - pos.y };
-    const mouseSensitivity = 0.25;   //factor to multiply with delta mouse movement
+     //factor to multiply with delta mouse movement
 
     if (mouse.leftButtonDown && !camera.isPerformingFlight) {
-      //add the relative movement of the mouse to the rotation variables
-  		camera.rotation.x += delta.x * mouseSensitivity;
-  		camera.rotation.y += delta.y * mouseSensitivity;
+      setCameraTarget(delta);
 
-      //keep rotation.x in interval ]-180,180]
-      if (camera.rotation.x <= -180) camera.rotation.x += 360;
-      else if (camera.rotation.x > 180) camera.rotation.x -= 360;
-
-      //keep rotation.y in interval ]-180,180]
-      if (camera.rotation.y <= -180) camera.rotation.y += 360;
-      else if (camera.rotation.y > 180) camera.rotation.y -= 360;
-
-      //TODO: OMAS?!?! folgendes machn ja oder nein? i glaub eig. nein aber wenn is ned mach is alles (noch) kaputt(er)/buggy(-ier)
-      //setCameraTarget();
       updateStats();
       updatePannelFromCamera();
     }
@@ -98,91 +91,38 @@ function initCameraInteraction(canvas) {
       toggleStats();
     }
     else if (event.code == 'ArrowUp' || event.code == 'KeyW'){
-      let direction = getCameraDirection();
-      for (let i in direction){
-        camera.position[i] += direction[i];
-      }
-      setCameraTarget();
-      displayText("up - new pos: " +  vectorToString(camera.position));
-
+      let direction = normalizeVec3(getVec3VectorDistance(camera.position,camera.target));
+      move(direction);
     }
     else if (event.code == 'ArrowDown' || event.code == 'KeyS'){
-      let direction = getCameraDirection();
-      for (let i in direction){
-        camera.position[i] -= direction[i];
-      }
-      setCameraTarget();
-      displayText("down - new pos: " +  vectorToString(camera.position));
+      let direction = normalizeVec3(getVec3VectorDistance(camera.target,camera.position));
+      move(direction);
     }
     updateStats();
     updatePannelFromCamera();
   });
 }
 
-
-
-
-function setCameraTarget(){
-  camera.target = [camera.position[0], 0, camera.position[2] + 20]; //TODO
-  /*const distance = 20; //how many units the target should be away from the camera
-  let cameraDirection = getCameraDirection();
-
-  //calculate target
-  let target = [0,0,0];
-  for (let i in cameraDirection){
-    target[i] = camera.position[i] + cameraDirection[i] * distance;
+function move(direction){
+  for (let i in direction){
+    camera.position[i] += direction[i];
+    camera.target[i] += direction[i];
   }
-
-  camera.target = target;
-  displayText("New camera target: " + vectorToString(camera.target)); //TODO: remove this line*/
 }
 
 
 
+function setCameraTarget(deltaRotation){
+  const mouseSensitivity = 0.25;
+  camera.rotation.x += deltaRotation.x*mouseSensitivity;
 
-/**
- * Returns the camera direction as x,y,z coordinates calculated from its rotation.
- * The returned vector is a normalized unit vector.
- */
-function getCameraDirection(){
-  return [0,0,1]; //TODO
-  /*let isCameraAustralian = false;   //bool to identify if camera is "standing on it's head"
-  let isXAngleGreater90 = false;    //true if camera.rotation.x < -90 or > 90
+  let x = Math.sin(camera.rotation.x*Math.PI/180);
+  let z = Math.cos(camera.rotation.x*Math.PI/180);
 
-  //calculate x (in interval [-1,1])
-  let xDirection = camera.rotation.x / 90;
-  if (xDirection < -1){
-    let difference = xDirection + 1;
-    xDirection = -1 - difference;
-    isXAngleGreater90 = true;
-  }
-  else if (xDirection > 1){
-    let difference = xDirection - 1;
-    xDirection = 1 - difference;
-    isXAngleGreater90 = true;
-  }
+  camera.target[0] = camera.position[0]+ x*30;
+  camera.target[2] = camera.position[2]+ z*30 ;
 
-  //calculate y (in interval [-1,1])
-  let yDirection = camera.rotation.y / 90;
-  if (yDirection < -1){
-    let difference = yDirection + 1;
-    yDirection = -1 - difference;
-    isCameraAustralian = true;
-  }
-  else if (yDirection > 1){
-    let difference = yDirection - 1;
-    yDirection = 1 - difference;
-    isCameraAustralian = true;
-  }
-
-  //calculate z (in interval [-1,1]; depends on x)
-  let zDirection = xDirection < 0 ? 1 + xDirection : 1 - xDirection;
-  if (isXAngleGreater90) zDirection *= -1;
-
-  if (isCameraAustralian){  //reverse x&z directions if camera is standing on it's head
-    xDirection *= -1;
-    zDirection *= -1;
-  }
-
-  return normalizeVec3([xDirection, yDirection, zDirection]);*/
+  camera.rotation.y += deltaRotation.y*mouseSensitivity;
+  let y = Math.sin(camera.rotation.y*Math.PI/180);
+  camera.target[1] = camera.position[1]+ y*30;
 }
