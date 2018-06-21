@@ -14,10 +14,58 @@ function createFloor(width, length){
 
 function createFarmHouse(width, length, height) {
   let farmhouse = new MaterialSGNode(
-    new FarmhouseRenderSGNode(width, length, height)
+    new FarmhouseSGNode(width, length, height)
   );
 
   farmhouse.diffuse = [0.6,0.6,0.6,1];
 
-  return new TransformationSGNode(glm.translate(10, height/2, 0), farmhouse);
+  let placement = mat4.multiply(mat4.create(), glm.translate(60, height/2, 10), glm.rotateY(-105));
+  return new TransformationSGNode(placement, farmhouse);
+}
+
+
+/* Human struct:
+var human = {
+  root: null,
+  head: null,
+  body: null,
+  right_arm: null,
+  left_arm: null,
+  tool: null,
+  right_leg: null,
+  left_leg: null
+}
+*/
+function createHuman(resources, scaleFactor) {
+  //TODO: apply material/texture
+  let root = new TransformationSGNode(glm.scale(scaleFactor,scaleFactor,scaleFactor));
+
+  let head = new TransformationSGNode(glm.translate(0,0,0), new RenderSGNode(resources.human_head));
+  let body = new TransformationSGNode(glm.translate(0,0,0), new RenderSGNode(resources.human_body));
+
+  //right_arm is at body.x + 1.15, therefore left has to be shifted to -1.15
+  let right_arm = new TransformationSGNode(glm.translate(0,0,0), new RenderSGNode(resources.human_arm));
+  let left_arm = new TransformationSGNode(glm.translate(-2.3,0,0), new RenderSGNode(resources.human_arm));
+
+  //right_leg is at body.x + 0.425 --> shift left to -0.425
+  let right_leg = new TransformationSGNode(glm.translate(0,0,0), new RenderSGNode(resources.human_leg));
+  let left_leg = new TransformationSGNode(glm.translate(-0.85,0,0), new RenderSGNode(resources.human_leg));
+
+  root.append(head);
+  root.append(body);
+  root.append(right_arm);
+  root.append(left_arm);
+  root.append(right_leg);
+  root.append(left_leg);
+
+  return {  //human struct containing TransformationSGNodes to animate
+    root: root,
+    head: head,
+    body: body,
+    right_arm: right_arm,
+    left_arm: left_arm,
+    tool: null,
+    right_leg: right_leg,
+    left_leg: left_leg
+  }
 }

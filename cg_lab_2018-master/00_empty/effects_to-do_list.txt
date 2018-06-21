@@ -1,7 +1,6 @@
 
 Points with "-" in front are still TO-Do
-Points with "?" in front are already implemented, but not yet described
-Points with "x" in front are completely done (impleneted + "algorithmic effects description" done)
+Points with "!" in front are already implemented, but not yet described
 Points with "x" in front are completely done (implemented + "algorithmic effects description" done)
 
 --- Attention! ---
@@ -20,7 +19,7 @@ When implementing an effect, take a look at the exact Specification in Google Dr
 --- Basic movie effects ---
 
 1) Scene Graph Elements
-- a) At least one manually composed model that consists of multiple parts
+! a) At least one manually composed model that consists of multiple parts
 - b) Separate animation of different parts and as a whole
 - c) Scene Graph Node that renders complex 3D shape (5-25 vertices, fully specified properties)
 

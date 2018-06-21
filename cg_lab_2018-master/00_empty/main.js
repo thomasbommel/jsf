@@ -4,10 +4,16 @@ var gl = null;
 //scene graph nodes
 var root = null;
 
+var farmHuman1;
+
 //load the shader resources using a utility function
 loadResources({
   vs: 'shader/empty.vs.glsl',
-  fs: 'shader/empty.fs.glsl'
+  fs: 'shader/empty.fs.glsl',
+  human_head: 'models/human/head.obj',
+  human_body: 'models/human/body.obj',
+  human_arm: 'models/human/arm.obj',
+  human_leg: 'models/human/leg.obj',
 }).then(function (resources /*an object containing our keys with the loaded resources*/) {
   init(resources);
 
@@ -45,8 +51,11 @@ function createSceneGraph(gl, resources) {
 
   }
 
-  root.append(createFloor(5, 10));
-  root.append(createFarmHouse(5, 3, 2));
+  root.append(createFloor(100, 100));
+  root.append(createFarmHouse(16, 8, 6));
+
+  farmHuman1 = createHuman(resources, 0.5);
+  root.append(farmHuman1.root);
 
   { //TODO: create mountains
 

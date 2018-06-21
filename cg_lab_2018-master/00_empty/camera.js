@@ -10,7 +10,7 @@ const camera = {
 };
 //camera default-values (as functions)
 function getDefaultCameraRotation() { return { x: 0, y: 10 }; }
-function getDefaultCameraPosition() { return [0,15,-25]; }
+function getDefaultCameraPosition() { return [0,30,-25]; }
 
 
 function setCameraToDefaultValues() {
