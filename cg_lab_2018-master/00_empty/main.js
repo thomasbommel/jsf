@@ -14,6 +14,8 @@ loadResources({
   human_body: 'models/human/body.obj',
   human_arm: 'models/human/arm.obj',
   human_leg: 'models/human/leg.obj',
+  hoe: 'models/hoe.obj',
+  dock: 'models/dock.obj',
 }).then(function (resources /*an object containing our keys with the loaded resources*/) {
   init(resources);
 
@@ -56,6 +58,9 @@ function createSceneGraph(gl, resources) {
 
   farmHuman1 = createHuman(resources, 0.5);
   root.append(farmHuman1.root);
+  createTool(resources.hoe, farmHuman1, true);
+
+  root.append(createDock(resources, [0,2,20], 0));
 
   { //TODO: create mountains
 
@@ -87,7 +92,7 @@ function render(/*float*/ timeInMilliseconds){
   context.viewMatrix = mat4.multiply(mat4.create(), lookAtMatrix, mouseRotateMatrix);
 
   //TODO: animate objects by rotating/translating nodes using timeInMilliseconds
-
+  //combination example: farmHuman1.root.matrix = mat4.multiply(mat4.create(), glm.translate(0.001 * timeInMilliseconds, 0, 0), glm.rotateY(timeInMilliseconds*0.05));
 
   //start rendering SceneGraph
   root.render(context);

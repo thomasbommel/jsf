@@ -19,9 +19,28 @@ function createFarmHouse(width, length, height, xPos, zPos, yRotation) {
 
   farmhouse.diffuse = [0.6,0.6,0.6,1];
 
-  let placement = mat4.multiply(mat4.create(), glm.translate(xPos, height/2, zPos), glm.rotateY(yRotation));
+  let placement = mat4.multiply(mat4.create(),
+    glm.translate(xPos, height/2, zPos),
+    glm.rotateY(yRotation)
+  );
   return new TransformationSGNode(placement, farmhouse);
 }
+
+/** Creates a dock with the given position and y-rotation */
+function createDock(resources, /*vec3*/ position, yRotation){
+  let dock = new MaterialSGNode(
+    new RenderSGNode(resources.dock)
+  );
+  dock.diffuse = [0.26,0.15,0,1];
+
+  let placement = mat4.multiply(mat4.create(),
+    glm.translate(position[0], position[1], position[2]),
+    glm.rotateY(yRotation)
+  );
+  return new TransformationSGNode(placement, dock);
+}
+
+
 
 
 function createHuman(resources, scaleFactor) {
@@ -56,4 +75,26 @@ function createHuman(resources, scaleFactor) {
     right_leg: right_leg,
     left_leg: left_leg
   }
+}
+
+
+
+/**
+ * Creates a tool and gives it to a human.
+ * Does not return anything but appends the tool's TransformationSGNode to human.tool instead.
+ */
+function createTool(toolModel, human, boolAddToRightHand){
+  if (human.tool){  //remove previous tool from human.root
+    human.root.remove(human.tool);
+  }
+
+  let xPos = 1.15;  //right hand offset from human.root
+  if (!boolAddToRightHand){
+    xPos *= -1; //add it to left hand
+  }
+
+  let placement = mat4.multiply(mat4.create(), glm.translate(xPos, 2.5, 0.8), glm.rotateX(-90));
+  let tool = new TransformationSGNode(placement, new RenderSGNode(toolModel));
+  human.tool = tool;
+  human.root.append(tool);
 }

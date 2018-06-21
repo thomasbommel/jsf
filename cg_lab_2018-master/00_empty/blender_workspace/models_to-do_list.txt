@@ -1,6 +1,6 @@
 
 x Human
-- Hoe
+x Hoe
 - Fish
 - Ball-room
 - Rose
