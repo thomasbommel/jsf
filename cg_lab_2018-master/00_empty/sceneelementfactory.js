@@ -26,6 +26,8 @@ function createFarmHouse(width, length, height, xPos, zPos, yRotation) {
   return new TransformationSGNode(placement, farmhouse);
 }
 
+
+
 /** Creates a dock with the given position and y-rotation */
 function createDock(resources, /*vec3*/ position, yRotation){
   let dock = new MaterialSGNode(
@@ -81,20 +83,36 @@ function createHuman(resources, scaleFactor) {
 
 /**
  * Creates a tool and gives it to a human.
- * Does not return anything but appends the tool's TransformationSGNode to human.tool instead.
+ * Does not return anything but appends the tool's SGNode to a body part instead.
+ * A human can hold a tool at either: "left", "right" or "mouth"
  */
-function createTool(toolModel, human, boolAddToRightHand){
-  if (human.tool){  //remove previous tool from human.root
-    human.root.remove(human.tool);
+function createTool(toolModel, human, whereToHoldTool){
+  if (human.tool){  //remove previous tool from human
+    human.right_arm.remove(human.tool);
+    human.left_arm.remove(human.tool);
+    human.head.remove(human.tool);
   }
 
-  let xPos = 1.15;  //right hand offset from human.root
-  if (!boolAddToRightHand){
-    xPos *= -1; //add it to left hand
+  let tool = new TransformationSGNode(mat4.create(), new RenderSGNode(toolModel));
+  let placement;
+  if (whereToHoldTool == "mouth"){
+    placement = mat4.multiply(mat4.create(), glm.translate(0.8, 5.8, -0.5), glm.rotateZ(90));
+    human.head.append(tool);
+  }
+  else {
+    let xPos = 1.15;  //hand offset from human.root
+    placement = mat4.multiply(mat4.create(), glm.translate(xPos, 2.5, 0.8), glm.rotateX(-90));
+    if (whereToHoldTool == "right"){
+      human.right_arm.append(tool);
+    }
+    else if (whereToHoldTool == "left"){
+      human.left_arm.append(tool);
+    }
+    else {
+      console.log("ERROR! Invalid whereToHoldTool-String at createTool()");
+    }
   }
 
-  let placement = mat4.multiply(mat4.create(), glm.translate(xPos, 2.5, 0.8), glm.rotateX(-90));
-  let tool = new TransformationSGNode(placement, new RenderSGNode(toolModel));
+  tool.matrix = placement;
   human.tool = tool;
-  human.root.append(tool);
 }

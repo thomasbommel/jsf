@@ -1,11 +1,11 @@
 
 x Human
 x Hoe
-- Fish
+x Fish
 - Ball-room
-- Rose
-- Dock
-- Fishing rod
+x Rose
+x Dock
+x Fishing rod
 
 Maybe:
 - Cow
