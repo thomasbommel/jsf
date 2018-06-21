@@ -22,6 +22,8 @@ loadResources({
   human_leg: 'models/human/leg.obj',
   hoe: 'models/hoe.obj',
   dock: 'models/dock.obj',
+  rose: 'models/rose.obj',
+  rod: 'models/rod.obj',
 }).then(function (resources /*an object containing our keys with the loaded resources*/) {
   init(resources);
 
@@ -59,9 +61,11 @@ function createSceneGraph(gl, resources) {
   root.append(createFarmHouse(16, 8, 6, 60, 10, -105));
   root.append(createFloor(100, 100));
 
-  farmHuman1 = createHuman(resources, 0.5);
+  farmHuman1 = createHuman(resources, 0.8);
   root.append(farmHuman1.root);
-  createTool(resources.hoe, farmHuman1, true);
+  createTool(resources.hoe, farmHuman1, "right");
+  createTool(resources.rose, farmHuman1, "mouth");
+  createTool(resources.rod, farmHuman1, "left");
 
   root.append(createDock(resources, [0,2,20], 0));
 
