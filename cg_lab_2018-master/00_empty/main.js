@@ -6,10 +6,16 @@ var root = null;
 
 var farmHuman1;
 
+var sun,lamp;
+
 //load the shader resources using a utility function
 loadResources({
   vs: 'shader/empty.vs.glsl',
   fs: 'shader/empty.fs.glsl',
+  vs_phong: 'shader/phong.vs.glsl',
+  fs_phong: 'shader/phong.fs.glsl',
+  vs_single: 'shader/single.vs.glsl',
+  fs_single: 'shader/single.fs.glsl',
   human_head: 'models/human/head.obj',
   human_body: 'models/human/body.obj',
   human_arm: 'models/human/arm.obj',
@@ -45,24 +51,30 @@ function init(resources) {
  */
 function createSceneGraph(gl, resources) {
   //compile and link shader program and create root node of SceneGraph with it
-  const root = new ShaderSGNode(createProgram(gl, resources.vs, resources.fs));
+  const root = new ShaderSGNode(createProgram(gl, resources.vs_phong, resources.fs_phong));
 
-  { //TODO: create sun (moving light source)
-
-  }
-
-  root.append(createFloor(100, 100));
   root.append(createFarmHouse(16, 8, 6, 60, 10, -105));
+  root.append(createFloor(100, 100));
 
   farmHuman1 = createHuman(resources, 0.5);
   root.append(farmHuman1.root);
 
-  { //TODO: create mountains
+  createAndAddLights(root, resources);
 
+  {
+    //TODO: create mountains
   }
 
   return root;
 }
+
+function createAndAddLights(root, resources){
+    sun = createLight([0, 5, 40], 4, resources, false);
+    root.append(sun);
+    lamp = createLight([0, 1, 2], 0.4, resources, true, 'u_light2');
+    root.append(lamp);
+}
+
 
 /**
  * renders a single frame
@@ -87,6 +99,8 @@ function render(/*float*/ timeInMilliseconds){
   context.viewMatrix = mat4.multiply(mat4.create(), lookAtMatrix, mouseRotateMatrix);
 
   //TODO: animate objects by rotating/translating nodes using timeInMilliseconds
+  sun.move(timeInMilliseconds,0.05);
+  lamp.move(timeInMilliseconds,0.4);
 
 
   //start rendering SceneGraph
