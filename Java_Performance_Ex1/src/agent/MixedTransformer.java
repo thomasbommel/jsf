@@ -51,7 +51,6 @@ public class MixedTransformer implements ClassFileTransformer {
 			}
 			
 			ClassPool cp = ClassPool.getDefault();
-			cp.importPackage("agent");
 			CtClass clazz = cp.makeClass(new ByteArrayInputStream(classfile));
 			
 			if (HotMethodAgent.DEBUG) System.out.printf("----------------------------- START TRANSFORMING %s -----------------------------%n", clazz.getName());
@@ -155,7 +154,6 @@ public class MixedTransformer implements ClassFileTransformer {
 		if (calledClassWasFrozen) calledClass.defrost();
 		
 		MethodInfo callerInfo = callSite.getMethodInfo();
-		calledMethod.getDeclaringClass().defrost();
 		MethodInfo calleeInfo = calledMethod.getMethodInfo();
 		
 		List<String> argTypes = getArgumentTypes(calleeInfo.getDescriptor());
