@@ -2,6 +2,28 @@
  * This class contains several utility functions to be used in main.js
  */
 
+function getDefaultMaterial() {
+  return {
+    ambient: [0.2, 0.2, 0.2, 1.0],
+    diffuse: [0.6, 0.6, 0.6, 1.0],
+    specular: [0, 0, 0, 1],
+    emission: [0, 0, 0, 1],
+    shininess: 0.0,
+    texture: null
+  };
+}
+
+function applyMaterial(materialNode, material) {
+  let defaultMaterial = getDefaultMaterial();
+
+  materialNode.ambient    = material.ambient    || defaultMaterial.ambient;
+  materialNode.diffuse    = material.diffuse    || defaultMaterial.diffuse;
+  materialNode.specular   = material.specular   || defaultMaterial.specular;
+  materialNode.emission   = material.emission   || defaultMaterial.emission;
+  materialNode.shininess  = material.shininess  || defaultMaterial.shininess;
+  materialNode.texture    = material.texture    || defaultMaterial.texture;
+}
+
  /**
   * this method displays a Vector using the displayText method from the framework
   * @param  {[type]} vector [the vector itself]

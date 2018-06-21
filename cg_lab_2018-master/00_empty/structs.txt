@@ -1,0 +1,31 @@
+
+//---- This is a helper file to look up member variables of structs quickly --\\
+
+Human:
+{  //each member contains a TransformationSGNode
+  root: ,
+  head: ,
+  body: ,
+  right_arm: ,
+  left_arm: ,
+  tool: ,
+  right_leg: ,
+  left_leg:
+};
+
+Material:
+{
+  ambient: [R,G,B,A],
+  diffuse: [R,G,B,A],
+  specular: [R,G,B,A],
+  emission: [R,G,B,A],
+  shininess: float,
+  texture:
+};
+
+Transformation:
+{
+  translation: [x,y,z],
+  yRotation: float,
+  scale: [x,y,z]
+};

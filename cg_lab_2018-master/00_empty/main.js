@@ -22,6 +22,7 @@ loadResources({
   dock: 'models/dock.obj',
   rose: 'models/rose.obj',
   rod: 'models/rod.obj',
+  fish: 'models/fish.obj',
 }).then(function (resources /*an object containing our keys with the loaded resources*/) {
   init(resources);
 
@@ -62,10 +63,12 @@ function createSceneGraph(gl, resources) {
   farmHuman1 = createHuman(resources, 0.8);
   root.append(farmHuman1.root);
   createTool(resources.hoe, farmHuman1, "right");
-  createTool(resources.rose, farmHuman1, "mouth");
-  createTool(resources.rod, farmHuman1, "left");
+  farmHuman1.tool = null;
+  createTool(resources.rose, farmHuman1, "mouth", {diffuse: [1,0,0,1]});
+  farmHuman1.tool = null;
+  createTool(resources.rod, farmHuman1, "left", {diffuse: [0.26,0.15,0,1]});
 
-  root.append(createDock(resources, [0,2,20], 0));
+  root.append(createSimpleModel( resources.dock, {translation: [0,2,20]}, {diffuse: [0.26,0.15,0,1]} ));
 
   createAndAddLights(root, resources);
 

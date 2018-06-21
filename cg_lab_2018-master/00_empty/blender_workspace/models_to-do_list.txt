@@ -7,6 +7,10 @@ x Rose
 x Dock
 x Fishing rod
 
+- Tree LOD 0 (min)
+- Tree LOD 1
+- Tree LOD 2 (max)
+
 Maybe:
 - Cow
 - Fence
