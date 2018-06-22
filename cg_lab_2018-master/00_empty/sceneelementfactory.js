@@ -29,24 +29,41 @@ function createFarmHouse(width, length, height, xPos, zPos, yRotation) {
 function createSimpleModel(model, material, transformation){
   let node = new MaterialSGNode(new RenderSGNode(model));
   applyMaterial(node, material || getDefaultMaterial());
-
-  let placement = mat4.create();
-  if (transformation){
-    let translation = transformation.translation || [0,0,0];
-    let yRotation = transformation.yRotation || 0;
-    let scale = transformation.scale || [1,1,1];
-
-    mat4.multiply(/*out =*/placement,
-      glm.translate(translation[0], translation[1], translation[2]),
-      glm.rotateY(yRotation)
-    );
-    mat4.multiply(/*out =*/placement, placement,
-      glm.scale(scale[0], scale[1], scale[2])
-    );
-  }
-  return new TransformationSGNode(placement, node);
+  return wrapWithTransformationSGNode(node, transformation);
 }
 
+
+
+
+function createCastle(resources, stoneMaterial, woodMaterial, transformation){
+  let floorNode = createSimpleModel(resources.castle_floor, stoneMaterial, transformation);
+  floorNode.append(createSimpleModel(resources.castle_walls, stoneMaterial));
+  floorNode.append(createSimpleModel(resources.castle_bridge, woodMaterial));
+  return floorNode;
+}
+
+
+
+
+function createPineTree(resources, stumpMaterial, leavesMaterial, transformation){
+  let position = [0,0,0];
+  if (transformation && transformation.translation){
+    position = transformation.translation;
+  }
+
+  let stumpNode = new MaterialSGNode(
+    new LODRenderSGNode(position, resources.treestump_lod0, resources.treestump_lod1, resources.treestump_lod2)
+  );
+  applyMaterial(stumpNode, stumpMaterial);
+
+  let leavesNode = new MaterialSGNode(
+    new LODRenderSGNode(position, resources.treeleaves_lod0, resources.treeleaves_lod1, resources.treeleaves_lod2)
+  );
+  applyMaterial(leavesNode, leavesMaterial);
+
+  stumpNode.append(leavesNode);
+  return wrapWithTransformationSGNode(stumpNode, transformation);
+}
 
 
 

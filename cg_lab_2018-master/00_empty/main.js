@@ -14,10 +14,25 @@ loadResources({
   fs_phong: 'shader/phong.fs.glsl',
   vs_single: 'shader/single.vs.glsl',
   fs_single: 'shader/single.fs.glsl',
+
+  //complex models -> use factory functions
   human_head: 'models/human/head.obj',
   human_body: 'models/human/body.obj',
   human_arm: 'models/human/arm.obj',
   human_leg: 'models/human/leg.obj',
+
+  treestump_lod0 : 'models/trees/pine_stump_lod_0.obj',
+  treestump_lod1 : 'models/trees/pine_stump_lod_1.obj',
+  treestump_lod2 : 'models/trees/pine_stump_lod_2.obj',
+  treeleaves_lod0 : 'models/trees/pine_leaves_lod_0.obj',
+  treeleaves_lod1 : 'models/trees/pine_leaves_lod_1.obj',
+  treeleaves_lod2 : 'models/trees/pine_leaves_lod_2.obj',
+
+  castle_bridge: 'models/castle/bridge.obj',
+  castle_floor: 'models/castle/floor.obj',
+  castle_walls: 'models/castle/walls.obj',
+
+  //simple models -> use createSimpleModel()
   hoe: 'models/hoe.obj',
   dock: 'models/dock.obj',
   rose: 'models/rose.obj',
@@ -68,7 +83,11 @@ function createSceneGraph(gl, resources) {
   farmHuman1.tool = null;
   createTool(resources.rod, farmHuman1, "left", {diffuse: [0.26,0.15,0,1]});
 
+  //TODO: remove testmodels
   root.append(createSimpleModel( resources.dock, {diffuse: [0.26,0.15,0,1]}, {translation: [0,2,20]} ));
+  root.append(createPineTree(resources, {diffuse: [1,1,0,1]}, {diffuse: [1,0,0,1]}, {translation: [5,0,0]}));
+  root.append(createSimpleModel(resources.fish, {diffuse: [0,0,1,1]}, {translation: [-5,2,0]}));
+  root.append(createCastle(resources, {diffuse: [1,0,1,1]}, {diffuse: [0.26,0.15,0,1]}, {translation: [-40,0,35], yRotation: -90}))
 
   createAndAddLights(root, resources);
 

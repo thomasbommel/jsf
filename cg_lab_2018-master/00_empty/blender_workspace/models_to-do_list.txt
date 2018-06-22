@@ -2,14 +2,14 @@
 x Human
 x Hoe
 x Fish
-- Ball-room
+x Castle
 x Rose
 x Dock
 x Fishing rod
 
-- Tree LOD 0 (min)
-- Tree LOD 1
-- Tree LOD 2 (max)
+x Tree LOD 0 (min)
+x Tree LOD 1
+x Tree LOD 2 (max)
 
 Maybe:
 - Cow

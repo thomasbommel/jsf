@@ -27,6 +27,28 @@ function applyMaterial(materialNode, material) {
   materialNode.texture    = material.texture    || defaultMaterial.texture;
 }
 
+
+//wraps a node with a TransformationSGNode and immediately applies the given transformation to it
+function wrapWithTransformationSGNode(node, transformation){
+  let placement = mat4.create();
+  if (transformation){
+    let translation = transformation.translation || [0,0,0];
+    let yRotation = transformation.yRotation || 0;
+    let scale = transformation.scale || [1,1,1];
+
+    mat4.multiply(/*out =*/placement,
+      glm.translate(translation[0], translation[1], translation[2]),
+      glm.rotateY(yRotation)
+    );
+    mat4.multiply(/*out =*/placement, placement,
+      glm.scale(scale[0], scale[1], scale[2])
+    );
+  }
+  return new TransformationSGNode(placement, node);
+}
+
+
+
  /**
   * this method displays a Vector using the displayText method from the framework
   * @param  {[type]} vector [the vector itself]

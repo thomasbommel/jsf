@@ -55,8 +55,31 @@ class FarmhouseSGNode extends RenderSGNode {
     }
     super(model, children);
   }
+}
+
+
+
+class LODRenderSGNode extends SGNode {
+
+  constructor(position, model_lod0, model_lod1, model_lod2, children) {
+    super(children);
+    this.position = position;
+    this.lod0Renderer = new RenderSGNode(model_lod0);
+    this.lod1Renderer = new RenderSGNode(model_lod1);
+    this.lod2Renderer = new RenderSGNode(model_lod2);
+  }
 
   render(context) {
+    let distanceToCam = getVectorLength(getVec3VectorDistance(this.position, camera.position));
+
+    if (distanceToCam < 150)
+      this.lod2Renderer.render(context);
+    else if (distanceToCam < 400)
+      this.lod1Renderer.render(context);
+    else
+      this.lod0Renderer.render(context);
+
+    //render children
     super.render(context);
   }
 }
