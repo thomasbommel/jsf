@@ -60,7 +60,7 @@ function createSceneGraph(gl, resources) {
   root.append(createFarmHouse(16, 8, 6, 60, 10, -105));
   root.append(createFloor(100, 100));
 
-  farmHuman1 = createHuman(resources, 0.8);
+  farmHuman1 = createHuman(resources, 0.8, null, null, {diffuse:[0,0,1,1]});
   root.append(farmHuman1.root);
   createTool(resources.hoe, farmHuman1, "right");
   farmHuman1.tool = null;
@@ -68,7 +68,7 @@ function createSceneGraph(gl, resources) {
   farmHuman1.tool = null;
   createTool(resources.rod, farmHuman1, "left", {diffuse: [0.26,0.15,0,1]});
 
-  root.append(createSimpleModel( resources.dock, {translation: [0,2,20]}, {diffuse: [0.26,0.15,0,1]} ));
+  root.append(createSimpleModel( resources.dock, {diffuse: [0.26,0.15,0,1]}, {translation: [0,2,20]} ));
 
   createAndAddLights(root, resources);
 

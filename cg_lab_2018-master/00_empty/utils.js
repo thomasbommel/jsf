@@ -13,6 +13,9 @@ function getDefaultMaterial() {
   };
 }
 
+/**
+ * Careful! Assumes material to be not null/undefined.
+ */
 function applyMaterial(materialNode, material) {
   let defaultMaterial = getDefaultMaterial();
 

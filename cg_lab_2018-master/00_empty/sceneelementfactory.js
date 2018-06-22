@@ -1,7 +1,7 @@
 
 
 function createFloor(width, length){
-  let floor = createSimpleModel(makeRect(width, length), null, {diffuse: [0,0.6,0,1]});
+  let floor = createSimpleModel(makeRect(width, length), {diffuse: [0,0.6,0,1]});
   floor.matrix = glm.rotateX(-90);
   return floor;
 }
@@ -26,7 +26,7 @@ function createFarmHouse(width, length, height, xPos, zPos, yRotation) {
  * Creates basic nodes for a model and applies a specified transformation and material to it.
  * Returns the TransformationSGNode for later animations of the model.
  */
-function createSimpleModel(model, transformation, material){
+function createSimpleModel(model, material, transformation){
   let node = new MaterialSGNode(new RenderSGNode(model));
   applyMaterial(node, material || getDefaultMaterial());
 
@@ -50,19 +50,19 @@ function createSimpleModel(model, transformation, material){
 
 
 
-function createHuman(resources, scaleFactor /*TODO: body, arm & leg material parameters */) {
+function createHuman(resources, scaleFactor, bodyMaterial, armMaterial, legMaterial) {
   let root = new TransformationSGNode(glm.scale(scaleFactor,scaleFactor,scaleFactor));
 
-  let head = createSimpleModel(resources.human_head);
-  let body = createSimpleModel(resources.human_body);
+  let head = createSimpleModel(resources.human_head, {diffuse: [0.87,0.69,0.46,1]});
+  let body = createSimpleModel(resources.human_body, bodyMaterial);
 
   //right_arm is at body.x + 1.15, therefore left has to be shifted to -1.15
-  let right_arm = createSimpleModel(resources.human_arm);
-  let left_arm = createSimpleModel(resources.human_arm, {translation: [-2.3,0,0]});
+  let right_arm = createSimpleModel(resources.human_arm, armMaterial);
+  let left_arm = createSimpleModel(resources.human_arm, armMaterial, {translation: [-2.3,0,0]});
 
   //right_leg is at body.x + 0.425 --> shift left to -0.425
-  let right_leg = createSimpleModel(resources.human_leg, null, {diffuse: [0,0,1,1]});
-  let left_leg = createSimpleModel(resources.human_leg, {translation: [-0.85,0,0]}, {diffuse: [0,0,1,1]});
+  let right_leg = createSimpleModel(resources.human_leg, legMaterial);
+  let left_leg = createSimpleModel(resources.human_leg, legMaterial, {translation: [-0.85,0,0]});
 
   root.append(head);
   root.append(body);
@@ -97,7 +97,7 @@ function createTool(toolModel, human, whereToHoldTool, material){
     human.head.remove(human.tool);
   }
 
-  let tool = createSimpleModel(toolModel, null, material);
+  let tool = createSimpleModel(toolModel, material);
   let placement;
   if (whereToHoldTool == "mouth"){
     placement = mat4.multiply(mat4.create(), glm.translate(0.8, 5.8, -0.5), glm.rotateZ(90));
