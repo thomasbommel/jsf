@@ -1,15 +1,24 @@
 
 
 function createFloor(resources){
-  let floor = new HeightMapSGNode(resources.tex_lava,
+  let floor = new TextureSGNode(resources.heightmap, true,
     createSimpleModel(resources.floor,
-       {diffuse: [0.25,0.47,0.17,1],ambient: [0.25,0.47,0.17,1]},
+       {diffuse: [0.25,0.47,0.17,1], ambient: [0.25,0.47,0.17,1]},
        {translation:[0,0,250]}
-     )
-   );
+  ));
 
   return floor;
 }
+
+
+function createAndAddLights(root, resources){
+    sun = createLight([0, 10, 40], 4, resources, false);
+    root.append(sun);
+    lamp = createLight([0, 1, 2], 0.4, resources, true, 'u_light2');
+    root.append(lamp);
+}
+
+
 
 function createFarmHouse(width, length, height, material, xPos, zPos, yRotation) {
   let farmhouse = new MaterialSGNode(
@@ -18,11 +27,11 @@ function createFarmHouse(width, length, height, material, xPos, zPos, yRotation)
   applyMaterial(farmhouse, material || getDefaultMaterial());
   farmhouse = wrapWithTextureSGNode(farmhouse, material);
 
-  let placement = mat4.multiply(mat4.create(),
-    glm.translate(xPos || 0, height/2, zPos || 0),
-    glm.rotateY(yRotation || 0)
-  );
-  return new TransformationSGNode(placement, farmhouse);
+  let transformation = {
+    translation: [xPos||0, height/2, zPos||0],
+    yRotation: yRotation || 0,
+  };
+  return wrapWithTransformationSGNode(farmhouse, transformation);
 }
 
 /**
@@ -36,12 +45,16 @@ function createSimpleModel(model, material, transformation){
   return wrapWithTransformationSGNode(node, transformation);
 }
 
+
+
 function createCastle(resources, stoneMaterial, woodMaterial, transformation){
   let floorNode = createSimpleModel(resources.castle_floor, stoneMaterial, transformation);
   floorNode.append(createSimpleModel(resources.castle_walls, stoneMaterial));
   floorNode.append(createSimpleModel(resources.castle_bridge, woodMaterial));
   return floorNode;
 }
+
+
 
 function createPineTree(resources, stumpMaterial, leavesMaterial, transformation){
   let position = [0,0,0];
@@ -68,10 +81,10 @@ function createPineTree(resources, stumpMaterial, leavesMaterial, transformation
 
 
 
-function createHuman(resources, scaleFactor, bodyMaterial, armMaterial, legMaterial) {
-  let root = new TransformationSGNode(glm.scale(scaleFactor,scaleFactor,scaleFactor));
+function createHuman(resources, bodyMaterial, armMaterial, legMaterial, transformation) {
+  let root = wrapWithTransformationSGNode(null, transformation);
 
-  let head = createSimpleModel(resources.human_head, {diffuse: [0.87,0.69,0.46,1]});
+  let head = createSimpleModel(resources.human_head, getSkinMaterial());
   let body = createSimpleModel(resources.human_body, bodyMaterial);
 
   //right_arm is at body.x + 1.15, therefore left has to be shifted to -1.15
@@ -108,7 +121,7 @@ function createHuman(resources, scaleFactor, bodyMaterial, armMaterial, legMater
  * Does not return anything but appends the tool's SGNode to a body part instead.
  * A human can hold a tool at either: "left", "right" or "mouth"
  */
-function createTool(toolModel, human, whereToHoldTool, material){
+function createAndAddTool(toolModel, human, whereToHoldTool, material){
   if (human.tool){  //remove previous tool from human
     human.right_arm.remove(human.tool);
     human.left_arm.remove(human.tool);

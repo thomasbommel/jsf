@@ -28,16 +28,11 @@ const float maximumHeight = 150.0;
 
 void main() {
 	vec4 heightValue = vec4(0,0,0,0);
-
 	if(u_enableHeightmap){
-		float heightRatio = (1.0-texture2D(u_tex,a_texCoord).y);// 0 = ground, 1 = highest
+		float heightRatio = (1.0-texture2D(u_tex,a_texCoord).y);	// 0 = ground, 1 = highest
 		heightValue.y = heightRatio * maximumHeight;
-
-
-
 		v_heightColorDifference = vec4(-heightRatio*0.25,0.25*heightRatio,-heightRatio*0.05,0);
  	}
-
 
 	vec4 eyePosition = u_modelView * (vec4(a_position,1) + heightValue);
 

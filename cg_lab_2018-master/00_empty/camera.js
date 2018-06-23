@@ -104,9 +104,10 @@ function initCameraInteraction(canvas) {
 }
 
 function move(direction){
+  const movespeed = 10;
   for (let i in direction){
-    camera.position[i] += direction[i];
-    camera.target[i] += direction[i];
+    camera.position[i] += direction[i] * movespeed;
+    camera.target[i] += direction[i] * movespeed;
   }
 }
 

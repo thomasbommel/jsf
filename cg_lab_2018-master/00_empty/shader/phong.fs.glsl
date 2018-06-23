@@ -57,9 +57,6 @@ vec4 calculateSimplePointLight(Light light, Material material, vec3 lightVec, ve
 	vec3 reflectVec = reflect(-lightVec,normalVec);
 	float spec = pow( max( dot(reflectVec, eyeVec), 0.0) , material.shininess);
 
-
-
-
 	if(u_enableObjectTexture)	{
 		//replace texture colors with material colors
 		material.diffuse = textureColor;

@@ -1,43 +1,33 @@
 
 
-
-class HeightMapSGNode extends AdvancedTextureSGNode {
-
-  constructor(image, children ) {
-      super(image, children);
-      this.wrapS = gl.CLAMP_TO_EDGE;
-      this.wrapT = gl.CLAMP_TO_EDGE;
-  }
-
-  render(context) {
-    //enable texture in fragment shader
-    gl.uniform1i(gl.getUniformLocation(context.shader, 'u_enableHeightmap'), 1);
-    //render texture
-    super.render(context);
-    //clean up
-    gl.uniform1i(gl.getUniformLocation(context.shader, 'u_enableHeightmap'), 0);
-  }
-
-}
-
-
 /**
  * Extends AdvancedTextureSGNode specifically to control the uniform 'u_enableObjectTexture'
  */
 class TextureSGNode extends AdvancedTextureSGNode {
 
-  constructor(image, children ) {
+  constructor(image, /*bool*/ isHeightmap, children) {
       super(image, children);
+      this.isHeightmap = isHeightmap;
+      if (this.isHeightmap == true){
+        this.wrapS = gl.CLAMP_TO_EDGE;
+        this.wrapT = gl.CLAMP_TO_EDGE;
+      }
   }
 
   render(context) {
 
     //enable texture in fragment shader
-    gl.uniform1i(gl.getUniformLocation(context.shader, 'u_enableObjectTexture'), 1);
+    if (this.isHeightmap == true)
+      gl.uniform1i(gl.getUniformLocation(context.shader, 'u_enableHeightmap'), 1);
+    else
+      gl.uniform1i(gl.getUniformLocation(context.shader, 'u_enableObjectTexture'), 1);
     //render texture
     super.render(context);
     //clean up
-    gl.uniform1i(gl.getUniformLocation(context.shader, 'u_enableObjectTexture'), 0);
+    if (this.isHeightmap == true)
+      gl.uniform1i(gl.getUniformLocation(context.shader, 'u_enableHeightmap'), 0);
+    else
+      gl.uniform1i(gl.getUniformLocation(context.shader, 'u_enableObjectTexture'), 0);
   }
 
 }
