@@ -1,11 +1,9 @@
 
 
-function createFloor(width, length){
-  let floor = createSimpleModel(makeRect(width, length), {diffuse: [0,0.6,0,1]});
-  floor.matrix = glm.rotateX(-90);
+function createFloor(resources){
+  let floor = new HeightMapSGNode(resources.tex_lava,createSimpleModel(resources.floor, {diffuse: [0,0.7,0,1]}));
   return floor;
 }
-
 
 function createFarmHouse(width, length, height, xPos, zPos, yRotation) {
   let farmhouse = new MaterialSGNode(
@@ -21,7 +19,6 @@ function createFarmHouse(width, length, height, xPos, zPos, yRotation) {
   return new TransformationSGNode(placement, farmhouse);
 }
 
-
 /**
  * Creates basic nodes for a model and applies a specified transformation and material to it.
  * Returns the TransformationSGNode for later animations of the model.
@@ -33,18 +30,12 @@ function createSimpleModel(model, material, transformation){
   return wrapWithTransformationSGNode(node, transformation);
 }
 
-
-
-
 function createCastle(resources, stoneMaterial, woodMaterial, transformation){
   let floorNode = createSimpleModel(resources.castle_floor, stoneMaterial, transformation);
   floorNode.append(createSimpleModel(resources.castle_walls, stoneMaterial));
   floorNode.append(createSimpleModel(resources.castle_bridge, woodMaterial));
   return floorNode;
 }
-
-
-
 
 function createPineTree(resources, stumpMaterial, leavesMaterial, transformation){
   let position = [0,0,0];

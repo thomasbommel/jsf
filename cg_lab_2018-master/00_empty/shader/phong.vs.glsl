@@ -21,8 +21,19 @@ varying vec3 v_light2Vec;
 
 varying vec2 v_texCoord;
 
+uniform sampler2D u_tex;	//texture unit to use
+uniform bool u_enableHeightmap;
+
 void main() {
-	vec4 eyePosition = u_modelView * vec4(a_position,1);
+	vec4 heightValue = vec4(0,0,0,0);
+	heightValue.y = (texture2D(u_tex,a_texCoord).y-0.5)*3.0;
+
+	vec4 eyePosition;
+	if(u_enableHeightmap){
+	 	eyePosition = u_modelView * (vec4(a_position,1) + heightValue);
+	 }else{
+ 		eyePosition = u_modelView * vec4(a_position,1);
+	}
 
   v_normalVec = u_normalMatrix * a_normal;
   v_eyeVec = -eyePosition.xyz;
@@ -32,6 +43,5 @@ void main() {
 	v_light2Vec = u_light2Pos - eyePosition.xyz;
 
 	v_texCoord = a_texCoord;
-
 	gl_Position = u_projection * eyePosition;
 }

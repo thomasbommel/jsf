@@ -1,5 +1,24 @@
 
 
+
+class HeightMapSGNode extends AdvancedTextureSGNode {
+
+  constructor(image, children ) {
+      super(image, children);
+  }
+
+  render(context) {
+    //enable texture in fragment shader
+    gl.uniform1i(gl.getUniformLocation(context.shader, 'u_enableHeightmap'), 1);
+    //render texture
+    super.render(context);
+    //clean up
+    gl.uniform1i(gl.getUniformLocation(context.shader, 'u_enableHeightmap'), 0);
+  }
+
+}
+
+
 /**
  * Extends AdvancedTextureSGNode specifically to control the uniform 'u_enableObjectTexture'
  */

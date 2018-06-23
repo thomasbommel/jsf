@@ -35,6 +35,8 @@ loadResources({
   castle_floor: 'models/castle/floor.obj',
   castle_walls: 'models/castle/walls.obj',
 
+  floor: 'models/floor.obj',
+
   //simple models -> use createSimpleModel()
   hoe: 'models/hoe.obj',
   dock: 'models/dock.obj',
@@ -66,8 +68,6 @@ function init(resources) {
   updatePannelFromCamera();
 }
 
-
-
 /**
  * creates the initial SceneGraph and returns it's root node
  */
@@ -76,7 +76,7 @@ function createSceneGraph(gl, resources) {
   const root = new ShaderSGNode(createProgram(gl, resources.vs_phong, resources.fs_phong));
 
   //root.append(createFarmHouse(16, 8, 6, 60, 10, -105));
-  root.append(createFloor(100, 100));
+  root.append(createFloor(resources));
 
   farmHuman1 = createHuman(resources, 0.8, {texture: resources.tex_lava}, null, {diffuse:[0,0,1,1]});
   root.append(farmHuman1.root);
