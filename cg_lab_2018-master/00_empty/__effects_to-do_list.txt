@@ -32,13 +32,13 @@ When implementing an effect, take a look at the exact Specification in Google Dr
 4) Illumination
 - a) Multiple light sources (at least 1 moving)
 - b) Implement at least one spot-light (LightSGNode, Phong Shader)
-- c) Phong shading should be applied to all objects in scene.
+! c) Phong shading should be applied to all objects in scene.
 
 5) Transparency
 - a) At least one object semi-transparent based on Alpha-Texture (look closely at specification!!)
 
 6) Camera
-- a) Control camera with forward/backward arrows and Mouse.
+! a) Control camera with forward/backward arrows and Mouse.
 - b) Create an additional animated camera flight (suggestion: triggered on key "x"?)
 
 --- Special effects ---

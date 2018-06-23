@@ -28,8 +28,8 @@ struct Light {
 uniform Material u_material;
 
 //light uniforms
-uniform Light u_light;
-uniform Light u_light2;
+uniform Light u_sun;
+uniform Light u_lamp1;
 
 //varying vectors for light computation
 varying vec3 v_normalVec;
@@ -57,9 +57,6 @@ vec4 calculateSimplePointLight(Light light, Material material, vec3 lightVec, ve
 	vec3 reflectVec = reflect(-lightVec,normalVec);
 	float spec = pow( max( dot(reflectVec, eyeVec), 0.0) , material.shininess);
 
-
-
-
 	if(u_enableObjectTexture)	{
 		//replace texture colors with material colors
 		material.diffuse = textureColor;
@@ -85,6 +82,6 @@ void main() {
 	textureColor = texture2D(u_tex, v_texCoord);
 
 	gl_FragColor =
-		calculateSimplePointLight(u_light, u_material, v_lightVec, v_normalVec, v_eyeVec, textureColor)
-		+ calculateSimplePointLight(u_light2, u_material, v_light2Vec, v_normalVec, v_eyeVec, textureColor);
+		calculateSimplePointLight(u_sun, u_material, v_lightVec, v_normalVec, v_eyeVec, textureColor)
+		+ calculateSimplePointLight(u_lamp1, u_material, v_light2Vec, v_normalVec, v_eyeVec, textureColor);
 }

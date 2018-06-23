@@ -3,6 +3,17 @@
  */
 
 
+function diffuseVecFromRGB(r,g,b){
+  return [r/255,g/255,b/255,1];
+}
+
+function ambientVecFromRGB(r,g,b){
+  return [0.6*r/255,0.6*g/255,0.6*b/255,1];
+}
+
+function getScaleVec(factor){
+  return [factor,factor,factor];
+}
 
 /**
  * Careful! Assumes material to be not null/undefined.
@@ -35,7 +46,10 @@ function wrapWithTransformationSGNode(node, transformation){
       glm.scale(scale[0], scale[1], scale[2])
     );
   }
-  return new TransformationSGNode(placement, node);
+  if (node)
+    return new TransformationSGNode(placement, node);
+  else
+    return new TransformationSGNode(placement);
 }
 
 
@@ -45,7 +59,7 @@ function wrapWithTransformationSGNode(node, transformation){
  */
 function wrapWithTextureSGNode(node, material){
   if (material && material.texture){
-    node = new TextureSGNode(material.texture, node);
+    node = new TextureSGNode(material.texture, false, node);
   }
   return node;
 }

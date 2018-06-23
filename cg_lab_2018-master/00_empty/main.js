@@ -4,8 +4,8 @@ var gl = null;
 //scene graph nodes
 var root = null;
 
-var farmHuman1;
-
+var farmer1, farmer2, farmer3, farmer4;
+var dancer1, dancer2, dancer3, dancer4, dancer5, dancer6, dancer7;
 var sun,lamp;
 
 var lastTime=0;
@@ -18,7 +18,10 @@ loadResources({
   fs_single: 'shader/single.fs.glsl',
 
   //textures
+  heightmap: 'textures/heightmap.jpg',
   tex_lava: 'textures/lava.jpg',
+  tex_wood: 'textures/wood.jpg',
+  tex_bricks: 'textures/bricks.jpg',
 
   //complex models -> use factory functions
   human_head: 'models/human/head.obj',
@@ -37,9 +40,10 @@ loadResources({
   castle_floor: 'models/castle/floor.obj',
   castle_walls: 'models/castle/walls.obj',
 
-  floor: 'models/floor.obj',
+
 
   //simple models -> use createSimpleModel()
+  floor: 'models/floor.obj',
   hoe: 'models/hoe.obj',
   dock: 'models/dock.obj',
   rose: 'models/rose.obj',
@@ -77,58 +81,85 @@ function createSceneGraph(gl, resources) {
   //compile and link shader program and create root node of SceneGraph with it
   const root = new ShaderSGNode(createProgram(gl, resources.vs_phong, resources.fs_phong));
 
+  //define simple color materials
+  let pink = {
+    diffuse: diffuseVecFromRGB(252,148,238), ambient: ambientVecFromRGB(252,148,239)
+  };
+  let red = {
+    diffuse: diffuseVecFromRGB(170,5,30), ambient: ambientVecFromRGB(170,5,30)
+  };
+  let darkblue = {
+    diffuse: diffuseVecFromRGB(10,0,70), ambient: ambientVecFromRGB(10,0,70)
+  };
+  let green = {
+    diffuse: diffuseVecFromRGB(7,107,29), ambient: ambientVecFromRGB(7,107,29)
+  };
 
-  //root.append(createFarmHouse(16, 8, 6, 60, 10, -105));
+  //BELOW: ACTUAL WORLD BUILDING
+  //initiate worldbuilding
   root.append(createFloor(resources));
 
-  farmHuman1 = createHuman(resources, 0.8, {texture: resources.tex_lava}, null, {diffuse:[0,0,1,1]});
+  let treeRootNode = new SGNode();
+  buildTrees(resources, treeRootNode, green);
+  root.append(treeRootNode);
 
-  //green: {diffuse: [0,0.6,0,1]}
-  root.append(createFarmHouse(16,8,6, {texture: resources.tex_lava}, 60, 10, 70));
+  //build the farm
+  root.append(createFarmHouse(64, 32, 24, {texture: resources.tex_wood}, 260, -40, 120));
+  let skinMat = getSkinMaterial();
 
-  farmHuman1 = createHuman(resources, 0.8,
-    {texture: resources.tex_lava, specular: [1,1,1,1], shininess: 0.5},
-    null,
-    {diffuse:[0,0,1,1]}
+  farmer1 = createHuman(resources, pink, skinMat, pink,
+    {scale: getScaleVec(0.82), translation: [160,0,-48], yRotation: 45}
   );
-  root.append(farmHuman1.root);
-  createTool(resources.hoe, farmHuman1, "right", {texture: resources.tex_lava});
-  farmHuman1.tool = null;
-  createTool(resources.rose, farmHuman1, "mouth", {diffuse: [1,0,0,1], specular: [1,0,0,1], shininess: 10});
-  farmHuman1.tool = null;
-  createTool(resources.rod, farmHuman1, "left", {diffuse: [0.26,0.15,0,1]});
+  farmer2 = createHuman(resources, red, red, darkblue,
+    {scale: getScaleVec(0.75), translation: [98,0,-11], yRotation: -45}
+  );
+  farmer3 = createHuman(resources, skinMat, skinMat, darkblue,
+    {scale: getScaleVec(0.9), translation: [160,0,45], yRotation: 120}
+  );
+  farmer4 = createHuman(resources, darkblue, skinMat, darkblue,
+    {scale: getScaleVec(0.45), translation: [174,0,-35], yRotation: 33}
+  );
+  root.append(farmer1.root);
+  root.append(farmer2.root);
+  root.append(farmer3.root);
+  root.append(farmer4.root);
+  createAndAddTool(resources.hoe, farmer1, "right", getIronMaterial());
+  createAndAddTool(resources.hoe, farmer2, "left", getIronMaterial());
+  createAndAddTool(resources.hoe, farmer3, "right", getIronMaterial());
+  createAndAddTool(resources.hoe, farmer4, "right", getIronMaterial());
+
+  //build festival at the castle
+  root.append(createCastle(resources,
+    {texture: resources.tex_bricks},
+    {texture: resources.tex_wood},
+    {scale: [3,3,3], translation: [-275,0.1,154], yRotation: -90}
+  ));
+
+
+  //build the fishing lake
+  root.append(createSimpleModel(resources.dock,
+    getWoodMaterial(),
+    {translation: [223,19,430], yRotation: 30}
+  ));
+
+
+
+
+  //ABOVE: ACTUAL WORLD BUILDING
+
+
+
+
+  //createTool(resources.rose, farmer1, "mouth", {diffuse: [1,0,0,1], specular: [1,0,0,1], shininess: 10});
+
+  //createTool(resources.rod, farmer1, "left", {diffuse: [0.26,0.15,0,1]});
 
   //TODO: remove testmodels
-  root.append(createSimpleModel( resources.dock, {diffuse: [0.26,0.15,0,1]}, {translation: [0,2,20]} ));
-  root.append(createPineTree(resources,
-    {diffuse: [0,0,1,1]},
-    {texture: resources.tex_lava},
-    {translation: [5,0,0]}
-  ));
   root.append(createSimpleModel(resources.fish, {texture: resources.tex_lava}, {translation: [-5,2,0]}));
-  root.append(createCastle(resources,
-    {diffuse: [1,0,1,1]},
-    getWoodMaterial(),
-    {translation: [-40,0,35], yRotation: -90}
-  ));
 
-  //createAndAddLights(root, resources);
-  sun = new SunNode([0,0,750],{},{showSphere:true,sphereRadius:20});
 
-  root.append(sun);
-
-  {
-    //TODO: create mountains
-  }
-
+  createAndAddLights(root, resources);
   return root;
-}
-
-function createAndAddLights(root, resources){
-    sun = createLight([0, 10, 40], 4, resources, false);
-    root.append(sun);
-    lamp = createLight([0, 1, 2], 0.4, resources, true, 'u_light2');
-    root.append(lamp);
 }
 
 
@@ -161,10 +192,58 @@ function render(/*float*/ timeInMilliseconds){
 
   //sun.animate(0,360,10,deltaTime);
 
-  //combination example: farmHuman1.root.matrix = mat4.multiply(mat4.create(), glm.translate(0.001 * timeInMilliseconds, 0, 0), glm.rotateY(timeInMilliseconds*0.05));
+  //combination example: farmer1.root.matrix = mat4.multiply(mat4.create(), glm.translate(0.001 * timeInMilliseconds, 0, 0), glm.rotateY(timeInMilliseconds*0.05));
 
   //start rendering SceneGraph
   root.render(context);
   //request another call as soon as possible (for animation)
   requestAnimationFrame(render);
+}
+
+
+function buildTrees(resources, root, leavesMat){
+  root.append(createPineTree(resources, getWoodMaterial(), leavesMat, {translation: [222,0,76], scale: getScaleVec(1.9)}));
+  root.append(createPineTree(resources, getWoodMaterial(), leavesMat, {translation: [257,0,148], scale: getScaleVec(2)}));
+  root.append(createPineTree(resources, getWoodMaterial(), leavesMat, {translation: [233,0,191], scale: getScaleVec(2)}));
+  root.append(createPineTree(resources, getWoodMaterial(), leavesMat, {translation: [263,0,223], scale: getScaleVec(2)}));
+  root.append(createPineTree(resources, getWoodMaterial(), leavesMat, {translation: [264,0,254], scale: getScaleVec(2)}));
+  root.append(createPineTree(resources, getWoodMaterial(), leavesMat, {translation: [199,0,183], scale: getScaleVec(2)}));
+  root.append(createPineTree(resources, getWoodMaterial(), leavesMat, {translation: [122,0,245], scale: getScaleVec(2)}));
+  root.append(createPineTree(resources, getWoodMaterial(), leavesMat, {translation: [200,0,-139], scale: getScaleVec(2)}));
+  root.append(createPineTree(resources, getWoodMaterial(), leavesMat, {translation: [316,0,49], scale: getScaleVec(2)}));
+  root.append(createPineTree(resources, getWoodMaterial(), leavesMat, {translation: [190,0,-113], scale: getScaleVec(2)}));
+  root.append(createPineTree(resources, getWoodMaterial(), leavesMat, {translation: [195,0,92], scale: getScaleVec(2)}));
+  root.append(createPineTree(resources, getWoodMaterial(), leavesMat, {translation: [-221,0,60], scale: getScaleVec(2)}));
+  root.append(createPineTree(resources, getWoodMaterial(), leavesMat, {translation: [-280,0,60], scale: getScaleVec(2)}));
+  root.append(createPineTree(resources, getWoodMaterial(), leavesMat, {translation: [-331,0,52], scale: getScaleVec(2)}));
+  root.append(createPineTree(resources, getWoodMaterial(), leavesMat, {translation: [-260,0,7], scale: getScaleVec(2)}));
+  root.append(createPineTree(resources, getWoodMaterial(), leavesMat, {translation: [-218,0,263], scale: getScaleVec(2)}));
+  root.append(createPineTree(resources, getWoodMaterial(), leavesMat, {translation: [-260,0,7], scale: getScaleVec(2)}));
+  root.append(createPineTree(resources, getWoodMaterial(), leavesMat, {translation: [-248,0,287], scale: getScaleVec(2)}));
+  root.append(createPineTree(resources, getWoodMaterial(), leavesMat, {translation: [-232,0,314], scale: getScaleVec(2)}));
+  root.append(createPineTree(resources, getWoodMaterial(), leavesMat, {translation: [-194,0,330], scale: getScaleVec(2)}));
+  root.append(createPineTree(resources, getWoodMaterial(), leavesMat, {translation: [165,0,115], scale: getScaleVec(2)}));
+  root.append(createPineTree(resources, getWoodMaterial(), leavesMat, {translation: [-251,0,33], scale: getScaleVec(2)}));
+  root.append(createPineTree(resources, getWoodMaterial(), leavesMat, {translation: [-290,0,2], scale: getScaleVec(2)}));
+  root.append(createPineTree(resources, getWoodMaterial(), leavesMat, {translation: [-336,0,-42], scale: getScaleVec(2)}));
+  root.append(createPineTree(resources, getWoodMaterial(), leavesMat, {translation: [-165,0,386], scale: getScaleVec(2)}));
+  root.append(createPineTree(resources, getWoodMaterial(), leavesMat, {translation: [115,22,497], scale: getScaleVec(2)}));
+  root.append(createPineTree(resources, getWoodMaterial(), leavesMat, {translation: [97,18,493], scale: getScaleVec(2)}));
+  root.append(createPineTree(resources, getWoodMaterial(), leavesMat, {translation: [105,23,545], scale: getScaleVec(2)}));
+  root.append(createPineTree(resources, getWoodMaterial(), leavesMat, {translation: [79,23,586], scale: getScaleVec(2)}));
+  root.append(createPineTree(resources, getWoodMaterial(), leavesMat, {translation: [-3,2,413], scale: getScaleVec(2)}));
+  root.append(createPineTree(resources, getWoodMaterial(), leavesMat, {translation: [-78,0,404], scale: getScaleVec(2)}));
+  root.append(createPineTree(resources, getWoodMaterial(), leavesMat, {translation: [-107,0,390], scale: getScaleVec(2)}));
+  root.append(createPineTree(resources, getWoodMaterial(), leavesMat, {translation: [207,0,214], scale: getScaleVec(2)}));
+  root.append(createPineTree(resources, getWoodMaterial(), leavesMat, {translation: [228,0,276], scale: getScaleVec(2)}));
+  root.append(createPineTree(resources, getWoodMaterial(), leavesMat, {translation: [280,4,305], scale: getScaleVec(2)}));
+  root.append(createPineTree(resources, getWoodMaterial(), leavesMat, {translation: [329,15,303], scale: getScaleVec(2)}));
+  root.append(createPineTree(resources, getWoodMaterial(), leavesMat, {translation: [323,0,191], scale: getScaleVec(2)}));
+  root.append(createPineTree(resources, getWoodMaterial(), leavesMat, {translation: [321,0,151], scale: getScaleVec(2)}));
+  root.append(createPineTree(resources, getWoodMaterial(), leavesMat, {translation: [349,0,140], scale: getScaleVec(2)}));
+  root.append(createPineTree(resources, getWoodMaterial(), leavesMat, {translation: [385,1,76], scale: getScaleVec(2)}));
+  root.append(createPineTree(resources, getWoodMaterial(), leavesMat, {translation: [315,0,213], scale: getScaleVec(2)}));
+  root.append(createPineTree(resources, getWoodMaterial(), leavesMat, {translation: [374,7,205], scale: getScaleVec(2)}));
+  root.append(createPineTree(resources, getWoodMaterial(), leavesMat, {translation: [372,12,240], scale: getScaleVec(2)}));
+  root.append(createPineTree(resources, getWoodMaterial(), leavesMat, {translation: [-136,12,-82], scale: getScaleVec(2)}));
 }

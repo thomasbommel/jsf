@@ -9,8 +9,8 @@ uniform mat3 u_normalMatrix;
 uniform mat4 u_projection;
 
 //light position uniforms
-uniform vec3 u_lightPos;
-uniform vec3 u_light2Pos;
+uniform vec3 u_sunPos;
+uniform vec3 u_lamp1Pos;
 
 //vertex shader outputs
 varying vec3 v_normalVec;
@@ -28,16 +28,11 @@ const float maximumHeight = 150.0;
 
 void main() {
 	vec4 heightValue = vec4(0,0,0,0);
-
 	if(u_enableHeightmap){
-		float heightRatio = (1.0-texture2D(u_tex,a_texCoord).y);// 0 = ground, 1 = highest
+		float heightRatio = (1.0-texture2D(u_tex,a_texCoord).y);	// 0 = ground, 1 = highest
 		heightValue.y = heightRatio * maximumHeight;
-
-
-
 		v_heightColorDifference = vec4(-heightRatio*0.25,0.25*heightRatio,-heightRatio*0.05,0);
  	}
-
 
 	vec4 eyePosition = u_modelView * (vec4(a_position,1) + heightValue);
 
@@ -45,8 +40,8 @@ void main() {
   v_eyeVec = -eyePosition.xyz;
 
 	//calculate light vectors
-	v_lightVec = u_lightPos - eyePosition.xyz;
-	v_light2Vec = u_light2Pos - eyePosition.xyz;
+	v_lightVec = u_sunPos - eyePosition.xyz;
+	v_light2Vec = u_lamp1Pos - eyePosition.xyz;
 
 	v_texCoord = a_texCoord;
 	gl_Position = u_projection * eyePosition;

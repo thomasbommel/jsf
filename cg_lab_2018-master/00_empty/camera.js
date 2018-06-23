@@ -114,14 +114,12 @@ function initCameraInteraction(canvas) {
 }
 
 function move(direction){
-  let speed = 10;
+  const movespeed = 10;
   for (let i in direction){
-    camera.position[i] += direction[i]*speed;
-    camera.target[i] += direction[i]*speed;
+    camera.position[i] += direction[i] * movespeed;
+    camera.target[i] += direction[i] * movespeed;
   }
 }
-
-
 
 function setCameraTarget(deltaRotation){
   const mouseSensitivity = 0.25;

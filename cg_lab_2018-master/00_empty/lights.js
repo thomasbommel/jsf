@@ -1,9 +1,10 @@
 
 
 class LightNode extends LightSGNode{
-  constructor(position, lightModifiers, sphereModifiers, children) {
+  constructor(position, uniform, lightModifiers, sphereModifiers, children) {
       super(position, children);
 
+      this.uniform = uniform;
       this.ambient =  [0.5,0.5, 0.5, 1];
       this.diffuse =  [1, 1, 1, 1];
       this.specular = [1, 1, 1, 1];
