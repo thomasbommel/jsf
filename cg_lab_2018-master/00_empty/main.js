@@ -75,22 +75,35 @@ function createSceneGraph(gl, resources) {
   //compile and link shader program and create root node of SceneGraph with it
   const root = new ShaderSGNode(createProgram(gl, resources.vs_phong, resources.fs_phong));
 
-  //root.append(createFarmHouse(16, 8, 6, 60, 10, -105));
-  root.append(createFloor(100, 100));
+  //green: {diffuse: [0,0.6,0,1]}
+  root.append(createFloor(100, 100, {texture: resources.tex_lava}));
+  root.append(createFarmHouse(16,8,6, {texture: resources.tex_lava}, 60, 10, 70));
 
-  farmHuman1 = createHuman(resources, 0.8, {texture: resources.tex_lava}, null, {diffuse:[0,0,1,1]});
+  farmHuman1 = createHuman(resources, 0.8,
+    {texture: resources.tex_lava, specular: [1,1,1,1], shininess: 0.5},
+    null,
+    {diffuse:[0,0,1,1]}
+  );
   root.append(farmHuman1.root);
   createTool(resources.hoe, farmHuman1, "right", {texture: resources.tex_lava});
   farmHuman1.tool = null;
-  createTool(resources.rose, farmHuman1, "mouth", {diffuse: [1,0,0,1]});
+  createTool(resources.rose, farmHuman1, "mouth", {diffuse: [1,0,0,1], specular: [1,0,0,1], shininess: 10});
   farmHuman1.tool = null;
   createTool(resources.rod, farmHuman1, "left", {diffuse: [0.26,0.15,0,1]});
 
   //TODO: remove testmodels
   root.append(createSimpleModel( resources.dock, {diffuse: [0.26,0.15,0,1]}, {translation: [0,2,20]} ));
-  root.append(createPineTree(resources, {diffuse: [1,1,0,1]}, {diffuse: [1,0,0,1]}, {translation: [5,0,0]}));
+  root.append(createPineTree(resources,
+    {diffuse: [0,0,1,1]},
+    {texture: resources.tex_lava},
+    {translation: [5,0,0]}
+  ));
   root.append(createSimpleModel(resources.fish, {texture: resources.tex_lava}, {translation: [-5,2,0]}));
-  root.append(createCastle(resources, {diffuse: [1,0,1,1]}, {diffuse: [0.26,0.15,0,1]}, {translation: [-40,0,35], yRotation: -90}));
+  root.append(createCastle(resources,
+    {diffuse: [1,0,1,1]},
+    getWoodMaterial(),
+    {translation: [-40,0,35], yRotation: -90}
+  ));
 
   createAndAddLights(root, resources);
 

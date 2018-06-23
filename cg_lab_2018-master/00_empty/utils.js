@@ -2,16 +2,7 @@
  * This class contains several utility functions to be used in main.js
  */
 
-function getDefaultMaterial() {
-  return {
-    ambient: [0.2, 0.2, 0.2, 1.0],
-    diffuse: [0.6, 0.6, 0.6, 1.0],
-    specular: [0, 0, 0, 1],
-    emission: [0, 0, 0, 1],
-    shininess: 0.0,
-    texture: null
-  };
-}
+
 
 /**
  * Careful! Assumes material to be not null/undefined.

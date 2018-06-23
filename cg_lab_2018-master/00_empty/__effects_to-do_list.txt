@@ -21,13 +21,13 @@ When implementing an effect, take a look at the exact Specification in Google Dr
 1) Scene Graph Elements
 ! a) At least one manually composed model that consists of multiple parts
 - b) Separate animation of different parts and as a whole
-- c) Scene Graph Node that renders complex 3D shape (5-25 vertices, fully specified properties)
+! c) Scene Graph Node that renders complex 3D shape (5-25 vertices, fully specified model matrices)
 
 2) Materials
 - a) Two clearly different Materials (not Textures!) with specular properties
 
 3) Texturing
-- a) Apply texture to 1)c)
+! a) Apply texture to 1)c)
 
 4) Illumination
 - a) Multiple light sources (at least 1 moving)
@@ -50,4 +50,4 @@ S2) Multi texturing
 - Mix multiple textures with an alpha map in a shader.
 
 S4) Level of detail
-- Three different detail levels in one render node (decide by camera distance to object).
+! Three different detail levels in one render node (decide by camera distance to object).
