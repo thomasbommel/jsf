@@ -14,8 +14,8 @@ const camera = {
   isPerformingFlight: false,     //true during an animated camera flight
 };
 //camera default-values (as functions)
-function getDefaultCameraRotation() { return { x: 0, y: 0 }; }
-function getDefaultCameraPosition() { return [0,10,-25]; }
+function getDefaultCameraRotation() { return { x: 0, y: 0}; }
+function getDefaultCameraPosition() { return [0,20,-35]; }
 
 
 function setCameraToDefaultValues() {
@@ -98,15 +98,26 @@ function initCameraInteraction(canvas) {
       let direction = normalizeVec3(getVec3VectorDistance(camera.target,camera.position));
       move(direction);
     }
+    else if(event.code == 'Digit1'){
+      sun.moveToMorning();
+    }
+    else if(event.code == 'Digit2'){
+      sun.moveToNoon();
+    }
+    else if(event.code == 'Digit3'){
+      sun.moveToEvening();
+    }
+
     updateStats();
     updatePannelFromCamera();
   });
 }
 
 function move(direction){
+  let speed = 10;
   for (let i in direction){
-    camera.position[i] += direction[i];
-    camera.target[i] += direction[i];
+    camera.position[i] += direction[i]*speed;
+    camera.target[i] += direction[i]*speed;
   }
 }
 

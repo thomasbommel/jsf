@@ -101,3 +101,7 @@ function getVec3VectorDistance(vecA, vecB){
 function getVec3EuclideanDistance(vecA, vecB){
   return getVectorLength(getVec3VectorDistance(vecA, vecB));
 }
+
+Math.radians = function(degrees) {
+	return degrees * Math.PI / 180;
+}

@@ -8,6 +8,8 @@ var farmHuman1;
 
 var sun,lamp;
 
+var lastTime=0;
+
 //load the shader resources using a utility function
 loadResources({
   vs_phong: 'shader/phong.vs.glsl',
@@ -110,7 +112,10 @@ function createSceneGraph(gl, resources) {
     {translation: [-40,0,35], yRotation: -90}
   ));
 
-  createAndAddLights(root, resources);
+  //createAndAddLights(root, resources);
+  sun = new SunNode([0,0,750],{},{showSphere:true,sphereRadius:20});
+
+  root.append(sun);
 
   {
     //TODO: create mountains
@@ -127,12 +132,17 @@ function createAndAddLights(root, resources){
 }
 
 
+
+
 /**
  * renders a single frame
  */
 function render(/*float*/ timeInMilliseconds){
   //keep window at maximum size possible
   checkForWindowResize(gl);
+  let deltaTime = (timeInMilliseconds - lastTime) /1000;
+  lastTime = timeInMilliseconds;
+  //console.log(deltaTime);
 
   //setup viewport
   gl.viewport(0, 0, gl.drawingBufferWidth, gl.drawingBufferHeight);
@@ -140,7 +150,7 @@ function render(/*float*/ timeInMilliseconds){
   gl.clear(gl.COLOR_BUFFER_BIT | gl.DEPTH_BUFFER_BIT);
 
   //create and setup context to use when rendering SceneGraph
-  const context = createSGContext(gl, mat4.perspective(mat4.create(), glm.deg2rad(30), gl.drawingBufferWidth / gl.drawingBufferHeight, 0.01, 1000));
+  const context = createSGContext(gl, mat4.perspective(mat4.create(), glm.deg2rad(30), gl.drawingBufferWidth / gl.drawingBufferHeight, 0.01, 10000));
   //arguments: matOut, viewerPos, pointToLookAt, up_Vector
   let lookAtMatrix = mat4.lookAt(mat4.create(), camera.position, camera.target, [0,1,0]);
 
@@ -148,10 +158,8 @@ function render(/*float*/ timeInMilliseconds){
   context.viewMatrix = lookAtMatrix;
 
   //TODO: animate objects by rotating/translating nodes using timeInMilliseconds
-  sun.move(timeInMilliseconds,0.05);
-  //lamp.move(timeInMilliseconds,0.04);
 
-  lamp.moveTo(camera.target);
+  //sun.animate(0,360,10,deltaTime);
 
   //combination example: farmHuman1.root.matrix = mat4.multiply(mat4.create(), glm.translate(0.001 * timeInMilliseconds, 0, 0), glm.rotateY(timeInMilliseconds*0.05));
 
