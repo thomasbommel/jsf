@@ -1,7 +1,7 @@
 
 
 function createFloor(resources){
-  let floor = new TextureSGNode(resources.heightmap, true,
+  let floor = new TextureSGNode(resources.heightmap, 'u_enableHeightmap',
     createSimpleModel(resources.floor,
        {diffuse: [0.25,0.47,0.17,1], ambient: [0.25,0.47,0.17,1]},
        {translation:[0,0,250]}

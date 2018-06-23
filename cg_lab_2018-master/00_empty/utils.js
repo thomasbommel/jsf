@@ -59,7 +59,7 @@ function wrapWithTransformationSGNode(node, transformation){
  */
 function wrapWithTextureSGNode(node, material){
   if (material && material.texture){
-    node = new TextureSGNode(material.texture, false, node);
+    node = new TextureSGNode(material.texture, 'u_enableObjectTexture', node);
   }
   return node;
 }

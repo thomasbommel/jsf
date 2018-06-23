@@ -5,29 +5,22 @@
  */
 class TextureSGNode extends AdvancedTextureSGNode {
 
-  constructor(image, /*bool*/ isHeightmap, children) {
+  constructor(image, boolUniform, children) {
       super(image, children);
-      this.isHeightmap = isHeightmap;
-      if (this.isHeightmap == true){
+      this.boolUniform = boolUniform;
+      if (this.boolUniform !== 'u_enableObjectTexture'){
         this.wrapS = gl.CLAMP_TO_EDGE;
         this.wrapT = gl.CLAMP_TO_EDGE;
-      }
+     }
   }
 
   render(context) {
-
     //enable texture in fragment shader
-    if (this.isHeightmap == true)
-      gl.uniform1i(gl.getUniformLocation(context.shader, 'u_enableHeightmap'), 1);
-    else
-      gl.uniform1i(gl.getUniformLocation(context.shader, 'u_enableObjectTexture'), 1);
+    gl.uniform1i(gl.getUniformLocation(context.shader,   this.boolUniform ), 1);
     //render texture
     super.render(context);
     //clean up
-    if (this.isHeightmap == true)
-      gl.uniform1i(gl.getUniformLocation(context.shader, 'u_enableHeightmap'), 0);
-    else
-      gl.uniform1i(gl.getUniformLocation(context.shader, 'u_enableObjectTexture'), 0);
+    gl.uniform1i(gl.getUniformLocation(context.shader,   this.boolUniform ), 0);
   }
 
 }
