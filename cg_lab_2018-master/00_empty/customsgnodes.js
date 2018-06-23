@@ -5,6 +5,8 @@ class HeightMapSGNode extends AdvancedTextureSGNode {
 
   constructor(image, children ) {
       super(image, children);
+      this.wrapS = gl.CLAMP_TO_EDGE;
+      this.wrapT = gl.CLAMP_TO_EDGE;
   }
 
   render(context) {

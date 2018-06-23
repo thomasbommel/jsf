@@ -1,7 +1,8 @@
 
 
 function createFloor(resources){
-  let floor = new HeightMapSGNode(resources.tex_lava,createSimpleModel(resources.floor, {diffuse: [0,0.7,0,1]}));
+  let floor = new HeightMapSGNode(resources.tex_lava,createSimpleModel(resources.floor, {diffuse: [0.25,0.47,0.17,1],ambient: [0.25,0.47,0.17,1]},{scale:[1.0,1.0,1.0]}));
+
   return floor;
 }
 

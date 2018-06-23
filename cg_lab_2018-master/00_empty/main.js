@@ -120,7 +120,7 @@ function createSceneGraph(gl, resources) {
 }
 
 function createAndAddLights(root, resources){
-    sun = createLight([0, 5, 40], 4, resources, false);
+    sun = createLight([0, 10, 40], 4, resources, false);
     root.append(sun);
     lamp = createLight([0, 1, 2], 0.4, resources, true, 'u_light2');
     root.append(lamp);
@@ -149,9 +149,9 @@ function render(/*float*/ timeInMilliseconds){
 
   //TODO: animate objects by rotating/translating nodes using timeInMilliseconds
   sun.move(timeInMilliseconds,0.05);
-  lamp.move(timeInMilliseconds,0.04);
+  //lamp.move(timeInMilliseconds,0.04);
 
-  //lamp.moveTo(camera.target);
+  lamp.moveTo(camera.target);
 
   //combination example: farmHuman1.root.matrix = mat4.multiply(mat4.create(), glm.translate(0.001 * timeInMilliseconds, 0, 0), glm.rotateY(timeInMilliseconds*0.05));
 
