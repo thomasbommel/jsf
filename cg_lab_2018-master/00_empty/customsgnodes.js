@@ -29,6 +29,7 @@ class TextureSGNode extends AdvancedTextureSGNode {
   }
 
   render(context) {
+
     //enable texture in fragment shader
     gl.uniform1i(gl.getUniformLocation(context.shader, 'u_enableObjectTexture'), 1);
     //render texture
@@ -63,7 +64,7 @@ class FarmhouseSGNode extends RenderSGNode {
     ]);
 
     //an index consists of 3 vertices that make up a triangle face
-    let indices =  new Float32Array([
+    let faces =  new Float32Array([
        //cuboid indices
        0,1,2,   0,2,3,
        4,5,6,   4,6,7,
@@ -77,13 +78,26 @@ class FarmhouseSGNode extends RenderSGNode {
        6,7,9,   7,8,9
     ]);
 
-    //TODO: specify normals and texCoords
+    //specify outwards-direction per vector (w,h,l simplified to -1,0,1)
+    let normals = new Float32Array([
+     0,-1, 0,   0, 1, 0,    1, 0, 0,  -1, 0,  0,
+     0, 0,-1,   0, 0, 1,  0.7,0.7,0, -0.7,0.7,0,
+     0, 0.93, -0.37,      0, 0.93, 0.37
+    ]);
+
+
+    //provide texture coordinates (=u,v) for each vertex
+    let texCoords = new Float32Array([
+      0, 0,      4, 0,      4, 4,       0, 4,
+      4, 0,      0, 0,      4, 0,       4, 4,
+      3, 0,      0, 3
+    ]);
 
     let model = {
       position: vertices,
-      index: indices
-      //normal: normals,
-      //texture: texCoords,
+      index: faces,
+      normal: normals,
+      texture: texCoords
     }
     super(model, children);
   }

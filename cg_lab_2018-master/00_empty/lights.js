@@ -19,7 +19,7 @@ function createLight(position, radius, resources, showSphere, uniform){
   }
 
   let light = new LightSGNode();
-  light.ambient = [0, 0, 0, 1];
+  light.ambient = [0.2, 0.2, 0.2, 1];
   light.diffuse = [1, 1, 1, 1];
   light.specular = [1, 1, 1, 1];
   light.position = position;

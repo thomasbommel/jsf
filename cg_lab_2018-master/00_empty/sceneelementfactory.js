@@ -5,16 +5,16 @@ function createFloor(resources){
   return floor;
 }
 
-function createFarmHouse(width, length, height, xPos, zPos, yRotation) {
+function createFarmHouse(width, length, height, material, xPos, zPos, yRotation) {
   let farmhouse = new MaterialSGNode(
     new FarmhouseSGNode(width, length, height)
   );
-
-  farmhouse.diffuse = [0.6,0.6,0.6,1];
+  applyMaterial(farmhouse, material || getDefaultMaterial());
+  farmhouse = wrapWithTextureSGNode(farmhouse, material);
 
   let placement = mat4.multiply(mat4.create(),
-    glm.translate(xPos, height/2, zPos),
-    glm.rotateY(yRotation)
+    glm.translate(xPos || 0, height/2, zPos || 0),
+    glm.rotateY(yRotation || 0)
   );
   return new TransformationSGNode(placement, farmhouse);
 }
@@ -47,11 +47,13 @@ function createPineTree(resources, stumpMaterial, leavesMaterial, transformation
     new LODRenderSGNode(position, resources.treestump_lod0, resources.treestump_lod1, resources.treestump_lod2)
   );
   applyMaterial(stumpNode, stumpMaterial);
+  stumpNode = wrapWithTextureSGNode(stumpNode, stumpMaterial);
 
   let leavesNode = new MaterialSGNode(
     new LODRenderSGNode(position, resources.treeleaves_lod0, resources.treeleaves_lod1, resources.treeleaves_lod2)
   );
   applyMaterial(leavesNode, leavesMaterial);
+  leavesNode = wrapWithTextureSGNode(leavesNode, leavesMaterial);
 
   stumpNode.append(leavesNode);
   return wrapWithTransformationSGNode(stumpNode, transformation);
