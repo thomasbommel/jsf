@@ -1,13 +1,26 @@
 
-//custom model structure:
-/*
-let model = {
-  position: position,
-  normal: normal,
-  texture: texture,
-  index: index
-};
+
+/**
+ * Extends AdvancedTextureSGNode specifically to control the uniform 'u_enableObjectTexture'
  */
+class TextureSGNode extends AdvancedTextureSGNode {
+
+  constructor(image, children ) {
+      super(image, children);
+  }
+
+  render(context) {
+    //enable texture in fragment shader
+    gl.uniform1i(gl.getUniformLocation(context.shader, 'u_enableObjectTexture'), 1);
+    //render texture
+    super.render(context);
+    //clean up
+    gl.uniform1i(gl.getUniformLocation(context.shader, 'u_enableObjectTexture'), 0);
+  }
+
+}
+
+
 
 /**
  * Renders a farmhouse at the local origin

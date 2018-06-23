@@ -48,6 +48,17 @@ function wrapWithTransformationSGNode(node, transformation){
 }
 
 
+/**
+ * If material and material.texture are present then it wraps the specified node with a TextureSGNode and returns that.
+ * Otherwise the specified node is simply returned.
+ */
+function wrapWithTextureSGNode(node, material){
+  if (material && material.texture){
+    node = new TextureSGNode(material.texture, node);
+  }
+  return node;
+}
+
 
  /**
   * this method displays a Vector using the displayText method from the framework

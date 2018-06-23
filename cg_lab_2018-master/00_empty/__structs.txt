@@ -1,6 +1,14 @@
 
 //---- This is a helper file to look up member variables of structs quickly --\\
 
+Model:
+{ //each member contains a matrix
+  position: ,
+  normal: ,
+  texture: ,
+  index:
+};
+
 Human:
 {  //each member contains a TransformationSGNode
   root: ,

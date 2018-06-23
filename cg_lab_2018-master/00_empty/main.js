@@ -15,6 +15,9 @@ loadResources({
   vs_single: 'shader/single.vs.glsl',
   fs_single: 'shader/single.fs.glsl',
 
+  //textures
+  tex_lava: 'textures/lava.jpg',
+
   //complex models -> use factory functions
   human_head: 'models/human/head.obj',
   human_body: 'models/human/body.obj',
@@ -37,7 +40,7 @@ loadResources({
   dock: 'models/dock.obj',
   rose: 'models/rose.obj',
   rod: 'models/rod.obj',
-  fish: 'models/fish.obj',
+  fish: 'models/fish.obj'
 }).then(function (resources /*an object containing our keys with the loaded resources*/) {
   init(resources);
 
@@ -72,12 +75,12 @@ function createSceneGraph(gl, resources) {
   //compile and link shader program and create root node of SceneGraph with it
   const root = new ShaderSGNode(createProgram(gl, resources.vs_phong, resources.fs_phong));
 
-  root.append(createFarmHouse(16, 8, 6, 60, 10, -105));
+  //root.append(createFarmHouse(16, 8, 6, 60, 10, -105));
   root.append(createFloor(100, 100));
 
-  farmHuman1 = createHuman(resources, 0.8, null, null, {diffuse:[0,0,1,1]});
+  farmHuman1 = createHuman(resources, 0.8, {texture: resources.tex_lava}, null, {diffuse:[0,0,1,1]});
   root.append(farmHuman1.root);
-  createTool(resources.hoe, farmHuman1, "right");
+  createTool(resources.hoe, farmHuman1, "right", {texture: resources.tex_lava});
   farmHuman1.tool = null;
   createTool(resources.rose, farmHuman1, "mouth", {diffuse: [1,0,0,1]});
   farmHuman1.tool = null;
@@ -86,8 +89,8 @@ function createSceneGraph(gl, resources) {
   //TODO: remove testmodels
   root.append(createSimpleModel( resources.dock, {diffuse: [0.26,0.15,0,1]}, {translation: [0,2,20]} ));
   root.append(createPineTree(resources, {diffuse: [1,1,0,1]}, {diffuse: [1,0,0,1]}, {translation: [5,0,0]}));
-  root.append(createSimpleModel(resources.fish, {diffuse: [0,0,1,1]}, {translation: [-5,2,0]}));
-  root.append(createCastle(resources, {diffuse: [1,0,1,1]}, {diffuse: [0.26,0.15,0,1]}, {translation: [-40,0,35], yRotation: -90}))
+  root.append(createSimpleModel(resources.fish, {texture: resources.tex_lava}, {translation: [-5,2,0]}));
+  root.append(createCastle(resources, {diffuse: [1,0,1,1]}, {diffuse: [0.26,0.15,0,1]}, {translation: [-40,0,35], yRotation: -90}));
 
   createAndAddLights(root, resources);
 

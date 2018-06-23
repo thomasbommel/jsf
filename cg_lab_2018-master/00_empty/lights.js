@@ -12,9 +12,10 @@
  */
 function createLight(position, radius, resources, showSphere, uniform){
   function createLightSphere(radius) {
-    return new ShaderSGNode(createProgram(gl, resources.vs_phong, resources.fs_phong), [
-      new RenderSGNode(makeSphere(radius,30,30))
-    ]);
+    let sphere = new MaterialSGNode(new RenderSGNode(makeSphere(radius || 1,30,30)));
+    sphere.diffuse = [1,1,1,1];
+    sphere.emission = [1,1,1,1];
+    return sphere;
   }
 
   let light = new LightSGNode();
@@ -26,7 +27,7 @@ function createLight(position, radius, resources, showSphere, uniform){
     light.uniform = uniform;
   }
   if(showSphere === true){
-    light.append(createLightSphere(radius));
+    light.append(createLightSphere(0.5));
   }
 
   let rotLight = new TransformationSGNode(mat4.create(), [

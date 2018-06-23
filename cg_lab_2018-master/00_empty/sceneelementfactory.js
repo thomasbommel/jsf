@@ -29,6 +29,7 @@ function createFarmHouse(width, length, height, xPos, zPos, yRotation) {
 function createSimpleModel(model, material, transformation){
   let node = new MaterialSGNode(new RenderSGNode(model));
   applyMaterial(node, material || getDefaultMaterial());
+  node = wrapWithTextureSGNode(node, material);
   return wrapWithTransformationSGNode(node, transformation);
 }
 
@@ -64,6 +65,7 @@ function createPineTree(resources, stumpMaterial, leavesMaterial, transformation
   stumpNode.append(leavesNode);
   return wrapWithTransformationSGNode(stumpNode, transformation);
 }
+
 
 
 
