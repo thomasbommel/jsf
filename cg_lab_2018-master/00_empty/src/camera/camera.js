@@ -1,9 +1,5 @@
 
 
-var dist = [0,0,0]; //TODO removeme
-var horizontalangle = 0;
-var verticalangle = 0;
-
 //camera struct
 const camera = {
   //access with camera.rotation.x and camera.rotation.y

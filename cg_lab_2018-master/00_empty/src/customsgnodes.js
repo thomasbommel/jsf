@@ -27,6 +27,7 @@ class TextureSGNode extends AdvancedTextureSGNode {
 
 
 
+
 /**
  * Renders a farmhouse at the local origin
  * width is supposed to be the long side of the house, length the short side

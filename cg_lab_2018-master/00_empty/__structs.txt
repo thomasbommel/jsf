@@ -37,3 +37,10 @@ Transformation:
   yRotation: float,
   scale: [x,y,z]
 };
+
+Animation:
+{
+  node: TransformationSGNode,
+  targetTransform: Transformation-struct
+  duration: float
+}

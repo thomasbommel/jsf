@@ -11,8 +11,8 @@ function ambientVecFromRGB(r,g,b){
   return [0.6*r/255,0.6*g/255,0.6*b/255,1];
 }
 
-function getScaleVec(factor){
-  return [factor,factor,factor];
+function vec3FromFloat(float){
+  return [float,float,float];
 }
 
 /**
@@ -32,24 +32,30 @@ function applyMaterial(materialNode, material) {
 
 //wraps a node with a TransformationSGNode and immediately applies the given transformation to it
 function wrapWithTransformationSGNode(node, transformation){
-  let placement = mat4.create();
-  if (transformation){
-    let translation = transformation.translation || [0,0,0];
-    let yRotation = transformation.yRotation || 0;
-    let scale = transformation.scale || [1,1,1];
-
-    mat4.multiply(/*out =*/placement,
-      glm.translate(translation[0], translation[1], translation[2]),
-      glm.rotateY(yRotation)
-    );
-    mat4.multiply(/*out =*/placement, placement,
-      glm.scale(scale[0], scale[1], scale[2])
-    );
-  }
+  let placement = calculatePlacementMatrix(transformation);
   if (node)
     return new TransformationSGNode(placement, node);
   else
     return new TransformationSGNode(placement);
+}
+
+
+function calculatePlacementMatrix(transformation) {
+  if (!transformation) return mat4.create();
+
+  let translation = transformation.translation || [0,0,0];
+  let yRotation = transformation.yRotation || 0;
+  let scale = transformation.scale || [1,1,1];
+
+  let placement = mat4.create();
+  mat4.multiply(/*out =*/placement,
+    glm.translate(translation[0], translation[1], translation[2]),
+    glm.rotateY(yRotation)
+  );
+  mat4.multiply(/*out =*/placement, placement,
+    glm.scale(scale[0], scale[1], scale[2])
+  );
+  return placement;
 }
 
 
