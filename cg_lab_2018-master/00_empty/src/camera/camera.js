@@ -53,7 +53,7 @@ function initCameraInteraction(canvas) {
     const delta = { x : mouse.pos.x - pos.x, y: mouse.pos.y - pos.y };
      //factor to multiply with delta mouse movement
 
-    if (mouse.leftButtonDown && !camera.isPerformingFlight) {
+    if (mouse.leftButtonDown && camera.isPerformingFlight === false) {
       setCameraTarget(delta, 0.25);
 
       updateStats();
@@ -71,7 +71,7 @@ function initCameraInteraction(canvas) {
   //handle key events
   document.addEventListener('keypress', function(event) {
     //https://developer.mozilla.org/en-US/docs/Web/API/KeyboardEvent
-    if (camera.isPerformingFlight) return;  //disable controls during flight
+    if (camera.isPerformingFlight === true) return;  //disable controls during flight
     displayText(event.code);    //TODO: debugging --> remove
 
     if (event.code === 'KeyR') {    //reset camera to defaults

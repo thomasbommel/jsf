@@ -70,7 +70,7 @@ function init(resources) {
   root = createSceneGraph(gl, resources);
 
   //perform main camera flight, then initialise camera interaction
-  performMainCameraFlight();
+  //performMainCameraFlight();
   initCameraInteraction(gl.canvas);
   updatePannelFromCamera();
 }
@@ -202,7 +202,11 @@ function render(/*float*/ timeInMilliseconds){
     });
   }
 
+  //sun.moveToNoon();
+
   //sun.animate(0,360,10,deltaTime);
+  //
+  //sun.animateColor([0,0,0,1],[1,0,0,0],[0,0,0,1],[0,0,1,1],10,deltaTime);
 
   //combination example: farmer1.root.matrix = mat4.multiply(mat4.create(), glm.translate(0.001 * timeInMilliseconds, 0, 0), glm.rotateY(timeInMilliseconds*0.05));
 
