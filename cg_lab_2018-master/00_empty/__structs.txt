@@ -38,9 +38,28 @@ Transformation:
   scale: [x,y,z]
 };
 
+
+
 Animation:
 {
   node: TransformationSGNode,
   targetTransform: Transformation-struct
   duration: float
 }
+
+CameraAnimation:
+{
+  position: [x,y,z],
+  rotation: {x: , y: },
+  duration: float
+}
+
+
+
+Camera:
+{
+  rotation: {x: , y: },
+  position: [x,y,z],
+  target: [x,y,z],
+  isPerformingFlight: bool,     //true during an animated camera flight
+};

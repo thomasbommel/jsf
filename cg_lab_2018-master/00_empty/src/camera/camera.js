@@ -17,7 +17,7 @@ function getDefaultCameraPosition() { return [0,20,-35]; }
 function setCameraToDefaultValues() {
   camera.rotation = getDefaultCameraRotation();
   camera.position = getDefaultCameraPosition();
-  setCameraTarget({x:0,y:0});
+  camera.rotation = getDefaultCameraRotation();
   camera.isPerformingFlight = false;
 }
 
@@ -54,7 +54,7 @@ function initCameraInteraction(canvas) {
      //factor to multiply with delta mouse movement
 
     if (mouse.leftButtonDown && !camera.isPerformingFlight) {
-      setCameraTarget(delta);
+      setCameraTarget(delta, 0.25);
 
       updateStats();
       updatePannelFromCamera();
@@ -88,11 +88,11 @@ function initCameraInteraction(canvas) {
     }
     else if (event.code == 'ArrowUp' || event.code == 'KeyW'){
       let direction = normalizeVec3(getVec3VectorDistance(camera.position,camera.target));
-      move(direction);
+      moveCamera(direction, 10);
     }
     else if (event.code == 'ArrowDown' || event.code == 'KeyS'){
       let direction = normalizeVec3(getVec3VectorDistance(camera.target,camera.position));
-      move(direction);
+      moveCamera(direction, 10);
     }
     else if(event.code == 'Digit1'){
       sun.moveToMorning();
@@ -109,25 +109,24 @@ function initCameraInteraction(canvas) {
   });
 }
 
-function move(direction){
-  const movespeed = 10;
+function moveCamera(direction, movespeed){
   for (let i in direction){
     camera.position[i] += direction[i] * movespeed;
     camera.target[i] += direction[i] * movespeed;
   }
 }
 
-function setCameraTarget(deltaRotation){
-  const mouseSensitivity = 0.25;
-  camera.rotation.x += deltaRotation.x*mouseSensitivity;
+function setCameraTarget(deltaRotation, mouseSensitivity){
+  const distance = 30;  //distance the target is away from position
+  camera.rotation.x += deltaRotation.x * mouseSensitivity;
 
   let x = Math.sin(camera.rotation.x*Math.PI/180);
   let z = Math.cos(camera.rotation.x*Math.PI/180);
 
-  camera.target[0] = camera.position[0]+ x*30;
-  camera.target[2] = camera.position[2]+ z*30 ;
+  camera.target[0] = camera.position[0]+ x * distance;
+  camera.target[2] = camera.position[2]+ z * distance;
 
-  camera.rotation.y += deltaRotation.y*mouseSensitivity;
+  camera.rotation.y += deltaRotation.y * mouseSensitivity;
   let y = Math.sin(camera.rotation.y*Math.PI/180);
-  camera.target[1] = camera.position[1]+ y*30;
+  camera.target[1] = camera.position[1]+ y * distance;
 }

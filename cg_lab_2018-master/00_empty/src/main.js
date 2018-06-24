@@ -168,6 +168,11 @@ function createSceneGraph(gl, resources) {
   );
   x.startAnimation();
 
+  let y = new CameraAnimation([
+    {position: [226,22,437], rotation: {x: 28.5, y:-5.25}, duration: 3}
+  ]);
+  y.startAnimation();
+
   createAndAddLights(root, resources);
   return root;
 }
