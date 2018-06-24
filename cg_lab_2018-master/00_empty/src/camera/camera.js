@@ -77,10 +77,7 @@ function initCameraInteraction(canvas) {
     if (event.code === 'KeyR') {    //reset camera to defaults
       setCameraToDefaultValues();
     }
-    else if (event.code == 'KeyX'){   //"x-tra" (additional) camera flight
-      performAdditionalCameraFlight();
-    }
-    else if (event.code == 'KeyC'){   //redo main camera flight
+    else if (event.code == 'KeyF'){   //redo main camera flight
       performMainCameraFlight();
     }
     else if (event.code == 'KeyT'){   //toggle debugging panels

@@ -77,7 +77,7 @@ class CameraAnimation {
 
   //only position and rotation matter
   constructor (cameraAnimStructs) {
-    this.anims = (typeof animationStructs !== 'undefined') ? [].concat(animationStructs) : [];
+    this.anims = (typeof cameraAnimStructs !== 'undefined') ? [].concat(cameraAnimStructs) : [];
   }
 
   switchAnimation(index){
@@ -87,10 +87,10 @@ class CameraAnimation {
     this.timePassed = -1;
     this.animIndex = index;
     this.from = {
-      position: camera.position,
-      rotation: camera.rotation
+      position: vec3.clone(camera.position),
+      rotation: {x: camera.rotation.x, y: camera.rotation.y}
     };
-    this.to = this.anims[index];
+    this.to = this.anims[index] || this.anims[this.anims.length - 1];
   }
 
   startAnimation(){
@@ -110,11 +110,18 @@ class CameraAnimation {
 
   calculateDeltaStruct(deltaTime, duration) {
     let posDiff = vec3.subtract(vec3.create(), this.to.position, this.from.position);
-    let rotationDiff = vec2.subtract(vec2.create(), this.to.rotation, this.from.rotation);
+    let rotationDiff = {
+      x: this.to.rotation.x - this.from.rotation.x,
+      y: this.to.rotation.y - this.from.rotation.y
+    };
     let deltaSeconds = (deltaTime/duration);
+
+    console.log(this.to);
+    console.log(this.from);
+
     return {
       position: vec3.multiply(vec3.create(), posDiff, vec3FromFloat(deltaSeconds)),
-      rotation: vec2.multiply(vec2.create(), rotationDiff, [deltaSeconds, deltaSeconds])
+      rotation: {x: rotationDiff.x * deltaSeconds, y: rotationDiff.y * deltaSeconds}
     };
   }
 
@@ -129,7 +136,7 @@ class CameraAnimation {
     }
 
     let curAnim = this.anims[this.animIndex];
-    this.transform(curAnim, this.calculateDeltaStruct(deltaTime, curAnim.duration));
+    this.transform(this.calculateDeltaStruct(deltaTime, curAnim.duration));
 
     this.timePassed += deltaTime;
     if (this.timePassed >= curAnim.duration) {

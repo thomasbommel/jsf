@@ -168,11 +168,6 @@ function createSceneGraph(gl, resources) {
   );
   x.startAnimation();
 
-  let y = new CameraAnimation([
-    {position: [226,22,437], rotation: {x: 28.5, y:-5.25}, duration: 3}
-  ]);
-  y.startAnimation();
-
   createAndAddLights(root, resources);
   return root;
 }
@@ -203,6 +198,7 @@ function render(/*float*/ timeInMilliseconds){
   if (timeInMilliseconds > 1500) { //wait for site to load
     animations.forEach( function(anim) {
       anim.animate(deltaTime);
+      //if (timeInMilliseconds < 3000) console.log(anim);
     });
   }
 
