@@ -54,16 +54,70 @@ class SunNode extends LightNode{
 
     this.moveToMorning = function(){
         this.moveToAngle(this.dayTimeAngles.morning);
+        this.ambient = [0.3,0.1,0.1,1];
+        this.diffuse = [0.3,0.2,0.5,1];
     }
 
     this.moveToNoon = function(timeDifference){
       this.moveToAngle(this.dayTimeAngles.noon);
+      this.ambient = [0.6,0.6,0.7,1];
+      this.diffuse = [0.9,0.9,0.8,1];
     }
 
     this.moveToEvening = function(){
       this.moveToAngle(this.dayTimeAngles.evening);
+      this.ambient = [0.3,0,0,1];
+      this.diffuse = [0.5,0.1,0.1,1];
     }
 
+    this.currentColors = null;
+    this.timePassedColorChange = -1;
+    this.animateColor = function(fromAmbient, toAmbient,fromDiffuse, toDiffuse, secondsNeeded, deltaTime){
+      if(this.timePassed < 0){
+        this.currentColors = {ambient:fromAmbient, diffuse:fromDiffuse}
+        this.ambient = fromAmbient;
+        this.diffuse = fromDiffuse;
+        this.timePassed = deltaTime;
+      }
+
+      let ambientColorChange = this.calculateColorChangeAmount(fromAmbient, toAmbient, secondsNeeded, deltaTime);
+      let diffuseColorChange = this.calculateColorChangeAmount(fromDiffuse, toDiffuse, secondsNeeded, deltaTime);
+
+      let newAmbient = [0,0,0,0];
+      let newDiffuse = [0,0,0,0];
+      for(let i in ambientColorChange){
+        newAmbient[i]=this.currentColors.ambient[i]+ambientColorChange[i];
+      }
+      for(let i in diffuseColorChange){
+        newDiffuse[i]=this.currentColors.diffuse[i]+diffuseColorChange[i];
+      }
+
+      this.timePassed += deltaTime;
+      if(this.timePassed > secondsNeeded){
+        this.timePassed = -1;
+      }
+
+      this.currentColors.diffuse = newDiffuse;
+      this.currentColors.ambient = newAmbient;
+
+      this.ambient = this.currentColors.ambient;
+      this.diffuse = this.currentColors.diffuse;
+    }
+
+    this.calculateColorChangeAmount = function(fromColor, toColor, secondsNeeded,deltaTime){
+        let diff = getVec3VectorDistance(toColor, fromColor);
+
+        for(let i in diff){
+          diff[i] = toColor[i] - fromColor[i];
+          diff[i] = diff[i] * deltaTime/secondsNeeded;
+        }
+        return diff;
+    }
+
+
+
+/*
+  this.currentColor = null;
   this.changeColor = function(newAmbient, newDiffuse){
     let colorChangeSpeed = 0.001;
 
@@ -84,7 +138,12 @@ class SunNode extends LightNode{
        this.diffuse[i]-=colorChangeSpeed;
       }
     }
-  }
+  }*/
+
+
+
+
+
 
   this.calculateMoveDistance = function(from, to, secondsNeeded,deltaTime){
       let difference = to - from;

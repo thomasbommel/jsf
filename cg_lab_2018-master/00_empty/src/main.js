@@ -265,7 +265,11 @@ function render(/*float*/ timeInMilliseconds){
   }
   cameraTargetSphere.matrix = glm.translate(camera.target[0], camera.target[1], camera.target[2]);
 
+  //sun.moveToNoon();
+
   //sun.animate(0,360,10,deltaTime);
+  //
+  //sun.animateColor([0,0,0,1],[1,0,0,0],[0,0,0,1],[0,0,1,1],10,deltaTime);
 
   //combination example: farmer1.root.matrix = mat4.multiply(mat4.create(), glm.translate(0.001 * timeInMilliseconds, 0, 0), glm.rotateY(timeInMilliseconds*0.05));
 
