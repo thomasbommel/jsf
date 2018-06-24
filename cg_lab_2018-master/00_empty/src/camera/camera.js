@@ -11,14 +11,13 @@ const camera = {
   isPerformingFlight: false,     //true during an animated camera flight
 };
 //camera default-values (as functions)
-function getDefaultCameraRotation() { return { x: 0, y: 0}; }
-function getDefaultCameraPosition() { return [0,20,-35]; }
-
+function getDefaultCameraRotation() { return {x: -128.28, y:-10.24}; }
+function getDefaultCameraPosition() { return [356.25, 22.06, 264.20]; }
 
 function setCameraToDefaultValues() {
   camera.rotation = getDefaultCameraRotation();
   camera.position = getDefaultCameraPosition();
-  camera.rotation = getDefaultCameraRotation();
+  camera.target = [0,0,0];
   camera.isPerformingFlight = false;
 }
 

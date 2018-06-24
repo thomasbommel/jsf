@@ -43,7 +43,7 @@ Transformation:
 Animation:
 {
   node: TransformationSGNode,
-  targetTransform: Transformation-struct
+  targetMatrix: 16-float-array
   duration: float
 }
 

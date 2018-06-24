@@ -20,7 +20,7 @@ class Animation {
     this.timePassed = -1;
     this.animIndex = index;
     this.from = this.currentMatrix;
-    this.to = calculatePlacementMatrix(this.anims[index].targetTransform);
+    this.to = this.anims[index].targetMatrix;
   }
 
   startAnimation(){
@@ -85,6 +85,13 @@ class CameraAnimation {
     if (index === this.anims.length) {
       this.stopAnimation();
     }
+    else if (index === 3) {
+      sun.setNoonColor();
+    }
+    else if (index === 8){
+      sun.setEveningColor();
+    }
+
     this.timePassed = -1;
     this.animIndex = index;
     this.from = {
@@ -92,21 +99,31 @@ class CameraAnimation {
       rotation: {x: camera.rotation.x, y: camera.rotation.y}
     };
     this.to = this.anims[index] || this.anims[this.anims.length - 1];
-    displayText(index);
   }
 
   startAnimation(){
     camera.isPerformingFlight = true;
+    sun.setMorningColor();
     animations.push(this);
     this.switchAnimation(0);
   }
 
   stopAnimation(){
-    camera.isPerformingFlight = false;
     var i = animations.indexOf(this);
     if (i >= 0) {
       animations.splice(i, 1);
     }
+
+    //clean up camera
+    camera.isPerformingFlight = false;
+    setCameraToDefaultValues();
+    //stop other animations
+    animateSun = false;
+    sun.moveToNoon();
+    animations.forEach( function(anim) {
+      anim.stopAnimation();
+    });
+
     return i >= 0;
   }
 

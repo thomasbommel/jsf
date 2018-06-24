@@ -59,6 +59,34 @@ function calculatePlacementMatrix(transformation) {
 }
 
 
+var lastFarmAnimationTime = -10000;
+var lastCastleAnimationTime = -10000;
+var lastLakeAnimationTime = -10000;
+function checkForAnimationProximity(timeInMilliseconds){
+  if (camera.isPerformingFlight) return;
+
+  let farmDist = getVectorLength(getVec3VectorDistance([160,23,11], camera.position));
+  let castleDist = getVectorLength(getVec3VectorDistance([-40,25,180], camera.position));
+  let lakeDist = getVectorLength(getVec3VectorDistance([207,27,400], camera.position));
+
+  let triggerDistance = 75, triggerCooldown = 40000;
+  if (farmDist < triggerDistance && (timeInMilliseconds - lastFarmAnimationTime) > triggerCooldown ){
+    animateFarmers();
+    lastFarmAnimationTime = timeInMilliseconds;
+  }
+  else if (castleDist < triggerDistance && (timeInMilliseconds - lastCastleAnimationTime) > triggerCooldown ) {
+    animateDancers();
+    lastCastleAnimationTime = timeInMilliseconds;
+  }
+  else if (lakeDist < triggerDistance && (timeInMilliseconds - lastLakeAnimationTime) > triggerCooldown ) {
+    animateLake();
+    lastLakeAnimationTime = timeInMilliseconds;
+  }
+}
+
+
+
+
 /**
  * If material and material.texture are present then it wraps the specified node with a TextureSGNode and returns that.
  * Otherwise the specified node is simply returned.

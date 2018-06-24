@@ -12,7 +12,7 @@ function createFloor(resources){
 function createWater(resources){
   return new TextureSGNode(resources.alphamap, 'u_enableAlphamap',
     createSimpleModel(resources.water,
-      {diffuse: [0,0,1,0.5], ambient: [0,0,0.6,0.5]},//diffuseVecFromRGB(23,185,193), ambient: ambientVecFromRGB(23,185,193)},
+      {diffuse: [0,0,1,1], ambient: [0,0,0.6,1]},//diffuseVecFromRGB(23,185,193), ambient: ambientVecFromRGB(23,185,193)},
       {translation: [431,0,397], scale: [0.8,1,0.75]}
   ));;
 }
@@ -21,8 +21,8 @@ function createWater(resources){
 function createAndAddLights(root, resources){
     sun = new SunNode([0,0,750],'u_sun',null,{showSphere:true,sphereRadius:20});
     root.append(sun);
-    lamp = new LightNode([0, 1, 2],'u_lamp1',null,{showSphere:true,sphereRadius:2});
-    //lamp = createLight([0, 1, 2], 0.4, resources, true, 'u_light2');
+    lamp = new LightNode([234.6,21,456.3],'u_lamp1',null,{showSphere:true,sphereRadius:0.5});
+    lamp.sphere.emission = [0.6,0,0,1];
     root.append(lamp);
 }
 

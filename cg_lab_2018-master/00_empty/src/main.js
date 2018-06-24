@@ -7,20 +7,17 @@ var animations = [];
 //scene graph nodes
 var root = null;
 
-//TODO: remove
-var cameraTargetSphere;
-
 var farmer1, farmer2, farmer3, farmer4;
 var dancer1, dancer2, dancer3, dancer4, dancer5, dancer6, dancer7;
 var fisher1, fisher2;
+var fish1, fish2, fish3, fish4, fish5;
+
 var sun,lamp;
 
 //load the shader resources using a utility function
 loadResources({
   vs_phong: 'shader/phong.vs.glsl',
   fs_phong: 'shader/phong.fs.glsl',
-  vs_single: 'shader/single.vs.glsl',
-  fs_single: 'shader/single.fs.glsl',
 
   //textures
   heightmap: 'textures/heightmap.jpg',
@@ -74,7 +71,7 @@ function init(resources) {
   root = createSceneGraph(gl, resources);
 
   //perform main camera flight, then initialise camera interaction
-  //performMainCameraFlight();
+  performMainCameraFlight();
   initCameraInteraction(gl.canvas);
   updatePannelFromCamera();
 }
@@ -119,7 +116,7 @@ function createSceneGraph(gl, resources) {
   let skinMat = getSkinMaterial();
 
   farmer1 = createHuman(resources, pink, skinMat, pink,
-    {scale: vec3FromFloat(0.82), translation: [160,0,-48], yRotation: 45}
+    {scale: vec3FromFloat(0.82), translation: [160,0,-48], yRotation: 180}
   );
   farmer2 = createHuman(resources, red, red, darkblue,
     {scale: vec3FromFloat(0.75), translation: [98,0,-11], yRotation: -45}
@@ -128,7 +125,7 @@ function createSceneGraph(gl, resources) {
     {scale: vec3FromFloat(0.9), translation: [160,0,45], yRotation: 120}
   );
   farmer4 = createHuman(resources, darkblue, skinMat, darkblue,
-    {scale: vec3FromFloat(0.45), translation: [174,0,-35], yRotation: 33}
+    {scale: vec3FromFloat(0.45), translation: [174,0,-35], yRotation: 50}
   );
   root.append(farmer1.root);
   root.append(farmer2.root);
@@ -146,16 +143,16 @@ function createSceneGraph(gl, resources) {
     {scale: vec3FromFloat(2.5), translation: [-275,0.1,154], yRotation: -90}
   ));
   dancer1 = createHuman(resources, black, black, black,
-    {scale: vec3FromFloat(0.87), translation: [-261,1,172], yRotation: 45}
+    {scale: vec3FromFloat(0.87), translation: [-261,1,172], yRotation: 37}
   );
   dancer2 = createHuman(resources, black, black, black,
-    {scale: vec3FromFloat(0.78), translation: [-248,1,147], yRotation: 45}
+    {scale: vec3FromFloat(0.78), translation: [-248,1,147], yRotation: 70}
   );
   dancer3 = createHuman(resources, black, skinMat, black,
-    {scale: vec3FromFloat(0.83), translation: [-265,1,133], yRotation: 45}
+    {scale: vec3FromFloat(0.83), translation: [-265,1,133], yRotation: 10}
   );
   dancer4 = createHuman(resources, white, skinMat, white,
-    {scale: vec3FromFloat(0.92), translation: [-288,1,168], yRotation: 45}
+    {scale: vec3FromFloat(0.92), translation: [-288,1,168], yRotation: 200}
   );
   dancer5 = createHuman(resources, black, white, black,
     {scale: vec3FromFloat(0.74), translation: [-296,1,137], yRotation: 45}
@@ -164,7 +161,7 @@ function createSceneGraph(gl, resources) {
     {scale: vec3FromFloat(0.94), translation: [-161,0,207], yRotation: 45}
   );
   dancer7 = createHuman(resources, black, white, black,
-    {scale: vec3FromFloat(1), translation: [-168,0,205], yRotation: 45}
+    {scale: vec3FromFloat(1), translation: [-168,0,205], yRotation: 225}
   );
   root.append(dancer1.root);
   root.append(dancer2.root);
@@ -188,10 +185,10 @@ function createSceneGraph(gl, resources) {
 
   root.append(createSimpleModel(resources.dock,
     getWoodMaterial(),
-    {translation: [223,19,430], yRotation: 30, scale: vec3FromFloat(1.1)}
+    {translation: [223,19,430], yRotation: 30}
   ));
   fisher1 = createHuman(resources, red, red, darkblue,
-    {scale: vec3FromFloat(0.75), translation: [241,18,459], yRotation: 200}
+    {scale: vec3FromFloat(0.75), translation: [241,18,456], yRotation: 200}
   );
   sit(fisher1);
   fisher2 = createHuman(resources, darkblue, skinMat, darkblue,
@@ -203,32 +200,16 @@ function createSceneGraph(gl, resources) {
   createAndAddTool(resources.rod, fisher1, "left", getWoodMaterial());
   createAndAddTool(resources.rod, fisher2, "right", getWoodMaterial());
 
-
-  //ABOVE: ACTUAL WORLD BUILDING
-
-
-
-
-  //createTool(resources.rose, farmer1, "mouth", {diffuse: [1,0,0,1], specular: [1,0,0,1], shininess: 10});
-
-  //createTool(resources.rod, farmer1, "left", {diffuse: [0.26,0.15,0,1]});
-
-  //TODO: remove testmodels
-  let fish = createSimpleModel(resources.fish, {texture: resources.tex_lava}, {translation: [-5,2,0]});
-  root.append(fish);
-
-  //TODO: remove test animations
-  let x = new Animation(2, [
-    {node: fish, targetTransform: {translation: [-5,2,-5]}, duration: 1.5},
-    {node: fish, targetTransform: {translation: [-5,2,5], scale: vec3FromFloat(3)}, duration: 1},
-    {node: fish, targetTransform: {translation: [5,0,-5], yRotation: 180}, duration: 2},
-    {node: fish, targetTransform: {translation: [-5,10,-5], scale: vec3FromFloat(1.5)}, duration: 6}]
-  );
-  x.startAnimation();
-
-  //TODO: remove
-  cameraTargetSphere = createSimpleModel(makeSphere(0.8,16,16), {diffuse: [1,0,0,1]});
-  root.append(cameraTargetSphere);
+  fish1 = createSimpleModel(resources.fish, darkblue, {translation: [270,16,450], yRotation: 200});
+  fish2 = createSimpleModel(resources.fish, darkblue, {translation: [240,14,470], yRotation: 190});
+  fish3 = createSimpleModel(resources.fish, darkblue, {translation: [331,14,433], yRotation: 200});
+  fish4 = createSimpleModel(resources.fish, darkblue, {translation: [180,12,540], yRotation: 290});
+  fish5 = createSimpleModel(resources.fish, darkblue, {translation: [310,13,490], yRotation: 277});
+  root.append(fish1);
+  root.append(fish2);
+  root.append(fish3);
+  root.append(fish4);
+  root.append(fish5);
 
   createAndAddLights(root, resources);
   root.append(createWater(resources));
@@ -250,7 +231,7 @@ function render(/*float*/ timeInMilliseconds){
 
   //setup viewport
   gl.viewport(0, 0, gl.drawingBufferWidth, gl.drawingBufferHeight);
-  gl.clearColor(0.9, 0.9, 0.9, 1);    //background color
+  gl.clearColor(0.84,1,0.98,1);    //skybox color
   gl.clear(gl.COLOR_BUFFER_BIT | gl.DEPTH_BUFFER_BIT);
 
   //create and setup context to use when rendering SceneGraph
@@ -263,30 +244,49 @@ function render(/*float*/ timeInMilliseconds){
   if (timeInMilliseconds > 1500) { //wait for site to load
     animations.forEach( function(anim) {
       anim.animate(deltaTime);
-      //if (timeInMilliseconds < 3000) console.log(camera);
     });
   }
-  cameraTargetSphere.matrix = glm.translate(camera.target[0], camera.target[1], camera.target[2]);
 
-  //sun.moveToNoon();
-
-  //lamp.moveTo(camera.target);
-
-  //sun.moveToMorning();
   if(animateSun){
     sunTime = sun.animate(35,130,36,deltaTime);
     sun.moveToAngle(sunTime);
   }
-  //
-  //sun.animateColor([0,0,0,1],[1,0,0,0],[0,0,0,1],[0,0,1,1],10,deltaTime);
 
-  //combination example: farmer1.root.matrix = mat4.multiply(mat4.create(), glm.translate(0.001 * timeInMilliseconds, 0, 0), glm.rotateY(timeInMilliseconds*0.05));
-
+  checkForAnimationProximity(timeInMilliseconds);
+  displayCurrentEffect(timeInMilliseconds);
   //start rendering SceneGraph
   root.render(context);
   //request another call as soon as possible (for animation)
   requestAnimationFrame(render);
 }
+
+
+function displayCurrentEffect(timeInMilliseconds){
+  let secondsAfterStart = (timeInMilliseconds - 1500) / 1000;
+
+  if (secondsAfterStart < 5){
+    displayText("Level of Details (Trees), Complex 3D Shape + Texture (Farmhouse)");
+  }
+  else if (secondsAfterStart < 9){
+    displayText("Composed Models, Separate Animations (Humans)");
+  }
+  else if (secondsAfterStart < 12.5) {
+    displayText("Terrain from Heightmap (Mountains)");
+  }
+  else if (secondsAfterStart < 21) {
+    clearText();
+  }
+  else if (secondsAfterStart < 24) {
+    displayText("Moving Lightsource (Sun)");
+  }
+  else if (secondsAfterStart < 30) {
+    displayText("Transparency from Alphamap (Lake)");
+  }
+  else {
+    clearText();
+  }
+}
+
 
 
 function buildTrees(resources, root, leavesMat){
