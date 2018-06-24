@@ -1,5 +1,6 @@
 
 
+var movementSpeed = 10;
 //camera struct
 const camera = {
   //access with camera.rotation.x and camera.rotation.y
@@ -31,6 +32,7 @@ function initCameraInteraction(canvas) {
     pos: { x : 0, y : 0},
     leftButtonDown: false
   };
+  const mouseSensitivity = 0.25;
 
   function toPos(mouseEvent) {
     //convert to local coordinates
@@ -54,7 +56,7 @@ function initCameraInteraction(canvas) {
      //factor to multiply with delta mouse movement
 
     if (mouse.leftButtonDown && !camera.isPerformingFlight) {
-      setCameraTarget(delta, 0.25);
+      setCameraTarget(delta, mouseSensitivity);
 
       updateStats();
       updatePannelFromCamera();
@@ -85,11 +87,11 @@ function initCameraInteraction(canvas) {
     }
     else if (event.code == 'ArrowUp' || event.code == 'KeyW'){
       let direction = normalizeVec3(getVec3VectorDistance(camera.position,camera.target));
-      moveCamera(direction, 10);
+      moveCamera(direction, movementSpeed);
     }
     else if (event.code == 'ArrowDown' || event.code == 'KeyS'){
       let direction = normalizeVec3(getVec3VectorDistance(camera.target,camera.position));
-      moveCamera(direction, 10);
+      moveCamera(direction, movementSpeed);
     }
     else if(event.code == 'Digit1'){
       sun.moveToMorning();
@@ -99,6 +101,12 @@ function initCameraInteraction(canvas) {
     }
     else if(event.code == 'Digit3'){
       sun.moveToEvening();
+    }
+    else if(event.code == 'NumpadAdd'){
+      if (movementSpeed < 20) movementSpeed++;
+    }
+    else if(event.code == 'NumpadSubtract'){
+      if (movementSpeed > 1) movementSpeed--;
     }
 
     updateStats();

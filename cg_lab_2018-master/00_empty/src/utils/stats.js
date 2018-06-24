@@ -42,6 +42,7 @@ function updateStats(){
   updateStat("camera.position", vectorToString(camera.position));
   updateStat("camera.rotation", vectorToString(camera.rotation));
   updateStat("camera.target", vectorToString(camera.target));
+  updateStat("movespeed", movementSpeed);
 }
 
 
