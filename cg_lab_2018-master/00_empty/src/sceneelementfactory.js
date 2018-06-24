@@ -1,13 +1,20 @@
 
 
 function createFloor(resources){
-  let floor = new TextureSGNode(resources.heightmap, 'u_enableHeightmap',
+  return new TextureSGNode(resources.heightmap, 'u_enableHeightmap',
     createSimpleModel(resources.floor,
        {diffuse: [0.25,0.47,0.17,1], ambient: [0.25,0.47,0.17,1]},
        {translation:[0,0,250]}
-  ));
+  ));;
+}
 
-  return floor;
+
+function createWater(resources){
+  return new TextureSGNode(resources.alphamap, 'u_enableAlphamap',
+    createSimpleModel(resources.water,
+      {diffuse: [0,0,1,0.5], ambient: [0,0,0.6,0.5]},//diffuseVecFromRGB(23,185,193), ambient: ambientVecFromRGB(23,185,193)},
+      {translation: [431,0,397], scale: [0.8,1,0.75]}
+  ));;
 }
 
 

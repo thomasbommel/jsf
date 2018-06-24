@@ -24,7 +24,7 @@ loadResources({
 
   //textures
   heightmap: 'textures/heightmap.jpg',
-  tex_lava: 'textures/lava.jpg',
+  alphamap: 'textures/alphamap.jpg',
   tex_wood: 'textures/wood.jpg',
   tex_bricks: 'textures/bricks.jpg',
 
@@ -45,19 +45,16 @@ loadResources({
   castle_floor: 'models/castle/floor.obj',
   castle_walls: 'models/castle/walls.obj',
 
-
-
   //simple models -> use createSimpleModel()
   floor: 'models/floor.obj',
+  water: 'models/water.obj',
   hoe: 'models/hoe.obj',
   dock: 'models/dock.obj',
   rose: 'models/rose.obj',
   rod: 'models/rod.obj',
   fish: 'models/fish.obj'
-}).then(function (resources /*an object containing our keys with the loaded resources*/) {
+}).then(function (resources) {
   init(resources);
-
-  //render one frame
   render(0);
 });
 
@@ -69,6 +66,9 @@ function init(resources) {
   gl = createContext();
   //enable depth test (render only the pixels closest to camera)
   gl.enable(gl.DEPTH_TEST);
+  gl.depthFunc(gl.LESS);
+  gl.enable(gl.BLEND);
+  gl.blendFunc(gl.SRC_ALPHA, gl.ONE_MINUS_SRC_ALPHA);
 
   //create scenegraph
   root = createSceneGraph(gl, resources);
@@ -100,10 +100,10 @@ function createSceneGraph(gl, resources) {
     diffuse: diffuseVecFromRGB(7,107,29), ambient: ambientVecFromRGB(7,107,29)
   };
   let black = {
-    diffuse: [0.1,0.1,0.1,1], ambient: [0.1,0.1,0.1,1], specular: [0.05,0.05,0.05,1], shininess: 10
+    diffuse: [0.1,0.1,0.1,1], ambient: [0.1,0.1,0.1,1], specular: [0.05,0.05,0.05,0], shininess: 10
   };
   let white = {
-    diffuse: [0.9,0.9,0.9,1], ambient: [0.7,0.7,0.7,1], specular: [0.05,0.05,0.05,1], shininess: 10
+    diffuse: [0.9,0.9,0.9,1], ambient: [0.7,0.7,0.7,1], specular: [0.05,0.05,0.05,0], shininess: 10
   };
 
   //BELOW: ACTUAL WORLD BUILDING
@@ -188,7 +188,7 @@ function createSceneGraph(gl, resources) {
 
   root.append(createSimpleModel(resources.dock,
     getWoodMaterial(),
-    {translation: [223,19,430], yRotation: 30}
+    {translation: [223,19,430], yRotation: 30, scale: vec3FromFloat(1.1)}
   ));
   fisher1 = createHuman(resources, red, red, darkblue,
     {scale: vec3FromFloat(0.75), translation: [241,18,459], yRotation: 200}
@@ -227,10 +227,11 @@ function createSceneGraph(gl, resources) {
   x.startAnimation();
 
   //TODO: remove
-  cameraTargetSphere = createSimpleModel(makeSphere(0.8,16,16));
+  cameraTargetSphere = createSimpleModel(makeSphere(0.8,16,16), {diffuse: [1,0,0,1]});
   root.append(cameraTargetSphere);
 
   createAndAddLights(root, resources);
+  root.append(createWater(resources));
   return root;
 }
 
@@ -247,7 +248,7 @@ function render(/*float*/ timeInMilliseconds){
 
   //setup viewport
   gl.viewport(0, 0, gl.drawingBufferWidth, gl.drawingBufferHeight);
-  gl.clearColor(0.9, 0.9, 0.9, 1.0);    //background color
+  gl.clearColor(0.9, 0.9, 0.9, 1);    //background color
   gl.clear(gl.COLOR_BUFFER_BIT | gl.DEPTH_BUFFER_BIT);
 
   //create and setup context to use when rendering SceneGraph
