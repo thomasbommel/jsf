@@ -174,6 +174,8 @@ function createSceneGraph(gl, resources) {
 
 
 var lastRenderTime=0;
+var sunTime = 0;
+var animateSun = false;
 /**
  * renders a single frame
  */
@@ -202,9 +204,13 @@ function render(/*float*/ timeInMilliseconds){
     });
   }
 
-  //sun.moveToNoon();
+  //lamp.moveTo(camera.target);
 
-  //sun.animate(0,360,10,deltaTime);
+  //sun.moveToMorning();
+  if(animateSun){
+    sunTime = sun.animate(35,130,36,deltaTime);
+    sun.moveToAngle(sunTime);
+  }
   //
   //sun.animateColor([0,0,0,1],[1,0,0,0],[0,0,0,1],[0,0,1,1],10,deltaTime);
 

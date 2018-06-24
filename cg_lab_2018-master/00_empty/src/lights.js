@@ -154,7 +154,6 @@ class SunNode extends LightNode{
   this.timePassed = -1;
   this.currentPos = -1;
   this.animate = function(from, to, secondsNeeded, deltaTime){
-    console.log(this.timePassed);
     if(this.timePassed < 0){
       this.currentPos = from;
       this.timePassed = deltaTime;
@@ -178,7 +177,7 @@ class SunNode extends LightNode{
     let yChange =  Math.sin(angle);
 
     this.position[0] = this.centerPosition[0] + xChange * this.turnRadius;
-    this.position[1] = this.centerPosition[1] + yChange * this.turnRadius *0.5;
+    this.position[1] = this.centerPosition[1] + yChange * this.turnRadius *0.4;
   }
 }
 }

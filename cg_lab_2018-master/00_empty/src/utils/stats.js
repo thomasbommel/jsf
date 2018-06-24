@@ -40,7 +40,7 @@ function updateStat(tag,text){
  */
 function updateStats(){
   updateStat("camera.position", vectorToString(camera.position));
-  updateStat("camera.rotation", vectorToString(camera.rotation));
+  updateStat("camera.rotation", "x:"+camera.rotation.x.toFixed(2)+",y:"+camera.rotation.y.toFixed(2));
   updateStat("camera.target", vectorToString(camera.target));
 }
 

@@ -91,6 +91,7 @@ class CameraAnimation {
       rotation: {x: camera.rotation.x, y: camera.rotation.y}
     };
     this.to = this.anims[index] || this.anims[this.anims.length - 1];
+    displayText(index);
   }
 
   startAnimation(){
@@ -139,6 +140,7 @@ class CameraAnimation {
     if (this.timePassed >= curAnim.duration) {
       this.switchAnimation(this.animIndex + 1);
     }
+    updateStats();
   }
 
 }
