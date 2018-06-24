@@ -267,6 +267,8 @@ function render(/*float*/ timeInMilliseconds){
 
   //sun.moveToNoon();
 
+  //sun.moveToNoon();
+
   //sun.animate(0,360,10,deltaTime);
   //
   //sun.animateColor([0,0,0,1],[1,0,0,0],[0,0,0,1],[0,0,1,1],10,deltaTime);

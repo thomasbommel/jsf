@@ -73,7 +73,7 @@ function initCameraInteraction(canvas) {
   //handle key events
   document.addEventListener('keypress', function(event) {
     //https://developer.mozilla.org/en-US/docs/Web/API/KeyboardEvent
-    if (camera.isPerformingFlight) return;  //disable controls during flight
+    if (camera.isPerformingFlight === true) return;  //disable controls during flight
     displayText(event.code);    //TODO: debugging --> remove
 
     if (event.code === 'KeyR') {    //reset camera to defaults
