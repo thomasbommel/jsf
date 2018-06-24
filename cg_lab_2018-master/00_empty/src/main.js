@@ -198,7 +198,7 @@ function render(/*float*/ timeInMilliseconds){
   if (timeInMilliseconds > 1500) { //wait for site to load
     animations.forEach( function(anim) {
       anim.animate(deltaTime);
-      //if (timeInMilliseconds < 3000) console.log(anim);
+      //if (timeInMilliseconds < 3000) console.log(camera);
     });
   }
 

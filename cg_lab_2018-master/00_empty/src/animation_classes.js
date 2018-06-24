@@ -94,13 +94,13 @@ class CameraAnimation {
   }
 
   startAnimation(){
-    this.currentlyRunning = true;
+    camera.isPerformingFlight = true;
     animations.push(this);
     this.switchAnimation(0);
   }
 
   stopAnimation(){
-    this.currentlyRunning = false;
+    camera.isPerformingFlight = false;
     var i = animations.indexOf(this);
     if (i >= 0) {
       animations.splice(i, 1);
@@ -115,9 +115,6 @@ class CameraAnimation {
       y: this.to.rotation.y - this.from.rotation.y
     };
     let deltaSeconds = (deltaTime/duration);
-
-    console.log(this.to);
-    console.log(this.from);
 
     return {
       position: vec3.multiply(vec3.create(), posDiff, vec3FromFloat(deltaSeconds)),
