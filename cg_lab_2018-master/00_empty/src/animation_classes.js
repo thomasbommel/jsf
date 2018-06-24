@@ -36,6 +36,7 @@ class Animation {
     if (i >= 0) {
       animations.splice(i, 1);
     }
+    this.restoreDefaults();
     return i >= 0;
   }
 
