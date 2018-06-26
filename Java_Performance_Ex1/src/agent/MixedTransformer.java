@@ -148,7 +148,7 @@ public class MixedTransformer implements ClassFileTransformer {
 		return Modifier.isAbstract(method.getModifiers());
 	}
 	
-	protected byte[] getCodeBefore(CtBehavior callSite, CtBehavior calledMethod) {
+	private byte[] getCodeBefore(CtBehavior callSite, CtBehavior calledMethod) {
 		CtClass calledClass = calledMethod.getDeclaringClass();
 		boolean calledClassWasFrozen = calledClass.isFrozen();
 		if (calledClassWasFrozen) calledClass.defrost();
@@ -157,10 +157,11 @@ public class MixedTransformer implements ClassFileTransformer {
 		MethodInfo calleeInfo = calledMethod.getMethodInfo();
 		
 		List<String> argTypes = getArgumentTypes(calleeInfo.getDescriptor());
-		Bytecode code = new Bytecode(callerInfo.getConstPool(), 0, argTypes.size());
+		Bytecode code = new Bytecode(callerInfo.getConstPool());
+		BytecodeHelper helper = new BytecodeHelper(code);
 		
 		// [
-		pushArgumentsArray(code, argTypes);
+		helper.pushArgumentsArray(argTypes);
 		// [ args
 		code.addLdc(callSite.getDeclaringClass().getName() + "." + callSite.getName());
 		// [ args, callSite
@@ -183,9 +184,10 @@ public class MixedTransformer implements ClassFileTransformer {
 		
 		String returnType = calleeInfo.getDescriptor().substring(calleeInfo.getDescriptor().indexOf(')') + 1);
 		Bytecode code = new Bytecode(callerInfo.getConstPool());
+		BytecodeHelper helper = new BytecodeHelper(code);
 		
 		// [ 
-		duplicateReturnValue(code, returnType);
+		helper.duplicateReturnValue(returnType);
 		// [ return-value
 		code.addLdc(callSite.getDeclaringClass().getName() + "." + callSite.getName());
 		// [ return-value, callSite
@@ -225,165 +227,6 @@ public class MixedTransformer implements ClassFileTransformer {
 			result.add(type);
 		}
 		return result;
-	}
-	
-	/**
-	 * Pushes an Object-array on the stack with the argument values from the current method
-	 */
-	private void pushArgumentsArray(Bytecode code, List<String> argTypes) {
-		// store individual arguments into local variables and then back to stack
-		for (int i = 0; i < argTypes.size(); i++) {
-			code.addStore(i, getCtClass(argTypes.get(i)));
-		}
-		for (int i = argTypes.size() - 1; i >= 0; i--) {
-			code.addLoad(i, getCtClass(argTypes.get(i)));
-		}
-		
-		// [
-		code.addIconst(argTypes.size());
-		// [ argument count
-		code.addAnewarray("java.lang.Object");
-		// [ array
-		int displacement = 0;
-		for(int i = 0; i < argTypes.size(); i++) {
-			// [ array
-			code.add(Opcode.DUP);
-			// [ array, array
-			code.addIconst(i);
-			// [ array, array, i
-			displacement += loadLocal(code, argTypes, i, displacement);
-			// [ array, array, i, i-th argument
-			code.add(Opcode.AASTORE);
-			// [ array
-		}
-	}
-	
-	/**
-	 * Loads the local parameter value of parameter i into the stack.<br>
-	 * Returns a displacement of 1 for types Long("J") and Double("D").
-	 */
-	private int loadLocal(Bytecode code, List<String> arguments, int i, int displacement) {
-		switch(arguments.get(i)) {
-			case "B":
-				code.addIload(i + displacement);
-				code.addInvokestatic("java.lang.Byte", "valueOf", "(B)Ljava/lang/Byte;");
-				return 0;
-			case "S":
-				code.addIload(i + displacement);
-				code.addInvokestatic("java.lang.Short", "valueOf", "(S)Ljava/lang/Short;");
-				return 0;
-			case "I":
-				code.addIload(i + displacement);
-				code.addInvokestatic("java.lang.Integer", "valueOf", "(I)Ljava/lang/Integer;");
-				return 0;
-			case "J":
-				code.addLload(i + displacement);
-				code.addInvokestatic("java.lang.Long", "valueOf", "(J)Ljava/lang/Long;");
-				return 1;
-			case "F":
-				code.addFload(i + displacement);
-				code.addInvokestatic("java.lang.Float", "valueOf", "(F)Ljava/lang/Float;");
-				return 0;
-			case "D":
-				code.addDload(i + displacement);
-				code.addInvokestatic("java.lang.Double", "valueOf", "(D)Ljava/lang/Double;");
-				return 1;
-			case "Z":
-				code.addIload(i + displacement);
-				code.addInvokestatic("java.lang.Boolean", "valueOf", "(Z)Ljava/lang/Boolean;");
-				return 0;
-			case "C":
-				code.addIload(i + displacement);
-				code.addInvokestatic("java.lang.Character", "valueOf", "(C)Ljava/lang/Character;");
-				return 0;
-			default: // L, [
-				code.addAload(i + displacement);
-				return 0;
-		}
-	}
-
-	/**
-	 * Gets a CtClass from a type-descriptor
-	 */
-	private CtClass getCtClass(String type) {
-		switch(type) {
-			case "B":
-				return CtClass.byteType;
-			case "S":
-				return CtClass.shortType;
-			case "I":
-				return CtClass.intType;
-			case "J":
-				return CtClass.longType;
-			case "F":
-				return CtClass.floatType;
-			case "D":
-				return CtClass.doubleType;
-			case "Z":
-				return CtClass.booleanType;
-			case "C":
-				return CtClass.charType;
-			default: // L, [
-			try {
-				return ClassPool.getDefault().get(type);
-			} catch (NotFoundException e) {
-				e.printStackTrace();
-				return null;
-			}
-		}
-	}
-	
-	/**
-	 * Duplicates the return value currently on top of the Stack.
-	 */
-	private void duplicateReturnValue(Bytecode code, String returnType) {
-		// [
-		if (returnType.equals("V")) {
-			code.add(Opcode.ACONST_NULL);
-		}
-		else if (returnType.equals("J") || returnType.equals("D")) {
-			code.add(Opcode.DUP2);
-		}
-		else {
-			code.add(Opcode.DUP);
-		}
-		// [ return-value (as primitive)
-		wrapPrimitiveWithReference(code, returnType);
-		// [ return-value (as Object)
-	}
-	
-	/**
-	 * Converts a primitive value on the stack to a Reference value.
-	 */
-	private void wrapPrimitiveWithReference(Bytecode code, String type) {
-		switch(type) {
-			case "B":
-				code.addInvokestatic("java.lang.Byte", "valueOf", "(B)Ljava/lang/Byte;");
-				break;
-			case "S":
-				code.addInvokestatic("java.lang.Short", "valueOf", "(S)Ljava/lang/Short;");
-				break;
-			case "I":
-				code.addInvokestatic("java.lang.Integer", "valueOf", "(I)Ljava/lang/Integer;");
-				break;
-			case "J":
-				code.addInvokestatic("java.lang.Long", "valueOf", "(J)Ljava/lang/Long;");
-				break;
-			case "F":
-				code.addInvokestatic("java.lang.Float", "valueOf", "(F)Ljava/lang/Float;");
-				break;
-			case "D":
-				code.addInvokestatic("java.lang.Double", "valueOf", "(D)Ljava/lang/Double;");
-				break;
-			case "Z":
-				code.addInvokestatic("java.lang.Boolean", "valueOf", "(Z)Ljava/lang/Boolean;");
-				break;
-			case "C":
-				code.addInvokestatic("java.lang.Character", "valueOf", "(C)Ljava/lang/Character;");
-				break;
-			default: // L, [ --> don't wrap since already reference
-				break;	
-		}
 	}
 	
 }

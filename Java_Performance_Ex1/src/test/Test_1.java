@@ -16,28 +16,26 @@ public class Test_1 {
 		testmethod2('k');
 		System.currentTimeMillis();
 		
-		recursive(3);
+		recursiveLong(3);
 
 		System.out.println(new StringBuilder("tezzt").append(" test"));
 		
 		new Test_1();
 		
-		testmethod2('x');
-		
 		Test_1 subclass = new Test_2();
 		((Test_2) subclass).testmethod3();
 		System.out.println(subclass.toString());
 		
-		Test_3.otherPackageStaticMethod(3.49f);
+		Test_3.otherPackageStaticMethod(3.49d);
 		Test_3 y = new Test_3();
 		y.otherPackageMethod(4.5f);
 		
 		Test_Uninstrumented.uninstrumentedSleep(1234);
 	}
 	
-	private static int recursive(int n) {
+	private static long recursiveLong(long n) {
 		if (n > 0) {
-			recursive(n-1);
+			recursiveLong(n-1);
 		}
 		return n;
 	}
@@ -55,8 +53,11 @@ public class Test_1 {
 //			e.printStackTrace();
 //		}
 		
-		System.out.println("test constr");
-		nonStaticEmpty("call nonStaticEmpty");
+		try {
+			System.out.println("test constr");
+			nonStaticEmpty("call nonStaticEmpty");
+		} catch (Exception e) {}
+
 		
 	}
 	
@@ -68,8 +69,9 @@ public class Test_1 {
 	
 	protected static void testmethod2(char c) {
 		
+		String test = new String("test?? --> ");
 		
-		System.out.println(c);
+		System.out.println(test + c);
 	}
 	
 	protected void nonStaticEmpty(String x) {
