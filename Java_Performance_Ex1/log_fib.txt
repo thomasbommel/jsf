@@ -1,0 +1,52 @@
+test.Fib.main                            ---->                                   fib(6)
+test.Fib.fib                             ---->                                   fib(5)
+test.Fib.fib                             ---->                                   fib(4)
+test.Fib.fib                             ---->                                   fib(3)
+test.Fib.fib                             ---->                                   fib(2)
+test.Fib.fib                             ---->                                   fib(1)
+test.Fib.fib                             <----                                   fib(1) [wall = 0,11 ms, cpu = 0,00 ms, ret=1]
+test.Fib.fib                             ---->                                   fib(0)
+test.Fib.fib                             <----                                   fib(0) [wall = 0,09 ms, cpu = 0,00 ms, ret=0]
+test.Fib.fib                             <----                                   fib(2) [wall = 8,00 ms, cpu = 0,00 ms, ret=1]
+test.Fib.fib                             ---->                                   fib(1)
+test.Fib.fib                             <----                                   fib(1) [wall = 0,10 ms, cpu = 0,00 ms, ret=1]
+test.Fib.fib                             <----                                   fib(3) [wall = 10,37 ms, cpu = 0,00 ms, ret=2]
+test.Fib.fib                             ---->                                   fib(2)
+test.Fib.fib                             ---->                                   fib(1)
+test.Fib.fib                             <----                                   fib(1) [wall = 0,06 ms, cpu = 0,00 ms, ret=1]
+test.Fib.fib                             ---->                                   fib(0)
+test.Fib.fib                             <----                                   fib(0) [wall = 0,06 ms, cpu = 0,00 ms, ret=0]
+test.Fib.fib                             <----                                   fib(2) [wall = 1,78 ms, cpu = 15,63 ms, ret=1]
+test.Fib.fib                             <----                                   fib(4) [wall = 14,67 ms, cpu = 15,63 ms, ret=3]
+test.Fib.fib                             ---->                                   fib(3)
+test.Fib.fib                             ---->                                   fib(2)
+test.Fib.fib                             ---->                                   fib(1)
+test.Fib.fib                             <----                                   fib(1) [wall = 0,07 ms, cpu = 0,00 ms, ret=1]
+test.Fib.fib                             ---->                                   fib(0)
+test.Fib.fib                             <----                                   fib(0) [wall = 0,19 ms, cpu = 0,00 ms, ret=0]
+test.Fib.fib                             <----                                   fib(2) [wall = 2,74 ms, cpu = 0,00 ms, ret=1]
+test.Fib.fib                             ---->                                   fib(1)
+test.Fib.fib                             <----                                   fib(1) [wall = 0,19 ms, cpu = 0,00 ms, ret=1]
+test.Fib.fib                             <----                                   fib(3) [wall = 5,65 ms, cpu = 0,00 ms, ret=2]
+test.Fib.fib                             <----                                   fib(5) [wall = 22,97 ms, cpu = 15,63 ms, ret=5]
+test.Fib.fib                             ---->                                   fib(4)
+test.Fib.fib                             ---->                                   fib(3)
+test.Fib.fib                             ---->                                   fib(2)
+test.Fib.fib                             ---->                                   fib(1)
+test.Fib.fib                             <----                                   fib(1) [wall = 0,05 ms, cpu = 0,00 ms, ret=1]
+test.Fib.fib                             ---->                                   fib(0)
+test.Fib.fib                             <----                                   fib(0) [wall = 0,05 ms, cpu = 0,00 ms, ret=0]
+test.Fib.fib                             <----                                   fib(2) [wall = 1,47 ms, cpu = 0,00 ms, ret=1]
+test.Fib.fib                             ---->                                   fib(1)
+test.Fib.fib                             <----                                   fib(1) [wall = 0,08 ms, cpu = 0,00 ms, ret=1]
+test.Fib.fib                             <----                                   fib(3) [wall = 3,01 ms, cpu = 0,00 ms, ret=2]
+test.Fib.fib                             ---->                                   fib(2)
+test.Fib.fib                             ---->                                   fib(1)
+test.Fib.fib                             <----                                   fib(1) [wall = 0,05 ms, cpu = 0,00 ms, ret=1]
+test.Fib.fib                             ---->                                   fib(0)
+test.Fib.fib                             <----                                   fib(0) [wall = 0,05 ms, cpu = 0,00 ms, ret=0]
+test.Fib.fib                             <----                                   fib(2) [wall = 1,12 ms, cpu = 0,00 ms, ret=1]
+test.Fib.fib                             <----                                   fib(4) [wall = 5,33 ms, cpu = 0,00 ms, ret=3]
+test.Fib.main                            <----                                   fib(6) [wall = 33,56 ms, cpu = 31,25 ms, ret=8]
+test.Fib.main                            ---->                               println(8)
+test.Fib.main                            <----                               println(8) [wall = 0,88 ms, cpu = 15,63 ms, ret=]

@@ -44,7 +44,7 @@ public class BytecodeHelper {
 				// [ array, long.1, long.2, array
 				code.add(Opcode.DUP_X2);
 				code.add(Opcode.POP);
-				// [ array, array, long.1, long.2, 
+				// [ array, array, long.1, long.2
 			}
 			else {
 				code.add(Opcode.DUP_X1);
@@ -97,50 +97,6 @@ public class BytecodeHelper {
 			return true;
 		default:	//any other type
 			return false;
-		}
-	}
-	
-	/**
-	 * Loads the local parameter value of parameter i into the stack.<br>
-	 * Returns a displacement of 1 for types Long("J") and Double("D").
-	 */
-	public int loadLocal(List<String> arguments, int i, int displacement) {
-		switch(arguments.get(i)) {
-			case "B":
-				code.addIload(i + displacement);
-				code.addInvokestatic("java.lang.Byte", "valueOf", "(B)Ljava/lang/Byte;");
-				return 0;
-			case "S":
-				code.addIload(i + displacement);
-				code.addInvokestatic("java.lang.Short", "valueOf", "(S)Ljava/lang/Short;");
-				return 0;
-			case "I":
-				code.addIload(i + displacement);
-				code.addInvokestatic("java.lang.Integer", "valueOf", "(I)Ljava/lang/Integer;");
-				return 0;
-			case "J":
-				code.addLload(i + displacement);
-				code.addInvokestatic("java.lang.Long", "valueOf", "(J)Ljava/lang/Long;");
-				return 1;
-			case "F":
-				code.addFload(i + displacement);
-				code.addInvokestatic("java.lang.Float", "valueOf", "(F)Ljava/lang/Float;");
-				return 0;
-			case "D":
-				code.addDload(i + displacement);
-				code.addInvokestatic("java.lang.Double", "valueOf", "(D)Ljava/lang/Double;");
-				return 1;
-			case "Z":
-				code.addIload(i + displacement);
-				code.addInvokestatic("java.lang.Boolean", "valueOf", "(Z)Ljava/lang/Boolean;");
-				return 0;
-			case "C":
-				code.addIload(i + displacement);
-				code.addInvokestatic("java.lang.Character", "valueOf", "(C)Ljava/lang/Character;");
-				return 0;
-			default: // L, [
-				code.addAload(i + displacement);
-				return 0;
 		}
 	}
 	

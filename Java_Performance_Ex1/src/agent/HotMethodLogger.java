@@ -1,8 +1,21 @@
 package agent;
 
+import java.io.File;
+import java.io.FileNotFoundException;
+import java.io.PrintStream;
 import java.lang.management.ManagementFactory;
 
 public class HotMethodLogger {
+	
+	private static PrintStream outStream;
+	static {
+		outStream = System.err;		//Default console stream
+		try {
+			outStream = new PrintStream(new File("log.txt"));
+		} catch (FileNotFoundException | NullPointerException e) {
+			e.printStackTrace();
+		}
+	}
 	
 	private static final String methodTimerKeyFormat = "%s_%s_%d";
 	private static final StackMap<String, MethodCall> methodTimer = new StackMap<>();
@@ -27,7 +40,7 @@ public class HotMethodLogger {
 			if (i > 0) argString += ", ";
 		}
 		
-		System.err.printf("%-40s ----> %40s%n", callSite, String.format("%s(%s)", calledMethod, argString));
+		outStream.printf("%-40s ----> %40s%n", callSite, String.format("%s(%s)", calledMethod, argString));
 		
 		long curThreadID = Thread.currentThread().getId();
 		methodTimer.add(String.format(methodTimerKeyFormat, callSite, calledMethod, curThreadID),
@@ -44,7 +57,7 @@ public class HotMethodLogger {
 		long cpuTimePassed = ManagementFactory.getThreadMXBean().getCurrentThreadCpuTime() - call.cpuTimeNanos;
 		double nanosToMillis = 1000000.0;
 		
-		System.err.printf("%-40s <---- %40s [wall = %.2f ms, cpu = %.2f ms, ret=%s]%n", 
+		outStream.printf("%-40s <---- %40s [wall = %.2f ms, cpu = %.2f ms, ret=%s]%n", 
 				callSite, String.format("%s(%s)", calledMethod, args), 
 				(double) wallTimePassed / nanosToMillis, cpuTimePassed / nanosToMillis, 
 				retVal == null ? "" : retVal.toString()

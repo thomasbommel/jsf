@@ -6,7 +6,7 @@ import java.util.List;
 
 public class HotMethodAgent {
 	
-	protected static final boolean DEBUG = true;
+	protected static final boolean DEBUG = false;
 	
 	public static void premain(String args, Instrumentation instrumentation) {
 		//filter out classes to transform from args-String
