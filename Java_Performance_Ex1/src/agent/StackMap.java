@@ -1,6 +1,7 @@
 package agent;
 
 import java.util.HashMap;
+import java.util.Set;
 import java.util.Stack;
 
 /**
@@ -28,6 +29,14 @@ public class StackMap<K,V> {
 		else {
 			return stack.pop();
 		}
+	}
+	
+	public Set<K> keySet() {
+		return map.keySet();
+	}
+	
+	public Stack<V> getStack(K key) {
+		return map.get(key);
 	}
 	
 }

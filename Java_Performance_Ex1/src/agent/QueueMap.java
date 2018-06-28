@@ -3,6 +3,7 @@ package agent;
 import java.util.HashMap;
 import java.util.LinkedList;
 import java.util.Queue;
+import java.util.Set;
 
 /**
  * Maps the Key (K) to a Queue of Values (V).
@@ -29,6 +30,14 @@ public class QueueMap<K,V> {
 		else {
 			return queue.poll();
 		}
+	}
+	
+	public Set<K> keySet() {
+		return map.keySet();
+	}
+	
+	public Queue<V> getQueue(K key) {
+		return map.get(key);
 	}
 	
 }

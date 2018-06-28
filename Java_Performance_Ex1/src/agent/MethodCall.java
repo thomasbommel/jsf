@@ -5,6 +5,9 @@ public class MethodCall {
 	protected final String caller, callee, args;
 	protected final long threadID, wallClockTimeNanos, cpuTimeNanos;
 	
+	//set after a methodcall finished for the purpose of gathering MethodStatistics
+	protected long wallTimePassedNanos, cpuTimePassedNanos;
+	
 	public MethodCall(String caller, String callee, String args, long threadID, long callTimeNanoSeconds, long cpuTime) {
 		super();
 		this.caller = caller;

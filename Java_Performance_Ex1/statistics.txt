@@ -1,0 +1,350 @@
+-------> Total times:
+-------> Wallclock:      1,27s    (1272,34ms),
+-------> CPU time:       0,02s    (15,63ms)
+
+-------------------------- Method: java.io.PrintStream.println --------------------------
+-> Total Calls: 7
+-> Sum walltime (% of total):      0,73ms (0,06%)
+-> Sum cputime  (% of total):      0,00ms (0,00%)
+
+-> Avg walltime (arithmetic):      0,10ms
+-> Avg cputime  (arithmetic):      0,00ms
+
+-> Min / Max walltime:      0,07ms     /      0,15ms
+-> Min / Max cputime:       0,00ms     /      0,00ms
+
+-> Callers:
+--->    1 calls (14,29%) from "test.Test_2.testmethod3"
+--->    1 calls (14,29%) from "test.Test_1.testmethod2"
+--->    3 calls (42,86%) from "test.Test_1.Test_1"
+--->    2 calls (28,57%) from "test.Test_1.main"
+
+
+-------------------------- Method: java.lang.System.currentTimeMillis --------------------------
+-> Total Calls: 1
+-> Sum walltime (% of total):      0,10ms (0,01%)
+-> Sum cputime  (% of total):      0,00ms (0,00%)
+
+-> Avg walltime (arithmetic):      0,10ms
+-> Avg cputime  (arithmetic):      0,00ms
+
+-> Min / Max walltime:      0,10ms     /      0,10ms
+-> Min / Max cputime:       0,00ms     /      0,00ms
+
+-> Callers:
+--->    1 calls (100,00%) from "test.Test_1.main"
+
+
+-------------------------- Method: test2.Test_3.otherPackageStaticMethod --------------------------
+-> Total Calls: 1
+-> Sum walltime (% of total):      1,04ms (0,08%)
+-> Sum cputime  (% of total):      0,00ms (0,00%)
+
+-> Avg walltime (arithmetic):      1,04ms
+-> Avg cputime  (arithmetic):      0,00ms
+
+-> Min / Max walltime:      1,04ms     /      1,04ms
+-> Min / Max cputime:       0,00ms     /      0,00ms
+
+-> Callers:
+--->    1 calls (100,00%) from "test.Test_1.main"
+
+
+-------------------------- Method: java.lang.StringBuilder.append --------------------------
+-> Total Calls: 5
+-> Sum walltime (% of total):      0,62ms (0,05%)
+-> Sum cputime  (% of total):      0,00ms (0,00%)
+
+-> Avg walltime (arithmetic):      0,12ms
+-> Avg cputime  (arithmetic):      0,00ms
+
+-> Min / Max walltime:      0,06ms     /      0,24ms
+-> Min / Max cputime:       0,00ms     /      0,00ms
+
+-> Callers:
+--->    1 calls (20,00%) from "test.Test_2.testmethod3"
+--->    1 calls (20,00%) from "test.Test_1.testmethod2"
+--->    2 calls (40,00%) from "test.Test_1.Test_1"
+--->    1 calls (20,00%) from "test.Test_1.main"
+
+
+-------------------------- Method: java.lang.StringBuilder.StringBuilder --------------------------
+-> Total Calls: 4
+-> Sum walltime (% of total):      0,36ms (0,03%)
+-> Sum cputime  (% of total):      0,00ms (0,00%)
+
+-> Avg walltime (arithmetic):      0,09ms
+-> Avg cputime  (arithmetic):      0,00ms
+
+-> Min / Max walltime:      0,06ms     /      0,12ms
+-> Min / Max cputime:       0,00ms     /      0,00ms
+
+-> Callers:
+--->    1 calls (25,00%) from "test.Test_2.testmethod3"
+--->    1 calls (25,00%) from "test.Test_1.testmethod2"
+--->    1 calls (25,00%) from "test.Test_1.Test_1"
+--->    1 calls (25,00%) from "test.Test_1.main"
+
+
+-------------------------- Method: java.lang.StringBuilder.toString --------------------------
+-> Total Calls: 3
+-> Sum walltime (% of total):      0,31ms (0,02%)
+-> Sum cputime  (% of total):      0,00ms (0,00%)
+
+-> Avg walltime (arithmetic):      0,10ms
+-> Avg cputime  (arithmetic):      0,00ms
+
+-> Min / Max walltime:      0,08ms     /      0,15ms
+-> Min / Max cputime:       0,00ms     /      0,00ms
+
+-> Callers:
+--->    1 calls (33,33%) from "test.Test_2.testmethod3"
+--->    1 calls (33,33%) from "test.Test_1.testmethod2"
+--->    1 calls (33,33%) from "test.Test_1.Test_1"
+
+
+-------------------------- Method: java.lang.Double.valueOf --------------------------
+-> Total Calls: 1
+-> Sum walltime (% of total):      0,04ms (0,00%)
+-> Sum cputime  (% of total):      0,00ms (0,00%)
+
+-> Avg walltime (arithmetic):      0,04ms
+-> Avg cputime  (arithmetic):      0,00ms
+
+-> Min / Max walltime:      0,04ms     /      0,04ms
+-> Min / Max cputime:       0,00ms     /      0,00ms
+
+-> Callers:
+--->    1 calls (100,00%) from "test.Test_1.main"
+
+
+-------------------------- Method: java.lang.Double.doubleValue --------------------------
+-> Total Calls: 1
+-> Sum walltime (% of total):      0,05ms (0,00%)
+-> Sum cputime  (% of total):      0,00ms (0,00%)
+
+-> Avg walltime (arithmetic):      0,05ms
+-> Avg cputime  (arithmetic):      0,00ms
+
+-> Min / Max walltime:      0,05ms     /      0,05ms
+-> Min / Max cputime:       0,00ms     /      0,00ms
+
+-> Callers:
+--->    1 calls (100,00%) from "test2.Test_3.otherPackageStaticMethod"
+
+
+-------------------------- Method: test.Test_1.testmethod2 --------------------------
+-> Total Calls: 1
+-> Sum walltime (% of total):      5,04ms (0,40%)
+-> Sum cputime  (% of total):      0,00ms (0,00%)
+
+-> Avg walltime (arithmetic):      5,04ms
+-> Avg cputime  (arithmetic):      0,00ms
+
+-> Min / Max walltime:      5,04ms     /      5,04ms
+-> Min / Max cputime:       0,00ms     /      0,00ms
+
+-> Callers:
+--->    1 calls (100,00%) from "test.Test_1.main"
+
+
+-------------------------- Method: test.Test_2.Test_2 --------------------------
+-> Total Calls: 1
+-> Sum walltime (% of total):      2,08ms (0,16%)
+-> Sum cputime  (% of total):      0,00ms (0,00%)
+
+-> Avg walltime (arithmetic):      2,08ms
+-> Avg cputime  (arithmetic):      0,00ms
+
+-> Min / Max walltime:      2,08ms     /      2,08ms
+-> Min / Max cputime:       0,00ms     /      0,00ms
+
+-> Callers:
+--->    1 calls (100,00%) from "test.Test_1.main"
+
+
+-------------------------- Method: test.Test_1.Test_1 --------------------------
+-> Total Calls: 2
+-> Sum walltime (% of total):     15,34ms (1,21%)
+-> Sum cputime  (% of total):     15,63ms (100,00%)
+
+-> Avg walltime (arithmetic):      7,67ms
+-> Avg cputime  (arithmetic):      7,81ms
+
+-> Min / Max walltime:      1,24ms     /     14,09ms
+-> Min / Max cputime:       0,00ms     /     15,63ms
+
+-> Callers:
+--->    2 calls (100,00%) from "test.Test_1.main"
+
+
+-------------------------- Method: test.Test_1.return5 --------------------------
+-> Total Calls: 2
+-> Sum walltime (% of total):      0,17ms (0,01%)
+-> Sum cputime  (% of total):      0,00ms (0,00%)
+
+-> Avg walltime (arithmetic):      0,08ms
+-> Avg cputime  (arithmetic):      0,00ms
+
+-> Min / Max walltime:      0,08ms     /      0,09ms
+-> Min / Max cputime:       0,00ms     /      0,00ms
+
+-> Callers:
+--->    1 calls (50,00%) from "test.Test_2.testmethod3"
+--->    1 calls (50,00%) from "test.Test_1.main"
+
+
+-------------------------- Method: java.lang.String.String --------------------------
+-> Total Calls: 1
+-> Sum walltime (% of total):      0,07ms (0,01%)
+-> Sum cputime  (% of total):      0,00ms (0,00%)
+
+-> Avg walltime (arithmetic):      0,07ms
+-> Avg cputime  (arithmetic):      0,00ms
+
+-> Min / Max walltime:      0,07ms     /      0,07ms
+-> Min / Max cputime:       0,00ms     /      0,00ms
+
+-> Callers:
+--->    1 calls (100,00%) from "test.Test_1.testmethod2"
+
+
+-------------------------- Method: test2.Test_3.Test_3 --------------------------
+-> Total Calls: 1
+-> Sum walltime (% of total):      0,05ms (0,00%)
+-> Sum cputime  (% of total):      0,00ms (0,00%)
+
+-> Avg walltime (arithmetic):      0,05ms
+-> Avg cputime  (arithmetic):      0,00ms
+
+-> Min / Max walltime:      0,05ms     /      0,05ms
+-> Min / Max cputime:       0,00ms     /      0,00ms
+
+-> Callers:
+--->    1 calls (100,00%) from "test.Test_1.main"
+
+
+-------------------------- Method: java.lang.String.valueOf --------------------------
+-> Total Calls: 1
+-> Sum walltime (% of total):      0,07ms (0,01%)
+-> Sum cputime  (% of total):      0,00ms (0,00%)
+
+-> Avg walltime (arithmetic):      0,07ms
+-> Avg cputime  (arithmetic):      0,00ms
+
+-> Min / Max walltime:      0,07ms     /      0,07ms
+-> Min / Max cputime:       0,00ms     /      0,00ms
+
+-> Callers:
+--->    1 calls (100,00%) from "test.Test_1.testmethod2"
+
+
+-------------------------- Method: test.Test_2.testmethod3 --------------------------
+-> Total Calls: 1
+-> Sum walltime (% of total):      4,65ms (0,37%)
+-> Sum cputime  (% of total):      0,00ms (0,00%)
+
+-> Avg walltime (arithmetic):      4,65ms
+-> Avg cputime  (arithmetic):      0,00ms
+
+-> Min / Max walltime:      4,65ms     /      4,65ms
+-> Min / Max cputime:       0,00ms     /      0,00ms
+
+-> Callers:
+--->    1 calls (100,00%) from "test.Test_1.main"
+
+
+-------------------------- Method: test2.Test_Uninstrumented.uninstrumentedSleep --------------------------
+-> Total Calls: 1
+-> Sum walltime (% of total):   1235,07ms (97,07%)
+-> Sum cputime  (% of total):      0,00ms (0,00%)
+
+-> Avg walltime (arithmetic):   1235,07ms
+-> Avg cputime  (arithmetic):      0,00ms
+
+-> Min / Max walltime:   1235,07ms     /   1235,07ms
+-> Min / Max cputime:       0,00ms     /      0,00ms
+
+-> Callers:
+--->    1 calls (100,00%) from "test.Test_1.main"
+
+
+-------------------------- Method: java.lang.Math.round --------------------------
+-> Total Calls: 2
+-> Sum walltime (% of total):      0,15ms (0,01%)
+-> Sum cputime  (% of total):      0,00ms (0,00%)
+
+-> Avg walltime (arithmetic):      0,08ms
+-> Avg cputime  (arithmetic):      0,00ms
+
+-> Min / Max walltime:      0,04ms     /      0,11ms
+-> Min / Max cputime:       0,00ms     /      0,00ms
+
+-> Callers:
+--->    1 calls (50,00%) from "test2.Test_3.otherPackageStaticMethod"
+--->    1 calls (50,00%) from "test2.Test_3.otherPackageMethod"
+
+
+-------------------------- Method: test2.Test_3.otherPackageMethod --------------------------
+-> Total Calls: 1
+-> Sum walltime (% of total):      0,49ms (0,04%)
+-> Sum cputime  (% of total):      0,00ms (0,00%)
+
+-> Avg walltime (arithmetic):      0,49ms
+-> Avg cputime  (arithmetic):      0,00ms
+
+-> Min / Max walltime:      0,49ms     /      0,49ms
+-> Min / Max cputime:       0,00ms     /      0,00ms
+
+-> Callers:
+--->    1 calls (100,00%) from "test.Test_1.main"
+
+
+-------------------------- Method: test.Test_1.recursiveLong --------------------------
+-> Total Calls: 4
+-> Sum walltime (% of total):      5,53ms (0,43%)
+-> Sum cputime  (% of total):      0,00ms (0,00%)
+
+-> Avg walltime (arithmetic):      1,38ms
+-> Avg cputime  (arithmetic):      0,00ms
+
+-> Min / Max walltime:      0,09ms     /      2,74ms
+-> Min / Max cputime:       0,00ms     /      0,00ms
+
+-> Callers:
+--->    3 calls (75,00%) from "test.Test_1.recursiveLong"
+--->    1 calls (25,00%) from "test.Test_1.main"
+
+
+-------------------------- Method: java.lang.Object.toString --------------------------
+-> Total Calls: 1
+-> Sum walltime (% of total):      0,04ms (0,00%)
+-> Sum cputime  (% of total):      0,00ms (0,00%)
+
+-> Avg walltime (arithmetic):      0,04ms
+-> Avg cputime  (arithmetic):      0,00ms
+
+-> Min / Max walltime:      0,04ms     /      0,04ms
+-> Min / Max cputime:       0,00ms     /      0,00ms
+
+-> Callers:
+--->    1 calls (100,00%) from "test.Test_1.main"
+
+
+-------------------------- Method: test.Test_1.nonStaticEmpty --------------------------
+-> Total Calls: 4
+-> Sum walltime (% of total):      0,34ms (0,03%)
+-> Sum cputime  (% of total):      0,00ms (0,00%)
+
+-> Avg walltime (arithmetic):      0,08ms
+-> Avg cputime  (arithmetic):      0,00ms
+
+-> Min / Max walltime:      0,06ms     /      0,11ms
+-> Min / Max cputime:       0,00ms     /      0,00ms
+
+-> Callers:
+--->    1 calls (25,00%) from "test.Test_2.testmethod3"
+--->    1 calls (25,00%) from "test.Test_1.main"
+--->    2 calls (50,00%) from "test.Test_1.Test_1"
+
+

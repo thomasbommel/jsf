@@ -7,11 +7,13 @@ import java.lang.management.ManagementFactory;
 
 public class HotMethodLogger {
 	
-	private static PrintStream outStream;
+	protected static PrintStream runtimeLoggingStream, statisticsLoggingStream;
 	static {
-		outStream = System.err;		//Default console stream
+		runtimeLoggingStream = System.err;		//Default console stream
+		statisticsLoggingStream = System.err;
 		try {
-			outStream = new PrintStream(new File("log.txt"));
+			runtimeLoggingStream = new PrintStream(new File("log.txt"));
+			statisticsLoggingStream = new PrintStream(new File("statistics.txt"));
 		} catch (FileNotFoundException | NullPointerException e) {
 			e.printStackTrace();
 		}
@@ -19,6 +21,9 @@ public class HotMethodLogger {
 	
 	private static final String methodTimerKeyFormat = "%s_%s_%d";
 	private static final StackMap<String, MethodCall> methodTimer = new StackMap<>();
+	private static final HotMethodStatistics methodStatistics = new HotMethodStatistics();
+	
+	//                --- Runtime Logging ---
 	
 	public static void startTrackingMethod(Object[] argsInReverseOrder, String callSite, String calledMethod) {
 		int i = 0;
@@ -40,7 +45,7 @@ public class HotMethodLogger {
 			if (i > 0) argString += ", ";
 		}
 		
-		outStream.printf("%-40s ----> %40s%n", callSite, String.format("%s(%s)", calledMethod, argString));
+		runtimeLoggingStream.printf("%-50s ----> %50s%n", callSite, String.format("%s(%s)", getSimpleMethodName(calledMethod), argString));
 		
 		long curThreadID = Thread.currentThread().getId();
 		methodTimer.add(String.format(methodTimerKeyFormat, callSite, calledMethod, curThreadID),
@@ -53,15 +58,23 @@ public class HotMethodLogger {
 		MethodCall call = methodTimer.remove(String.format(methodTimerKeyFormat, callSite, calledMethod, Thread.currentThread().getId()));
 		
 		String args = call.args;
+		
 		long wallTimePassed = System.nanoTime() - call.wallClockTimeNanos;
 		long cpuTimePassed = ManagementFactory.getThreadMXBean().getCurrentThreadCpuTime() - call.cpuTimeNanos;
-		double nanosToMillis = 1000000.0;
 		
-		outStream.printf("%-40s <---- %40s [wall = %.2f ms, cpu = %.2f ms, ret=%s]%n", 
-				callSite, String.format("%s(%s)", calledMethod, args), 
-				(double) wallTimePassed / nanosToMillis, cpuTimePassed / nanosToMillis, 
-				retVal == null ? "" : retVal.toString()
+		runtimeLoggingStream.printf("%-50s <---- %50s [wall = %.2fms, cpu = %.2fms%s]%n",
+				callSite, String.format("%s(%s)", getSimpleMethodName(calledMethod), args), 
+				(double) wallTimePassed / HotMethodStatistics.nanosToMillis, (double) cpuTimePassed / HotMethodStatistics.nanosToMillis,
+				retVal == null ? "" : ", ret=" + retVal.toString()
 		);
+		
+		call.wallTimePassedNanos = wallTimePassed;
+		call.cpuTimePassedNanos = cpuTimePassed;
+		methodStatistics.recordMethodCall(call);
+	}
+	
+	private static String getSimpleMethodName(String methodNameWithPackages) {
+		return methodNameWithPackages.substring(methodNameWithPackages.lastIndexOf('.') + 1);
 	}
 	
 }

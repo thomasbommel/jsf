@@ -4,6 +4,9 @@ import java.lang.instrument.Instrumentation;
 import java.util.ArrayList;
 import java.util.List;
 
+/**
+ * Only works for applications that use a single thread.
+ */
 public class HotMethodAgent {
 	
 	protected static final boolean DEBUG = false;

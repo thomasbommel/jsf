@@ -165,7 +165,7 @@ public class MixedTransformer implements ClassFileTransformer {
 		// [ args
 		code.addLdc(callSite.getDeclaringClass().getName() + "." + callSite.getName());
 		// [ args, callSite
-		code.addLdc(calledMethod.getName());
+		code.addLdc(calledMethod.getDeclaringClass().getName() + "." + calledMethod.getName());
 		// [ args, callSite, calledMethodName
 		code.addInvokestatic(loggerClassName, "startTrackingMethod", "([Ljava/lang/Object;Ljava/lang/String;Ljava/lang/String;)V");
 		// [
@@ -191,7 +191,7 @@ public class MixedTransformer implements ClassFileTransformer {
 		// [ return-value
 		code.addLdc(callSite.getDeclaringClass().getName() + "." + callSite.getName());
 		// [ return-value, callSite
-		code.addLdc(calledMethod.getName());
+		code.addLdc(calledMethod.getDeclaringClass().getName() + "." + calledMethod.getName());
 		// [ return-value, callSite, calledMethodName
 		code.addInvokestatic(loggerClassName, "stopTrackingMethod", "(Ljava/lang/Object;Ljava/lang/String;Ljava/lang/String;)V");
 		// [
