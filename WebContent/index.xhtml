@@ -17,22 +17,23 @@
 
 	Welcome to Test!
 	
-	
-	
-
+	<f:view>
 	<h:form>
-		<p:outputPanel deferred="true">
-			<h3>Loaded after page load.</h3>
-			<p>Lorem ipsum dolor sit amet...</p>
-		</p:outputPanel>
+        <h:panelGrid columns="2">
+            <h:outputLabel value="Celsius"></h:outputLabel>
+            <h:inputText  value="#{temperatureConvertor.celsius}"></h:inputText>
+        </h:panelGrid>
+        <h:commandButton action="#{temperatureConvertor.celsiusToFahrenheit}" value="Calculate"></h:commandButton>
+        <h:commandButton action="#{temperatureConvertor.reset}" value="Reset"></h:commandButton>
+        <h:messages layout="table"></h:messages>
+    </h:form>
+</f:view>
 
-		<div style="height: 600px"></div>
-
-		<p:outputPanel deferred="true" deferredMode="visible">
-			<h3>Loaded after the panel becomes visible on page scroll.</h3>
-			<p>Lorem ipsum dolor sit amet...</p>
-		</p:outputPanel>
-	</h:form>
+    <h:panelGroup rendered="#{temperatureConvertor.initial!=true}">
+    <h3> Result </h3>
+    <h:outputLabel value="Fahrenheit "></h:outputLabel>
+    <h:outputLabel value="#{temperatureConvertor.fahrenheit}"></h:outputLabel>
+    </h:panelGroup>
 
 </body>
 </html>
