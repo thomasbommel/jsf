@@ -1,3 +1,4 @@
+package deprecated;
 public class TemperatureConvertor {
     private double celsius;
     private double fahrenheit;

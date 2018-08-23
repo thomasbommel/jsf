@@ -1,10 +1,11 @@
+package deprecated;
  
 import java.util.Date;
  
 import org.hibernate.Session;
 
-import com.javawebtutor.HibernateUtil;
-import com.javawebtutor.User;
+import deprecated.HibernateUtil;
+import deprecated.User;
  
 public class Test {
     public static void main(String[] args) {

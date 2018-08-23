@@ -1,4 +1,4 @@
-package com.javawebtutor;
+package deprecated;
  
 import java.util.Date;
  
