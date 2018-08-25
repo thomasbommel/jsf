@@ -1,92 +1,92 @@
 test.Test_1.main                                   ---->                       Test_1(": hello 2", "hello")
 test.Test_1.Test_1                                 ---->                    StringBuilder("test constr2: ")
-test.Test_1.Test_1                                 <----                    StringBuilder("test constr2: ") [wall = 0,12ms, cpu = 0,00ms]
+test.Test_1.Test_1                                 <----                    StringBuilder("test constr2: ") [wall = 0,16ms, cpu = 0,00ms]
 test.Test_1.Test_1                                 ---->                                    append("hello")
-test.Test_1.Test_1                                 <----                                    append("hello") [wall = 0,24ms, cpu = 0,00ms, ret=test constr2: hello]
+test.Test_1.Test_1                                 <----                                    append("hello") [wall = 0,14ms, cpu = 0,00ms, ret=test constr2: hello]
 test.Test_1.Test_1                                 ---->                                append(": hello 2")
-test.Test_1.Test_1                                 <----                                append(": hello 2") [wall = 0,14ms, cpu = 0,00ms, ret=test constr2: hello: hello 2]
+test.Test_1.Test_1                                 <----                                append(": hello 2") [wall = 0,23ms, cpu = 0,00ms, ret=test constr2: hello: hello 2]
 test.Test_1.Test_1                                 ---->                                         toString()
-test.Test_1.Test_1                                 <----                                         toString() [wall = 0,15ms, cpu = 0,00ms, ret=test constr2: hello: hello 2]
+test.Test_1.Test_1                                 <----                                         toString() [wall = 0,13ms, cpu = 0,00ms, ret=test constr2: hello: hello 2]
 test.Test_1.Test_1                                 ---->            println("test constr2: hello: hello 2")
-test.Test_1.Test_1                                 <----            println("test constr2: hello: hello 2") [wall = 0,15ms, cpu = 0,00ms]
-test.Test_1.main                                   <----                       Test_1(": hello 2", "hello") [wall = 14,09ms, cpu = 15,63ms]
+test.Test_1.Test_1                                 <----            println("test constr2: hello: hello 2") [wall = 1,93ms, cpu = 0,00ms]
+test.Test_1.main                                   <----                       Test_1(": hello 2", "hello") [wall = 25,01ms, cpu = 15,63ms]
 test.Test_1.main                                   ---->                   nonStaticEmpty("objectref call")
-test.Test_1.main                                   <----                   nonStaticEmpty("objectref call") [wall = 0,07ms, cpu = 0,00ms]
+test.Test_1.main                                   <----                   nonStaticEmpty("objectref call") [wall = 0,27ms, cpu = 0,00ms]
 test.Test_1.main                                   ---->                                          return5()
-test.Test_1.main                                   <----                                          return5() [wall = 0,08ms, cpu = 0,00ms, ret=5]
+test.Test_1.main                                   <----                                          return5() [wall = 0,32ms, cpu = 0,00ms, ret=5]
 test.Test_1.main                                   ---->                                   testmethod2('k')
 test.Test_1.testmethod2                            ---->                              String("test?? --> ")
-test.Test_1.testmethod2                            <----                              String("test?? --> ") [wall = 0,07ms, cpu = 0,00ms]
+test.Test_1.testmethod2                            <----                              String("test?? --> ") [wall = 0,10ms, cpu = 0,00ms]
 test.Test_1.testmethod2                            ---->                             valueOf("test?? --> ")
-test.Test_1.testmethod2                            <----                             valueOf("test?? --> ") [wall = 0,07ms, cpu = 0,00ms, ret=test?? --> ]
+test.Test_1.testmethod2                            <----                             valueOf("test?? --> ") [wall = 0,10ms, cpu = 0,00ms, ret=test?? --> ]
 test.Test_1.testmethod2                            ---->                       StringBuilder("test?? --> ")
-test.Test_1.testmethod2                            <----                       StringBuilder("test?? --> ") [wall = 0,06ms, cpu = 0,00ms]
+test.Test_1.testmethod2                            <----                       StringBuilder("test?? --> ") [wall = 0,14ms, cpu = 0,00ms]
 test.Test_1.testmethod2                            ---->                                        append('k')
-test.Test_1.testmethod2                            <----                                        append('k') [wall = 0,07ms, cpu = 0,00ms, ret=test?? --> k]
+test.Test_1.testmethod2                            <----                                        append('k') [wall = 0,11ms, cpu = 0,00ms, ret=test?? --> k]
 test.Test_1.testmethod2                            ---->                                         toString()
-test.Test_1.testmethod2                            <----                                         toString() [wall = 0,09ms, cpu = 0,00ms, ret=test?? --> k]
+test.Test_1.testmethod2                            <----                                         toString() [wall = 0,15ms, cpu = 0,00ms, ret=test?? --> k]
 test.Test_1.testmethod2                            ---->                            println("test?? --> k")
-test.Test_1.testmethod2                            <----                            println("test?? --> k") [wall = 0,13ms, cpu = 0,00ms]
-test.Test_1.main                                   <----                                   testmethod2('k') [wall = 5,04ms, cpu = 0,00ms]
+test.Test_1.testmethod2                            <----                            println("test?? --> k") [wall = 0,62ms, cpu = 0,00ms]
+test.Test_1.main                                   <----                                   testmethod2('k') [wall = 9,12ms, cpu = 15,63ms]
 test.Test_1.main                                   ---->                                currentTimeMillis()
-test.Test_1.main                                   <----                                currentTimeMillis() [wall = 0,10ms, cpu = 0,00ms, ret=1530196405931]
+test.Test_1.main                                   <----                                currentTimeMillis() [wall = 0,09ms, cpu = 0,00ms, ret=1535198589540]
 test.Test_1.main                                   ---->                                   recursiveLong(3)
 test.Test_1.recursiveLong                          ---->                                   recursiveLong(2)
 test.Test_1.recursiveLong                          ---->                                   recursiveLong(1)
 test.Test_1.recursiveLong                          ---->                                   recursiveLong(0)
-test.Test_1.recursiveLong                          <----                                   recursiveLong(0) [wall = 0,09ms, cpu = 0,00ms, ret=0]
-test.Test_1.recursiveLong                          <----                                   recursiveLong(1) [wall = 0,91ms, cpu = 0,00ms, ret=1]
-test.Test_1.recursiveLong                          <----                                   recursiveLong(2) [wall = 1,80ms, cpu = 0,00ms, ret=2]
-test.Test_1.main                                   <----                                   recursiveLong(3) [wall = 2,74ms, cpu = 0,00ms, ret=3]
+test.Test_1.recursiveLong                          <----                                   recursiveLong(0) [wall = 0,08ms, cpu = 0,00ms, ret=0]
+test.Test_1.recursiveLong                          <----                                   recursiveLong(1) [wall = 2,01ms, cpu = 0,00ms, ret=1]
+test.Test_1.recursiveLong                          <----                                   recursiveLong(2) [wall = 3,44ms, cpu = 0,00ms, ret=2]
+test.Test_1.main                                   <----                                   recursiveLong(3) [wall = 4,90ms, cpu = 0,00ms, ret=3]
 test.Test_1.main                                   ---->                             StringBuilder("tezzt")
-test.Test_1.main                                   <----                             StringBuilder("tezzt") [wall = 0,09ms, cpu = 0,00ms]
+test.Test_1.main                                   <----                             StringBuilder("tezzt") [wall = 0,11ms, cpu = 0,00ms]
 test.Test_1.main                                   ---->                                    append(" test")
-test.Test_1.main                                   <----                                    append(" test") [wall = 0,11ms, cpu = 0,00ms, ret=tezzt test]
+test.Test_1.main                                   <----                                    append(" test") [wall = 0,06ms, cpu = 0,00ms, ret=tezzt test]
 test.Test_1.main                                   ---->                                println(tezzt test)
-test.Test_1.main                                   <----                                println(tezzt test) [wall = 0,09ms, cpu = 0,00ms]
+test.Test_1.main                                   <----                                println(tezzt test) [wall = 0,27ms, cpu = 0,00ms]
 test.Test_1.main                                   ---->                                           Test_1()
 test.Test_1.Test_1                                 ---->                             println("test constr")
-test.Test_1.Test_1                                 <----                             println("test constr") [wall = 0,07ms, cpu = 0,00ms]
+test.Test_1.Test_1                                 <----                             println("test constr") [wall = 0,09ms, cpu = 0,00ms]
 test.Test_1.Test_1                                 ---->              nonStaticEmpty("call nonStaticEmpty")
-test.Test_1.Test_1                                 <----              nonStaticEmpty("call nonStaticEmpty") [wall = 0,10ms, cpu = 0,00ms]
-test.Test_1.main                                   <----                                           Test_1() [wall = 1,24ms, cpu = 0,00ms]
+test.Test_1.Test_1                                 <----              nonStaticEmpty("call nonStaticEmpty") [wall = 0,08ms, cpu = 0,00ms]
+test.Test_1.main                                   <----                                           Test_1() [wall = 2,26ms, cpu = 15,63ms]
 test.Test_1.main                                   ---->                                           Test_2()
 test.Test_1.Test_1                                 ---->                             println("test constr")
-test.Test_1.Test_1                                 <----                             println("test constr") [wall = 0,11ms, cpu = 0,00ms]
+test.Test_1.Test_1                                 <----                             println("test constr") [wall = 0,50ms, cpu = 0,00ms]
 test.Test_1.Test_1                                 ---->              nonStaticEmpty("call nonStaticEmpty")
-test.Test_1.Test_1                                 <----              nonStaticEmpty("call nonStaticEmpty") [wall = 0,11ms, cpu = 0,00ms]
-test.Test_1.main                                   <----                                           Test_2() [wall = 2,08ms, cpu = 0,00ms]
+test.Test_1.Test_1                                 <----              nonStaticEmpty("call nonStaticEmpty") [wall = 0,08ms, cpu = 0,00ms]
+test.Test_1.main                                   <----                                           Test_2() [wall = 3,90ms, cpu = 0,00ms]
 test.Test_1.main                                   ---->                                      testmethod3()
 test.Test_2.testmethod3                            ---->           StringBuilder("Subclass methodcall ;; ")
-test.Test_2.testmethod3                            <----           StringBuilder("Subclass methodcall ;; ") [wall = 0,08ms, cpu = 0,00ms]
+test.Test_2.testmethod3                            <----           StringBuilder("Subclass methodcall ;; ") [wall = 0,07ms, cpu = 0,00ms]
 test.Test_2.testmethod3                            ---->                                          return5()
-test.Test_2.testmethod3                            <----                                          return5() [wall = 0,09ms, cpu = 0,00ms, ret=5]
+test.Test_2.testmethod3                            <----                                          return5() [wall = 0,26ms, cpu = 0,00ms, ret=5]
 test.Test_2.testmethod3                            ---->                                          append(5)
-test.Test_2.testmethod3                            <----                                          append(5) [wall = 0,06ms, cpu = 0,00ms, ret=Subclass methodcall ;; 5]
+test.Test_2.testmethod3                            <----                                          append(5) [wall = 0,26ms, cpu = 0,00ms, ret=Subclass methodcall ;; 5]
 test.Test_2.testmethod3                            ---->                                         toString()
-test.Test_2.testmethod3                            <----                                         toString() [wall = 0,08ms, cpu = 0,00ms, ret=Subclass methodcall ;; 5]
+test.Test_2.testmethod3                            <----                                         toString() [wall = 0,06ms, cpu = 0,00ms, ret=Subclass methodcall ;; 5]
 test.Test_2.testmethod3                            ---->                println("Subclass methodcall ;; 5")
-test.Test_2.testmethod3                            <----                println("Subclass methodcall ;; 5") [wall = 0,11ms, cpu = 0,00ms]
+test.Test_2.testmethod3                            <----                println("Subclass methodcall ;; 5") [wall = 0,13ms, cpu = 0,00ms]
 test.Test_2.testmethod3                            ---->                       nonStaticEmpty("super call")
-test.Test_2.testmethod3                            <----                       nonStaticEmpty("super call") [wall = 0,06ms, cpu = 0,00ms]
-test.Test_1.main                                   <----                                      testmethod3() [wall = 4,65ms, cpu = 0,00ms]
+test.Test_2.testmethod3                            <----                       nonStaticEmpty("super call") [wall = 0,07ms, cpu = 0,00ms]
+test.Test_1.main                                   <----                                      testmethod3() [wall = 6,50ms, cpu = 0,00ms]
 test.Test_1.main                                   ---->                                         toString()
 test.Test_1.main                                   <----                                         toString() [wall = 0,04ms, cpu = 0,00ms, ret=This is a subclass]
 test.Test_1.main                                   ---->                      println("This is a subclass")
-test.Test_1.main                                   <----                      println("This is a subclass") [wall = 0,08ms, cpu = 0,00ms]
+test.Test_1.main                                   <----                      println("This is a subclass") [wall = 0,09ms, cpu = 0,00ms]
 test.Test_1.main                                   ---->                                      valueOf(3.49)
-test.Test_1.main                                   <----                                      valueOf(3.49) [wall = 0,04ms, cpu = 0,00ms, ret=3.49]
+test.Test_1.main                                   <----                                      valueOf(3.49) [wall = 0,06ms, cpu = 0,00ms, ret=3.49]
 test.Test_1.main                                   ---->                     otherPackageStaticMethod(3.49)
 test2.Test_3.otherPackageStaticMethod              ---->                                      doubleValue()
-test2.Test_3.otherPackageStaticMethod              <----                                      doubleValue() [wall = 0,05ms, cpu = 0,00ms, ret=3.49]
+test2.Test_3.otherPackageStaticMethod              <----                                      doubleValue() [wall = 0,12ms, cpu = 0,00ms, ret=3.49]
 test2.Test_3.otherPackageStaticMethod              ---->                                        round(3.49)
-test2.Test_3.otherPackageStaticMethod              <----                                        round(3.49) [wall = 0,11ms, cpu = 0,00ms, ret=3]
-test.Test_1.main                                   <----                     otherPackageStaticMethod(3.49) [wall = 1,04ms, cpu = 0,00ms, ret=3]
+test2.Test_3.otherPackageStaticMethod              <----                                        round(3.49) [wall = 0,12ms, cpu = 0,00ms, ret=3]
+test.Test_1.main                                   <----                     otherPackageStaticMethod(3.49) [wall = 1,69ms, cpu = 0,00ms, ret=3]
 test.Test_1.main                                   ---->                                           Test_3()
-test.Test_1.main                                   <----                                           Test_3() [wall = 0,05ms, cpu = 0,00ms]
+test.Test_1.main                                   <----                                           Test_3() [wall = 0,06ms, cpu = 0,00ms]
 test.Test_1.main                                   ---->                            otherPackageMethod(4.5)
 test2.Test_3.otherPackageMethod                    ---->                                         round(4.5)
-test2.Test_3.otherPackageMethod                    <----                                         round(4.5) [wall = 0,04ms, cpu = 0,00ms, ret=5]
-test.Test_1.main                                   <----                            otherPackageMethod(4.5) [wall = 0,49ms, cpu = 0,00ms, ret=5]
+test2.Test_3.otherPackageMethod                    <----                                         round(4.5) [wall = 0,05ms, cpu = 0,00ms, ret=5]
+test.Test_1.main                                   <----                            otherPackageMethod(4.5) [wall = 0,70ms, cpu = 0,00ms, ret=5]
 test.Test_1.main                                   ---->                          uninstrumentedSleep(1234)
-test.Test_1.main                                   <----                          uninstrumentedSleep(1234) [wall = 1235,07ms, cpu = 0,00ms]
+test.Test_1.main                                   <----                          uninstrumentedSleep(1234) [wall = 1236,16ms, cpu = 0,00ms]
