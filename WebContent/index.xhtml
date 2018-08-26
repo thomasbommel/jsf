@@ -4,13 +4,8 @@
 	xmlns:p="http://primefaces.org/ui"
 	xmlns:h="http://java.sun.com/jsf/html"
 	xmlns:f="http://java.sun.com/jsf/core">
-<head>
-<meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1"
-	 />
-<title>Welcome to Test!</title>
-</head>
-<body>
-
+<h:head></h:head>
+<h:body>
 	<script type="text/javascript">
 		console.log('javascript working');
 	</script>
@@ -23,8 +18,8 @@
             <h:outputLabel value="Celsius"></h:outputLabel>
             <h:inputText  value="#{temperatureConvertor.celsius}"></h:inputText>
         </h:panelGrid>
-        <h:commandButton action="#{temperatureConvertor.celsiusToFahrenheit}" value="Calculate"></h:commandButton>
-        <h:commandButton action="#{temperatureConvertor.reset}" value="Reset"></h:commandButton>
+        <h:commandButton style="" action="#{temperatureConvertor.celsiusToFahrenheit}" value="Calculate"></h:commandButton>
+        <p:commandButton action="#{temperatureConvertor.reset}" value="Reset" ajax="false" ></p:commandButton>
         <h:messages layout="table"></h:messages>
     </h:form>
 </f:view>
@@ -35,5 +30,12 @@
     <h:outputLabel value="#{temperatureConvertor.fahrenheit}"></h:outputLabel>
     </h:panelGroup>
 
-</body>
+<p:outputLabel value = "TESTTEST"></p:outputLabel>
+ <p:commandButton value="checkcheck"></p:commandButton>
+ 
+
+        <p:outputLabel for="popup" value="Popup:" />
+        <p:calendar id="popup"  />
+
+</h:body>
 </html>
