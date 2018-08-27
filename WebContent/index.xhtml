@@ -12,30 +12,46 @@
 
 	Welcome to Test!
 	
-	<f:view>
-	<h:form>
-        <h:panelGrid columns="2">
-            <h:outputLabel value="Celsius"></h:outputLabel>
-            <h:inputText  value="#{temperatureConvertor.celsius}"></h:inputText>
-        </h:panelGrid>
-        <h:commandButton style="" action="#{temperatureConvertor.celsiusToFahrenheit}" value="Calculate"></h:commandButton>
-        <p:commandButton action="#{temperatureConvertor.reset}" value="Reset" ajax="false" ></p:commandButton>
-        <h:messages layout="table"></h:messages>
-    </h:form>
-</f:view>
 
-    <h:panelGroup rendered="#{temperatureConvertor.initial!=true}">
-    <h3> Result </h3>
-    <h:outputLabel value="Fahrenheit "></h:outputLabel>
-    <h:outputLabel value="#{temperatureConvertor.fahrenheit}"></h:outputLabel>
-    </h:panelGroup>
 
-<p:outputLabel value = "TESTTEST"></p:outputLabel>
- <p:commandButton value="checkcheck"></p:commandButton>
- 
+	<h:form id="form">
 
-        <p:outputLabel for="popup" value="Popup:" />
-        <p:calendar id="popup"  />
+
+		<p:growl id="msgs" />
+
+		<p:panel header="Create a new Container" style="margin-bottom:20px">
+			<h:panelGrid columns="2" cellpadding="5">
+				<p:inputText id="nameInput"
+					value="#{containerHandler.newContainer.name}" required="true" />
+
+				<p:commandButton id="btn_reset" value="Reset" type="reset" />
+				<p:commandButton id="btn_add" value="Add"
+					update="containerPanel msgs @parent"
+					actionListener="#{containerHandler.createNew}" >
+					<p:collector value="#{containerHandler.newContainer}"
+						addTo="#{containerHandler.containers}" unique="true" />
+				</p:commandButton>
+			</h:panelGrid>
+		</p:panel>
+
+
+		<p:outputPanel id="containerPanel">
+			<p:dataTable value="#{containerHandler.containers}" var="container"
+				id="containerTable">
+				<p:column headerText="Name">
+					<h:outputText value="#{container.name}" />
+				</p:column>
+				<p:column headerText="Action">
+					<p:commandLink value="Remove" update=":form:containerPanel"
+						actionListener="#{containerHandler.deleteContainer(container)}"
+						process=":form:containerPanel">
+						<p:collector value="#{container}"
+							removeFrom="#{containerHandler.containers}" unique="true" />
+					</p:commandLink>
+				</p:column>
+			</p:dataTable>
+		</p:outputPanel>
+	</h:form>
 
 </h:body>
 </html>
