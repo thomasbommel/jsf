@@ -10,7 +10,7 @@ import database.entities.Container;
 
 public class ContainerHandler {
 
-	private Container		newContainer;
+	private Container		currentContainer;
 	private List<Container>	containers;
 
 	public List<Container> getContainers() {
@@ -41,32 +41,26 @@ public class ContainerHandler {
 
 	public void createNew() {
 		System.out.println("ContainerHandler.createNew");
-		Container containerToCreate = getNewContainer();
-		if (containers.contains(containerToCreate)) {
-			FacesMessage msg = new FacesMessage("Dublicated", "This Container has already been added");
+		Container containerToCreate = getCurrentContainer();
+
+		if (containers.stream().anyMatch(cont -> cont.getName().equals(containerToCreate.getName()))) {
+			System.out.println("duplicate");
+			FacesMessage msg = new FacesMessage("Duplicated", "This Container has already been added");
 			FacesContext.getCurrentInstance().addMessage(null, msg);
 		} else {
 			ContainerDAO.getInstance().beginConversationWithTransaction();
 			ContainerDAO.getInstance().persist(containerToCreate);
 			containers.add(containerToCreate);
 			ContainerDAO.getInstance().endConversationWithTransaction();
+			currentContainer = null;
 		}
 	}
 
-	public void reinit() {
-		System.out.println("ContainerHandler.reinit");
-		newContainer = new Container();
-	}
-
-	public Container getNewContainer() {
-		if (newContainer == null) {
-			reinit();
+	public Container getCurrentContainer() {
+		if (currentContainer == null) {
+			currentContainer = new Container();
 		}
-		return newContainer;
-	}
-
-	public void setNewContainer(Container newContainer) {
-		this.newContainer = newContainer;
+		return currentContainer;
 	}
 
 }

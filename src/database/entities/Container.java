@@ -111,4 +111,66 @@ public class Container {
 				+ children + ", items=" + items + "]";
 	}
 
+	@Override
+	public int hashCode() {
+		final int prime = 31;
+		int result = 1;
+		result = prime * result + ((children == null) ? 0 : children.hashCode());
+		result = prime * result + ((containerId == null) ? 0 : containerId.hashCode());
+		result = prime * result + ((items == null) ? 0 : items.hashCode());
+		result = prime * result + ((name == null) ? 0 : name.hashCode());
+		result = prime * result + ((parent == null) ? 0 : parent.hashCode());
+		return result;
+	}
+
+	@Override
+	public boolean equals(Object obj) {
+		if (this == obj) {
+			return true;
+		}
+		if (obj == null) {
+			return false;
+		}
+		if (getClass() != obj.getClass()) {
+			return false;
+		}
+		Container other = (Container) obj;
+		if (children == null) {
+			if (other.children != null) {
+				return false;
+			}
+		} else if (!children.equals(other.children)) {
+			return false;
+		}
+		if (containerId == null) {
+			if (other.containerId != null) {
+				return false;
+			}
+		} else if (!containerId.equals(other.containerId)) {
+			return false;
+		}
+		if (items == null) {
+			if (other.items != null) {
+				return false;
+			}
+		} else if (!items.equals(other.items)) {
+			return false;
+		}
+		if (name == null) {
+			if (other.name != null) {
+				return false;
+			}
+		} else if (!name.equals(other.name)) {
+			return false;
+		}
+		if (parent == null) {
+			if (other.parent != null) {
+				return false;
+			}
+		} else if (!parent.equals(other.parent)) {
+			return false;
+		}
+		return true;
+	}
+
 }

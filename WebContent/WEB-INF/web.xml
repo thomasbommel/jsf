@@ -21,10 +21,8 @@
 
 	<context-param>
 		<param-name>primefaces.THEME</param-name>
-		<param-value>afterdark</param-value>
+		<param-value>cruze</param-value>
 	</context-param>
-
-
 
 	<!-- JSF mapping -->
 	<servlet>

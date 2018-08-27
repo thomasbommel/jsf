@@ -12,25 +12,19 @@
 
 	Welcome to Test!
 	
-
+<p:growl id="msgs" autoUpdate="true" sticky="true" showDetail="true" />
 
 	<h:form id="form">
-
-
-		<p:growl id="msgs" />
-
+		
 		<p:panel header="Create a new Container" style="margin-bottom:20px">
 			<h:panelGrid columns="2" cellpadding="5">
-				<p:inputText id="nameInput"
-					value="#{containerHandler.newContainer.name}" required="true" />
+				<p:inputText id="nameInput" label="nameInput" value="#{containerHandler.currentContainer.name}"
+					 required="true" />
 
 				<p:commandButton id="btn_reset" value="Reset" type="reset" />
 				<p:commandButton id="btn_add" value="Add"
-					update="containerPanel msgs @parent"
-					actionListener="#{containerHandler.createNew}" >
-					<p:collector value="#{containerHandler.newContainer}"
-						addTo="#{containerHandler.containers}" unique="true" />
-				</p:commandButton>
+					update="msgs containerPanel @parent"
+					actionListener="#{containerHandler.createNew()}"/>
 			</h:panelGrid>
 		</p:panel>
 
