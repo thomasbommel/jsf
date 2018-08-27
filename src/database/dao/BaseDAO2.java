@@ -86,6 +86,11 @@ public class BaseDAO2<T> {
 	}
 
 	@SuppressWarnings("unchecked")
+	public T findById(Integer id) {
+		return getSession().get(clazz, id);
+	}
+
+	@SuppressWarnings("unchecked")
 	public List<T> findAll() {
 		return getSession().createQuery("from " + clazz.getSimpleName()).list();
 	}

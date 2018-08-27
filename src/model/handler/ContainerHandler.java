@@ -31,9 +31,11 @@ public class ContainerHandler {
 		System.out.println("ContainerHandler.deleteContainer");
 		if (container != null) {
 			System.out.println("deleteContainer: " + container);
-			ContainerDAO.getInstance().beginTransaction();
+			containers.remove(container);
+			ContainerDAO.getInstance().beginConversationWithTransaction();
+			container = ContainerDAO.getInstance().findById(container.getContainerId());
 			ContainerDAO.getInstance().delete(container);
-			ContainerDAO.getInstance().commitTransaction();
+			ContainerDAO.getInstance().endConversationWithTransaction();
 		} else {
 			System.out.println("container was null");
 		}

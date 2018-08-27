@@ -15,20 +15,22 @@
 <p:growl id="msgs" autoUpdate="true" sticky="true" showDetail="true" />
 
 	<h:form id="form">
-		
-		<p:panel header="Create a new Container" style="margin-bottom:20px">
-			<h:panelGrid columns="2" cellpadding="5">
-				<p:inputText id="nameInput" label="nameInput" value="#{containerHandler.currentContainer.name}"
-					 required="true" />
 
-				<p:commandButton id="btn_reset" value="Reset" type="reset" />
+		<p:panel header="Create a new Container" style="margin-bottom:10px">
+			<h:panelGrid columns="3">
+				<p:inputText id="nameInput" label="nameInput"
+					value="#{containerHandler.currentContainer.name}" required="true" />
+
+
 				<p:commandButton id="btn_add" value="Add"
-					update="msgs containerPanel @parent"
-					actionListener="#{containerHandler.createNew()}"/>
+					update="msgs :tableform:containerPanel @parent"
+					actionListener="#{containerHandler.createNew()}" />
+				<p:commandButton id="btn_reset" value="Reset" type="reset" />
 			</h:panelGrid>
 		</p:panel>
+	</h:form>
 
-
+	<h:form id="tableform">
 		<p:outputPanel id="containerPanel">
 			<p:dataTable value="#{containerHandler.containers}" var="container"
 				id="containerTable">
@@ -36,16 +38,22 @@
 					<h:outputText value="#{container.name}" />
 				</p:column>
 				<p:column headerText="Action">
-					<p:commandLink value="Remove" update=":form:containerPanel"
-						actionListener="#{containerHandler.deleteContainer(container)}"
-						process=":form:containerPanel">
-						<p:collector value="#{container}"
-							removeFrom="#{containerHandler.containers}" unique="true" />
-					</p:commandLink>
+					<p:commandButton id="btn_remove" value="Remove" update="@form"
+						actionListener="#{containerHandler.deleteContainer(container)}">
+						<p:confirm header="Confirmation" message="Are you sure?"
+							icon="ui-icon-alert" />
+					</p:commandButton>
 				</p:column>
 			</p:dataTable>
 		</p:outputPanel>
-	</h:form>
 
+		<p:confirmDialog global="true" showEffect="fade" hideEffect="fade" closable="false" >
+			<p:commandButton value="Yes" type="button"
+				styleClass="ui-confirmdialog-yes" icon="ui-icon-check" />
+			<p:commandButton value="No" type="button"
+				styleClass="ui-confirmdialog-no" icon="ui-icon-close" />
+		</p:confirmDialog>
+
+	</h:form>
 </h:body>
 </html>
