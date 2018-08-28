@@ -6,54 +6,75 @@
 	xmlns:f="http://java.sun.com/jsf/core">
 <h:head></h:head>
 <h:body>
-	<script type="text/javascript">
-		console.log('javascript working');
-	</script>
+	<p:growl id="msgs" autoUpdate="true" sticky="true" showDetail="true" />
 
-	Welcome to Test!
-	
-<p:growl id="msgs" autoUpdate="true" sticky="true" showDetail="true" />
+	<div class="ui-g">
 
-	<h:form id="form">
+		<div class="ui-g-12 ui-md-4 ui-lg-2" id="menuDiv">
+			<h:form id="menu">
+				<p:menu style="width:100%;">
+					<p:submenu label="Ajax">
+						<p:menuitem value="Save" update="msgs" icon="ui-icon-disk" />
+						<p:menuitem value="Update" update="msgs"
+							icon="ui-icon-arrowrefresh-1-w" />
+					</p:submenu>
+					<p:submenu label="Non-Ajax">
+						<p:menuitem value="Delete" update="msgs" ajax="false"
+							icon="ui-icon-close" />
+					</p:submenu>
+					<p:submenu label="Navigations">
+						<p:menuitem value="External" url="http://www.primefaces.org"
+							icon="ui-icon-home" />
+						<p:menuitem value="Internal" icon="ui-icon-star" />
+					</p:submenu>
+				</p:menu>
+			</h:form>
+		</div>
 
-		<p:panel header="Create a new Container" style="margin-bottom:10px">
-			<h:panelGrid columns="3">
-				<p:inputText id="nameInput" label="nameInput"
-					value="#{containerHandler.currentContainer.name}" required="true" />
+
+		<div class="ui-g-12 ui-md-8 ui-lg-10" id="contentDiv">
+			<h:form id="form">
+				<p:panel header="Create a new Container" style="margin-bottom:4px;">
+					<h:panelGrid columns="3">
+						<p:inputText id="nameInput" label="nameInput"
+							value="#{containerHandler.currentContainer.name}" required="true" />
 
 
-				<p:commandButton id="btn_add" value="Add"
-					update="msgs :tableform:containerPanel @parent"
-					actionListener="#{containerHandler.createNew()}" />
-				<p:commandButton id="btn_reset" value="Reset" type="reset" />
-			</h:panelGrid>
-		</p:panel>
-	</h:form>
+						<p:commandButton id="btn_add" value="Add"
+							update="msgs :tableform:containerPanel @parent"
+							actionListener="#{containerHandler.createNew()}" />
+						<p:commandButton id="btn_reset" value="Reset" type="reset" />
+					</h:panelGrid>
+				</p:panel>
+			</h:form>
 
-	<h:form id="tableform">
-		<p:outputPanel id="containerPanel">
-			<p:dataTable value="#{containerHandler.containers}" var="container"
-				id="containerTable">
-				<p:column headerText="Name">
-					<h:outputText value="#{container.name}" />
-				</p:column>
-				<p:column headerText="Action">
-					<p:commandButton id="btn_remove" value="Remove" update="@form"
-						actionListener="#{containerHandler.deleteContainer(container)}">
-						<p:confirm header="Confirmation" message="Are you sure?"
-							icon="ui-icon-alert" />
-					</p:commandButton>
-				</p:column>
-			</p:dataTable>
-		</p:outputPanel>
+			<h:form id="tableform">
+				<p:outputPanel id="containerPanel">
+					<p:dataTable value="#{containerHandler.containers}" var="container"
+						id="containerTable">
+						<p:column headerText="Name">
+							<h:outputText value="#{container.name}" />
+						</p:column>
+						<p:column headerText="Action" >
+							<p:commandButton id="btn_remove" value="Remove" update="@form"
+								actionListener="#{containerHandler.deleteContainer(container)}">
+								<p:confirm header="Confirmation" message="Are you sure?"
+									icon="ui-icon-alert" />
+							</p:commandButton>
+						</p:column>
+					</p:dataTable>
+				</p:outputPanel>
 
-		<p:confirmDialog global="true" showEffect="fade" hideEffect="fade" closable="false" >
-			<p:commandButton value="Yes" type="button"
-				styleClass="ui-confirmdialog-yes" icon="ui-icon-check" />
-			<p:commandButton value="No" type="button"
-				styleClass="ui-confirmdialog-no" icon="ui-icon-close" />
-		</p:confirmDialog>
+				<p:confirmDialog global="true" showEffect="fade" hideEffect="fade"
+					closable="false">
+					<p:commandButton value="Yes" type="button"
+						styleClass="ui-confirmdialog-yes" icon="ui-icon-check" />
+					<p:commandButton value="No" type="button"
+						styleClass="ui-confirmdialog-no" icon="ui-icon-close" />
+				</p:confirmDialog>
+			</h:form>
 
-	</h:form>
+		</div>
+	</div>
 </h:body>
 </html>
