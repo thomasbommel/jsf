@@ -10,6 +10,7 @@ import javax.persistence.CollectionTable;
 import javax.persistence.Column;
 import javax.persistence.ElementCollection;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
@@ -31,14 +32,14 @@ public class Container {
 	@Column(name = "container_name")
 	private String				name;
 
-	@ManyToOne
+	@ManyToOne(fetch = FetchType.EAGER)
 	@JoinColumn(name = "container_parent")
 	private Container			parent;
 
-	@OneToMany(mappedBy = "parent", cascade = CascadeType.ALL)
+	@OneToMany(mappedBy = "parent", cascade = CascadeType.ALL, fetch = FetchType.EAGER)
 	private Set<Container>		children;
 
-	@ElementCollection
+	@ElementCollection(fetch = FetchType.EAGER)
 	@CollectionTable(name = "item_container", joinColumns = @JoinColumn(name = "container_id"))
 	@Column(name = "count")
 	@MapKeyJoinColumn(name = "item_id", insertable = true, updatable = true)
@@ -94,6 +95,14 @@ public class Container {
 		return java.util.Collections.unmodifiableSet(children);
 	}
 
+	public Set<Container> getChildren() {
+		return children;
+	}
+
+	public void setChildren(Set<Container> children) {
+		this.children = children;
+	}
+
 	public Map<Item, Integer> getItems() {
 		if (items == null) {
 			items = new HashMap<>();
@@ -107,19 +116,17 @@ public class Container {
 
 	@Override
 	public String toString() {
-		return "Container [containerId=" + containerId + ", name=" + name + ", parent=" + parent + ", children="
-				+ children + ", items=" + items + "]";
+		return "Container [containerId=" + containerId + ", name=" + name + ", parent=" + parent + ", items=" + items
+				+ "]";
 	}
 
 	@Override
 	public int hashCode() {
 		final int prime = 31;
 		int result = 1;
-		result = prime * result + ((children == null) ? 0 : children.hashCode());
 		result = prime * result + ((containerId == null) ? 0 : containerId.hashCode());
 		result = prime * result + ((items == null) ? 0 : items.hashCode());
 		result = prime * result + ((name == null) ? 0 : name.hashCode());
-		result = prime * result + ((parent == null) ? 0 : parent.hashCode());
 		return result;
 	}
 
@@ -135,13 +142,7 @@ public class Container {
 			return false;
 		}
 		Container other = (Container) obj;
-		if (children == null) {
-			if (other.children != null) {
-				return false;
-			}
-		} else if (!children.equals(other.children)) {
-			return false;
-		}
+
 		if (containerId == null) {
 			if (other.containerId != null) {
 				return false;

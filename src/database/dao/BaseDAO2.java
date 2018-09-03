@@ -19,13 +19,17 @@ public class BaseDAO2<T> {
 	}
 
 	private static SessionFactory getSessionFactory() {
-		try {
-			// Create the SessionFactory from hibernate.cfg.xml
-			return new Configuration().configure().buildSessionFactory();
-		} catch (Throwable ex) {
-			// Make sure you log the exception, as it might be swallowed
-			System.err.println("SessionFactory creation failed." + ex);
-			throw new ExceptionInInitializerError(ex);
+		if (sessionFactory == null) {
+			try {
+				// Create the SessionFactory from hibernate.cfg.xml
+				return new Configuration().configure().buildSessionFactory();
+			} catch (Throwable ex) {
+				// Make sure you log the exception, as it might be swallowed
+				System.err.println("SessionFactory creation failed." + ex);
+				throw new ExceptionInInitializerError(ex);
+			}
+		} else {
+			return sessionFactory;
 		}
 	}
 

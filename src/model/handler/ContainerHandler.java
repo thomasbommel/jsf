@@ -1,9 +1,14 @@
 package model.handler;
 
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import javax.faces.application.FacesMessage;
 import javax.faces.context.FacesContext;
+
+import org.primefaces.model.DefaultTreeNode;
+import org.primefaces.model.TreeNode;
 
 import database.dao.ContainerDAO;
 import database.entities.Container;
@@ -63,6 +68,30 @@ public class ContainerHandler {
 			currentContainer = new Container();
 		}
 		return currentContainer;
+	}
+
+	public TreeNode getTreeTable() {
+		TreeNode root = new DefaultTreeNode(new Container("RootContainer"), null);
+		ContainerDAO.getInstance().beginConversationWithTransaction();
+		List<Container> containerList = ContainerDAO.getInstance().findAll();
+		ContainerDAO.getInstance().endConversationWithTransaction();
+
+		Map<Container, TreeNode> containerNodes = new HashMap<>();
+		containerList.forEach(c -> {
+			containerNodes.put(c, new DefaultTreeNode(c));
+		});
+
+		containerNodes.entrySet().forEach(e -> {
+			Container parent = e.getKey().getParent();
+
+			if (parent == null) {
+				root.getChildren().add(e.getValue());
+			} else {
+				containerNodes.get(parent).getChildren().add(e.getValue());
+			}
+		});
+
+		return root;
 	}
 
 }

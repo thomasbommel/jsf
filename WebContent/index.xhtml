@@ -55,7 +55,7 @@
 						<p:column headerText="Name">
 							<h:outputText value="#{container.name}" />
 						</p:column>
-						<p:column headerText="Action" >
+						<p:column headerText="Action">
 							<p:commandButton id="btn_remove" value="Remove" update="@form"
 								actionListener="#{containerHandler.deleteContainer(container)}">
 								<p:confirm header="Confirmation" message="Are you sure?"
@@ -73,6 +73,19 @@
 						styleClass="ui-confirmdialog-no" icon="ui-icon-close" />
 				</p:confirmDialog>
 			</h:form>
+
+			<h:form id="treefableform">
+				<p:treeTable value="#{containerHandler.treeTable}" var="container">
+					<p:column headerText="ID" sortable="true" sortBy="#{container.getContainerId()}">
+						<h:outputText value="#{container.getContainerId()}" />
+					</p:column>
+					<p:column headerText="Name" sortable="true" sortBy="#{container.name}">
+						<h:outputText value="#{container.name}" />
+					</p:column>
+				</p:treeTable>
+
+			</h:form>
+
 
 		</div>
 	</div>
