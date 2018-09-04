@@ -4,6 +4,8 @@ import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.PrintStream;
 import java.lang.management.ManagementFactory;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 
 public class HotMethodLogger {
 	
@@ -13,7 +15,7 @@ public class HotMethodLogger {
 		statisticsLoggingStream = System.err;
 		try {
 			runtimeLoggingStream = new PrintStream(new File("log.txt"));
-			statisticsLoggingStream = new PrintStream(new File("statistics.txt"));
+			statisticsLoggingStream = new PrintStream(new File("statistics" + new SimpleDateFormat("_dd.MM.yyyy_HH-mm-ss-SSS").format(new Date()) +".txt"));
 		} catch (FileNotFoundException | NullPointerException e) {
 			e.printStackTrace();
 		}

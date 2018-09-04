@@ -219,7 +219,7 @@ public class MixedTransformer implements ClassFileTransformer {
 			}
 			if (c == 'L') {		//object type
 				int semicolon = descriptor.indexOf(";", i + 1);
-				type += descriptor.substring(i + 1, semicolon);
+				type += descriptor.substring(i, semicolon + 1);
 				i = semicolon;
 			} else {			//primitive type
 				type += c;
