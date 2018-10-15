@@ -2,15 +2,61 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>Empty</title>
+    <title>Medieval Fantasy</title>
     <link rel="stylesheet" href="style.css">
 </head>
-<body>
+<body class="fullscreen">
     <!-- include helper library for matrix computation -->
     <script src="../libs/gl-matrix.js"></script>
     <!-- include our framework with utilities -->
     <script src="../libs/framework.js"></script>
     <!-- include the main script -->
-    <script src="main.js"></script>
+    <script src="src/main.js"></script>
+
+    <!-- include own scripts -->
+    <script src="src/camera/camera.js"></script>
+    <script src="src/camera/camera_flights.js"></script>
+
+    <script src="src/utils/materials.js"></script>
+    <script src="src/utils/utils.js"></script>
+    <script src="src/utils/stats.js"></script>
+
+    <script src="src/lights.js"></script>
+    <script src="src/customsgnodes.js"></script>
+    <script src="src/sceneelementfactory.js"></script>
+    <script src="src/animation_classes.js"></script>
+
+    <div id="statsDiv" style="float:left;">
+      <div id="oldstats"  class="statusPanel">old</div>
+      <div id="stats"     class="statusPanel">new</div>
+      <button onclick="makeSnapshot()" style="margin-left:10px;">Snapshot</button>
+      <div id="snapshot"  class="statusPanel">snapshot</div>
+    </div>
+
+    <div id="controlDiv" style="float:left;">
+      <table>
+        <tr>
+          <td>pos x</td>  <td><input id="positionx" type="number" oninput="updateCameraFromPannel()" value="0"/></td>
+          <td>y</td>      <td><input id="positiony" type="number" oninput="updateCameraFromPannel()" value="0"/></td>
+          <td>z</td>      <td><input id="positionz" type="number" oninput="updateCameraFromPannel()" value="0"/></td>
+          <td/>
+        </tr>
+        <tr>
+          <td>target x</td>   <td><input id="targetx" type="number" oninput="updateCameraFromPannel()" value="0"/></td>
+          <td>y</td>          <td><input id="targety" type="number" oninput="updateCameraFromPannel()" value="0"/></td>
+          <td>z</td>          <td><input id="targetz" type="number" oninput="updateCameraFromPannel()" value="0"/></td>
+          <td/>
+        <tr>
+        <tr>
+          <td>rotation x</td>  <td><input id="rotationx" type="number" oninput="updateCameraFromPannel()" value="0"/></td>
+          <td>y</td>           <td><input id="rotationy" type="number" oninput="updateCameraFromPannel()" value="0"/></td>
+          <td colspan = "2">  <button id="updateCameraFromPannel" onclick="updateCameraFromPannel()" style="margin-left:10px;">update Camera</button></td>
+          <td> <button id="updatePannelFromCamera" onclick="updatePannelFromCamera()" style="margin-left:10px;">update Pannel</button></td>
+        </tr>
+        <tr>
+      </table>
+
+    </div>
+
 </body>
 </html>

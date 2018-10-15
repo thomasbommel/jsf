@@ -1,3 +1,18 @@
+canvas {
+  width: 75vw;
+  height: 85vh;
+}
+
+.fullscreen canvas{
+    width: 98vw;
+    height: 98vh;
+}
+
+
+.fullscreen div{
+    display:none;
+}
+
 p {
   position: relative;
   margin-top: -1.5em;
@@ -5,4 +20,14 @@ p {
   color: #2F4F4F;
   letter-spacing: 1px;
   text-align: center;
+}
+
+/* TODO add option to hide/show me via keyboard binding */
+.statusPanel{
+  width:17vW;
+  height:25vH;
+  font-size:1.1em;
+  margin:10px;
+  padding:5px;
+  border:1px solid grey;
 }

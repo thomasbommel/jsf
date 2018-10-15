@@ -1,0 +1,53 @@
+
+Points with "-" in front are still TO-Do
+Points with "!" in front are already implemented, but not yet described
+Points with "x" in front are completely done (implemented + "algorithmic effects description" done)
+
+--- Attention! ---
+This list DOES NOT specify all details needed for an effect implementation, it only summarizes them to give an overview.
+When implementing an effect, take a look at the exact Specification in Google Drive: https://drive.google.com/drive/folders/0B7IVstmtIvlHYzl1ZWtEb3ZLXzg
+
+--- Minimal requirements --- (algorithmic effects description NOT required)
+
+x Create three independent scenes, all part of the same world
+x Exactly 30 second camera flight
+x Always have at least 1 animated object during entire flight
+x Trigger Animations of individual scenes when manually controlling Camera close to them
+x Use displayText(text) to display currently visible basic & special effects
+- Create separate document with algorithmic effects description of basic & special effects
+
+--- Basic movie effects ---
+
+1) Scene Graph Elements
+! a) At least one manually composed model that consists of multiple parts
+! b) Separate animation of different parts and as a whole
+! c) Scene Graph Node that renders complex 3D shape (5-25 vertices, fully specified model matrices)
+
+2) Materials
+! a) Two clearly different Materials (not Textures!) with specular properties
+
+3) Texturing
+! a) Apply texture to 1)c)
+
+4) Illumination
+! a) Multiple light sources (at least 1 moving)
+- b) Implement at least one spot-light (LightSGNode, Phong Shader)
+! c) Phong shading should be applied to all objects in scene.
+
+5) Transparency
+! a) At least one object semi-transparent based on Alpha-Texture (look closely at specification!!)
+
+6) Camera
+! a) Control camera with forward/backward arrows and Mouse.
+! b) Create an animated camera flight
+
+--- Special effects ---
+
+S1) Terrain from heightmap
+! Must be implemented using a vertex shader.
+
+S2) Multi texturing
+- Mix multiple textures with an alpha map in a shader.
+
+S4) Level of detail
+! Three different detail levels in one render node (decide by camera distance to object).

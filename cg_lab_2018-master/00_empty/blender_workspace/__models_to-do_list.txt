@@ -1,0 +1,16 @@
+
+x Human
+x Hoe
+x Fish
+x Castle
+x Rose
+x Dock
+x Fishing rod
+
+x Tree LOD 0 (min)
+x Tree LOD 1
+x Tree LOD 2 (max)
+
+Maybe:
+- Cow
+- Fence

@@ -1,0 +1,65 @@
+
+//---- This is a helper file to look up member variables of structs quickly --\\
+
+Model:
+{ //each member contains a matrix
+  position: ,
+  normal: ,
+  texture: ,
+  index:
+};
+
+Human:
+{  //each member contains a TransformationSGNode
+  root: ,
+  head: ,
+  body: ,
+  right_arm: ,
+  left_arm: ,
+  tool: ,
+  right_leg: ,
+  left_leg:
+};
+
+Material:
+{
+  ambient: [R,G,B,A],
+  diffuse: [R,G,B,A],
+  specular: [R,G,B,A],
+  emission: [R,G,B,A],
+  shininess: float,
+  texture:
+};
+
+Transformation:
+{
+  translation: [x,y,z],
+  yRotation: float,
+  scale: [x,y,z]
+};
+
+
+
+Animation:
+{
+  node: TransformationSGNode,
+  targetMatrix: 16-float-array
+  duration: float
+}
+
+CameraAnimation:
+{
+  position: [x,y,z],
+  rotation: {x: , y: },
+  duration: float
+}
+
+
+
+Camera:
+{
+  rotation: {x: , y: },
+  position: [x,y,z],
+  target: [x,y,z],
+  isPerformingFlight: bool,     //true during an animated camera flight
+};
