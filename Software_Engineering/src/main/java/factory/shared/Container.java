@@ -1,5 +1,7 @@
 package factory.shared;
 
+import java.util.Objects;
+
 import factory.shared.enums.Material;
 import factory.shared.interfaces.ContainerDemander;
 import factory.shared.interfaces.ContainerSupplier;
@@ -12,9 +14,7 @@ public class Container {
 	 * @param material - The material this container is filled with. Must not be null.
 	 */
 	public Container(Material material) {
-		if (material == null)
-			throw new IllegalArgumentException("Material in Container constructor must not be null.");
-		this.material = material;
+		this.material = Objects.requireNonNull(material,"Material in Container constructor must not be null.");
 	}
 
 	public Material getMaterial() {

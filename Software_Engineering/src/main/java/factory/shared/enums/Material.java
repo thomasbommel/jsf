@@ -2,11 +2,16 @@ package factory.shared.enums;
 
 public enum Material {
 	CAR_BODIES			(200),
-	NAILS				(500),
+	WHEELS				(300),
+	SCREWS				(500),
+	LUBRICANT			(100),
 	COLOR_RED			(300),
 	COLOR_GREEN			(300),
-	COLOR_BLUE			(300);
-	
+	COLOR_BLUE			(300),
+	COLOR_WHITE			(300),
+	COLOR_BLACK			(300),
+	COLOR_GRAY			(300);
+
 	/** Amount of the material that fits into a single container. */
 	public final int containerAmount;
 	
