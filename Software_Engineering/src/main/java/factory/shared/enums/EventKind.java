@@ -30,7 +30,7 @@ public enum EventKind {
 	
 	//------------------------------------- AGV Errors --------------------------------------
 	AGV_FORKLIFT_DAMAGED 		(),
-	AGV_ForkliftCollision 		(),
+	AGV_FORKLIFT_COLLISION 		(),
 	
 	
 	//------------------------------- Monitoring Notifications ------------------------------
