@@ -1,11 +1,12 @@
 package factory.shared.interfaces;
 
-import app.gui.Drawable;
+import java.awt.Graphics;
+
 import factory.shared.Position;
 
 public interface Placeable {
 
 	Position getPosition();
-	Drawable getDrawable();		//TODO
+	Graphics getDrawable();		//TODO
 	
 }
