@@ -13,7 +13,7 @@ public enum EventKind {
 	
 	
 	//------------------------------- Conveyors Notifications -------------------------------
-	CONVEYORS_LackOfOil			(),
+	CONVEYORS_LACK_OF_OIL			(),
 	
 	//---------------------------------- Conveyors Errors -----------------------------------
 	
@@ -26,10 +26,10 @@ public enum EventKind {
 	
 	
 	//---------------------------------- AGV Notifications ----------------------------------
-	AGV_ContainerDelivered 		(Task.class),
+	AGV_CONTAINER_DELIVERED 		(Task.class),
 	
 	//------------------------------------- AGV Errors --------------------------------------
-	AGV_ForkliftDamaged 		(),
+	AGV_FORKLIFT_DAMAGED 		(),
 	AGV_ForkliftCollision 		(),
 	
 	

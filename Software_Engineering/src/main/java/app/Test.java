@@ -11,18 +11,18 @@ public class Test implements Monitorable {
 	public static void main(String[] args) {
 		Test thiz = new Test();
 		
-		System.out.println(EventKind.AGV_ContainerDelivered);
+		System.out.println(EventKind.AGV_CONTAINER_DELIVERED);
 		System.out.println(EventKind.AGV_ForkliftCollision);
 		
 		System.out.println("-- Valid Attachment --");
-		new FactoryEvent(thiz, EventKind.AGV_ContainerDelivered, new AgvTask());
+		new FactoryEvent(thiz, EventKind.AGV_CONTAINER_DELIVERED, new AgvTask());
 		
 		System.out.println("-- Zero (correct) Attachments --");
 		new FactoryEvent(thiz, EventKind.AGV_ForkliftCollision);
 		
 		try {
 			System.out.println("-- Invalid Attachment --");
-			new FactoryEvent(thiz, EventKind.AGV_ContainerDelivered, new Object());
+			new FactoryEvent(thiz, EventKind.AGV_CONTAINER_DELIVERED, new Object());
 		} catch (IllegalArgumentException e) {
 			System.out.println("Exception caught.");
 		}
