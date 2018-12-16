@@ -4,20 +4,19 @@ package factory.shared;
  * this class is used as general Position of an Object in the factory
  */
 public class Position {
-
-	public void setPositionX(double xPos) {
+	public void setPositionX(int xPos) {
 		//TODO
 	}
 
-	public void setPositionY(double yPos) {
+	public void setPositionY(int yPos) {
 		//TODO
 	}
 
-	public double getPositionX() {
+	public int getPositionX() {
 		return 0;	//TODO
 	}
 
-	public double getPositionY() {
+	public int getPositionY() {
 		return 0;	//TODO
 	}
 }
