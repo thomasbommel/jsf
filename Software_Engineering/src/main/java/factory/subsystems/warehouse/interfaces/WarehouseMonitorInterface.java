@@ -2,10 +2,11 @@ package factory.subsystems.warehouse.interfaces;
 
 import java.util.List;
 
-import factory.shared.enums.Material;
 import factory.shared.Task;
+import factory.shared.enums.Material;
+import factory.shared.interfaces.Monitorable;
 
-public interface WarehouseMonitorInterface{
+public interface WarehouseMonitorInterface extends Monitorable{
 
 	int getAmount(Material material);
 	

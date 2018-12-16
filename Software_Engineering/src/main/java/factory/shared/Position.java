@@ -4,6 +4,7 @@ package factory.shared;
  * this class is used as general Position of an Object in the factory
  */
 public class Position {
+
 	public void setPositionX(int xPos) {
 		//TODO
 	}

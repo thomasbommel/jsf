@@ -1,7 +1,10 @@
 package factory.subsystems.monitoring.interfaces;
 
-public interface MonitoringInterface {
+import factory.shared.FactoryEvent;
 
-	void start();
-
+public interface MonitoringInterface{
+	
+	public void handleEvent(FactoryEvent event);
+	
+	
 }
