@@ -1,5 +1,6 @@
 package app.gui;
 
+import factory.shared.interfaces.Placeable;
 import factory.shared.interfaces.Stoppable;
 import factory.subsystems.monitoring.interfaces.MonitoringInterface;
 
@@ -23,5 +24,13 @@ public class GUIHandler implements Stoppable{
 	public void stop() {
 		this.ui.stop();
 	}
+	
+	public void addToFactoryPanel(Placeable placeable) {
+		this.ui.getFactoryPanel().getObjectsToDraw().add(placeable);
+	}
 
+	public void setMenuPanel(MenuPanel menuPanel) {
+		this.ui.setMenuPanel(menuPanel);
+	}
+	
 }

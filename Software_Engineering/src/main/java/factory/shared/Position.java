@@ -5,19 +5,35 @@ package factory.shared;
  */
 public class Position {
 
-	public void setPositionX(int xPos) {
-		//TODO
-	}
+	private int positionX;
+	private int positionY;
 
-	public void setPositionY(int yPos) {
-		//TODO
+	public Position(int positionX, int positionY) {
+		super();
+		this.positionX = positionX;
+		this.positionY = positionY;
 	}
 
 	public int getPositionX() {
-		return 0;	//TODO
+		return positionX;
+	}
+
+	public void setPositionX(int positionX) {
+		this.positionX = positionX;
 	}
 
 	public int getPositionY() {
-		return 0;	//TODO
+		return positionY;
 	}
+
+	public void setPositionY(int positionY) {
+		this.positionY = positionY;
+	}
+
+	@Override
+	public String toString() {
+		return "Position [positionX=" + positionX + ", positionY=" + positionY + "]";
+	}
+
+	
 }

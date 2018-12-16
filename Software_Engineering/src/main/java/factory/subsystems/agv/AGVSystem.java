@@ -1,8 +1,9 @@
 package factory.subsystems.agv;
 
-import factory.shared.AbstractSubsystem;
+import factory.shared.Position;
 import factory.shared.Task;
 import factory.shared.enums.SubsystemStatus;
+import factory.subsystems.AbstractSubsystem;
 import factory.subsystems.agv.interfaces.AgvMonitorInterface;
 import factory.subsystems.monitoring.interfaces.MonitoringInterface;
 
@@ -32,6 +33,12 @@ public class AGVSystem extends AbstractSubsystem implements AgvMonitorInterface 
 
 	@Override
 	public Task getCurrentTask() {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public Position getPosition() {
 		// TODO Auto-generated method stub
 		return null;
 	}

@@ -10,5 +10,4 @@ public interface AgvMonitorInterface extends Monitorable{
 	Task getCurrentTask();
 	
 	
-	
 }

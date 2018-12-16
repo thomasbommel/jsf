@@ -1,6 +1,7 @@
 package app;
 
 import factory.shared.FactoryEvent;
+import factory.shared.Position;
 import factory.shared.enums.EventKind;
 import factory.shared.enums.SubsystemStatus;
 import factory.shared.interfaces.Monitorable;
@@ -46,5 +47,11 @@ public class Test implements Monitorable {
 	public boolean isReady() {
 		return false;
 	}
-	
+
+	@Override
+	public Position getPosition() {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
 }
