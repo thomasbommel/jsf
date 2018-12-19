@@ -23,7 +23,7 @@ public class Database {
 	
 	{ 
 		//TODO: rather than initializing the list here statically, add a table for each StorageSite when the layout.xml is being processed
-		TABLES.add(new StorageSiteTable(new StorageSite(1)));
+		TABLES.add(new StorageSiteTable(new StorageSite(null, 1)));
 		TABLES.add(new TransactionsTable());
 	}
 	

@@ -20,6 +20,7 @@ public enum EventKind {
 	
 	
 	//------------------------------- Warehouse Notifications -------------------------------
+	WAREHOUSE_TASK_COMPLETED		(Task.class),
 	
 	//---------------------------------- Warehouse Errors -----------------------------------
 	
