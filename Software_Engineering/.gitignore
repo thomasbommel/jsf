@@ -1,1 +1,5 @@
 /target/
+
+#JDBC
+/database/
+/derby.log
