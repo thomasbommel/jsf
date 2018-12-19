@@ -5,8 +5,6 @@ import java.awt.Graphics;
 import java.util.ArrayList;
 import java.util.List;
 
-import javax.swing.BorderFactory;
-
 import factory.shared.interfaces.Placeable;
 
 public class FactoryPanel extends GUIPanel {
@@ -16,9 +14,7 @@ public class FactoryPanel extends GUIPanel {
 	public FactoryPanel(int fps) {
 		super(fps);
 		this.objectsToDraw = new ArrayList<>();
-		this.setBackground(Color.YELLOW);
-		this.setBorder(BorderFactory.createLineBorder(Color.RED, 1));
-
+		this.setBackground(Color.WHITE);
 	}
 
 	@Override

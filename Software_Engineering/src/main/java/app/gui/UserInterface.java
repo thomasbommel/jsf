@@ -38,10 +38,11 @@ public class UserInterface implements Stoppable {
 		this.frame = new JFrame("Toy Car Factory v.0.0.0.0.0.1 ;)");
 		this.frame.setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
 		this.contentPane = (JPanel) frame.getContentPane();
-		this.contentPane.setBackground(Color.GREEN);
+		this.contentPane.setBackground(Color.LIGHT_GRAY);
 		this.contentPane.setLayout(null);
 		this.frame.setSize(1200, 800);
 
+		initMenuBar();
 		initFactoryPanel();
 		initDefaultMenuPanel();
 
@@ -52,6 +53,7 @@ public class UserInterface implements Stoppable {
 	private void initMenuBar() {
 		this.menuBar = new JPanel();
 		this.menuBar.setBounds(0, 0, 800, 50);
+		this.menuBar.setBackground(new Color(150,150,150));
 		this.contentPane.add(this.menuBar);
 	}
 	
@@ -63,7 +65,7 @@ public class UserInterface implements Stoppable {
 
 	private void initDefaultMenuPanel() {
 		this.menuPanel = new MenuPanel(this.fps);
-		this.menuPanel.setBackground(Color.ORANGE);
+		this.menuPanel.setBackground(Color.LIGHT_GRAY);
 		this.menuPanel.setBounds(800, 0, 400, 800);
 		this.contentPane.add(menuPanel);
 	}

@@ -2,17 +2,12 @@ package app.gui;
 
 import java.awt.Color;
 import java.awt.Graphics;
-import java.util.Random;
-
-import javax.swing.BorderFactory;
 
 public class MenuPanel extends GUIPanel {
 
 	public MenuPanel(int fps) {
 		super(fps);
-		this.setBackground(Color.YELLOW);
-		this.setBorder(BorderFactory.createLineBorder(
-				new Color(new Random().nextInt(255), new Random().nextInt(255), new Random().nextInt(255)), 1));// TODO remove
+		this.setBackground(Color.LIGHT_GRAY);
 	}
 
 	@Override
