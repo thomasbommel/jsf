@@ -25,6 +25,7 @@ class JPanelUpdateActionListener implements ActionListener {
 		panelToUpdate = panel;
 	}
 
+	@Override
 	public void actionPerformed(ActionEvent e) {
 		panelToUpdate.repaint();
 	}
