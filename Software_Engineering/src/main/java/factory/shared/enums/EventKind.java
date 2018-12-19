@@ -29,8 +29,8 @@ public enum EventKind {
 	AGV_CONTAINER_DELIVERED 		(Task.class),
 	
 	//------------------------------------- AGV Errors --------------------------------------
-	AGV_FORKLIFT_DAMAGED 		(),
-	AGV_FORKLIFT_COLLISION 		(),
+	AGV_FORKLIFT_DAMAGED 			(),
+	AGV_FORKLIFT_COLLISION 			(),
 	
 	
 	//------------------------------- Monitoring Notifications ------------------------------

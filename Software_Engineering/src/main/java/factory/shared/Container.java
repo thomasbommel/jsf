@@ -14,7 +14,7 @@ public class Container {
 	 * @param material - The material this container is filled with. Must not be null.
 	 */
 	public Container(Material material) {
-		this.material = Objects.requireNonNull(material,"Material in Container constructor must not be null.");
+		this.material = Objects.requireNonNull(material, "Material in Container constructor must not be null.");
 	}
 
 	public Material getMaterial() {

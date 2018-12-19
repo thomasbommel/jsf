@@ -6,7 +6,7 @@ import factory.shared.Task;
 import factory.shared.enums.Material;
 import factory.shared.interfaces.Monitorable;
 
-public interface WarehouseMonitorInterface extends Monitorable{
+public interface WarehouseMonitorInterface extends Monitorable {
 
 	int getAmount(Material material);
 	
