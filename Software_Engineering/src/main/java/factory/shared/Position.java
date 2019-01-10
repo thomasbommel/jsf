@@ -6,7 +6,7 @@ package factory.shared;
 public class Position {
 
 	private int positionX;
-	private int positionY;
+	private int positionY;   
 
 	public Position(int positionX, int positionY) {
 		super();
