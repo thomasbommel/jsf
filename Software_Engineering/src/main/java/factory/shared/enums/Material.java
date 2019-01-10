@@ -18,4 +18,9 @@ public enum Material {
 	private Material(int containerAmount) {
 		this.containerAmount = containerAmount;
 	}
+	
+	@Override
+	public String toString() {
+		return this.name();
+	}
 }

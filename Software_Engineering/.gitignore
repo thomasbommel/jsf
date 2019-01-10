@@ -1,5 +1,5 @@
 /target/
 
-# Derby
+# Derby JDBC
 database/
 derby.log
