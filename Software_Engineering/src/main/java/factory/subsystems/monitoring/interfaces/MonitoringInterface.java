@@ -6,5 +6,4 @@ public interface MonitoringInterface {
 	
 	public void handleEvent(FactoryEvent event);
 	
-	
 }
