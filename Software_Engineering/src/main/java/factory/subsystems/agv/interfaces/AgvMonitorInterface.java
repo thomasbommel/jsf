@@ -22,5 +22,5 @@ public interface AgvMonitorInterface{
 	 * returns a list of all forklifts
 	 * @return forklifts
 	 */
-	List<Forklift> notifyMonitoringSystem();
+	List<Forklift> getForklifts();
 }
