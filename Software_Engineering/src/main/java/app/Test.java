@@ -1,6 +1,8 @@
 package app;
 
 import factory.shared.FactoryEvent;
+import factory.shared.Position;
+import factory.shared.ResourceBox;
 import factory.shared.enums.EventKind;
 import factory.shared.enums.SubsystemStatus;
 import factory.shared.interfaces.Monitorable;
@@ -15,7 +17,7 @@ public class Test implements Monitorable {
 		System.out.println(EventKind.AGV_FORKLIFT_COLLISION);
 		
 		System.out.println("-- Valid Attachment --");
-		new FactoryEvent(thiz, EventKind.AGV_CONTAINER_DELIVERED, new AgvTask());
+		new FactoryEvent(thiz, EventKind.AGV_CONTAINER_DELIVERED, new AgvTask(1, new ResourceBox(), new Position(0.,0.), new Position(0.,0.)));
 		
 		System.out.println("-- Zero (correct) Attachments --");
 		new FactoryEvent(thiz, EventKind.AGV_FORKLIFT_COLLISION);
@@ -29,7 +31,7 @@ public class Test implements Monitorable {
 		
 		try {
 			System.out.println("-- Too many Attachments --");
-			new FactoryEvent(thiz, EventKind.AGV_FORKLIFT_COLLISION, new AgvTask());
+			new FactoryEvent(thiz, EventKind.AGV_FORKLIFT_COLLISION, new AgvTask(1, new ResourceBox(), new Position(0.,0.), new Position(0.,0.)));
 		} catch (IllegalArgumentException e) {
 			System.out.println("Exception caught.");
 		}
