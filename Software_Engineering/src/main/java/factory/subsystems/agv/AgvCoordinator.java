@@ -6,6 +6,7 @@ import java.util.List;
 import factory.shared.AbstractSubsystem;
 import factory.shared.Task;
 import factory.shared.enums.SubsystemStatus;
+import factory.shared.interfaces.Placeable;
 import factory.subsystems.agv.interfaces.AgvMonitorInterface;
 import factory.subsystems.monitoring.interfaces.MonitoringInterface;
 
@@ -43,7 +44,8 @@ public class AgvCoordinator extends AbstractSubsystem implements AgvMonitorInter
 	}
 
 	@Override
-	public boolean isReady() {
-		return ready;
+	public List<Placeable> getPlaceables() {
+		// TODO Auto-generated method stub
+		return null;
 	}
 }

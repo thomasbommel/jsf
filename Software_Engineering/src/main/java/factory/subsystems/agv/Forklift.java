@@ -75,10 +75,10 @@ public class Forklift implements Placeable {
 		shutdown = false;
 	}
 	
-	private boolean targetReached(Position target)
-	{
-		return pos.subtract(target).length() < THRESHOLD;
-	}
+//	private boolean targetReached(Position target)
+//	{
+//		return pos.subtract(target).length() < THRESHOLD;
+//	}
 
 	final TimerTask move = new TimerTask() {
 		// this is periodically called to update the forklift's position
@@ -94,33 +94,33 @@ public class Forklift implements Placeable {
 				// Vector to next target along path
 				// this is saved in a field because it'll also be used for the direction of the
 				// graphic
-				vec = path.get(0).subtract(pos);
+//				vec = path.get(0).subtract(pos);
 				// length of vector
-				Double len = vec.length();
+//				Double len = vec.length();
 				// distance we can move
 				Double moveLen = timeElapsed / SPEED;
 				// don't overshoot the target
-				moveLen = Math.min(moveLen, len);
+//				moveLen = Math.min(moveLen, len);
 				// normalize the vector and set it to the appropriate length
-				vec = vec.divide(len).multiply(moveLen);
+//				vec = vec.divide(len).multiply(moveLen);
 				// add it to our position to obtain the new one
-				pos = pos.add(vec);
+//				pos = pos.add(vec);
 
 				// when we reach a target, remove it
 				// due to floating point numbers we use a small range
-				if (targetReached(path.get(0))) {
-					path.remove(0);
-				}
-				if (currentTask != null) {
-					if (targetReached(currentTask.getPickup())) {
-						carriedBox = currentTask.getBox();
-						// TODO: Pick up Box
-					}
-					if (targetReached(currentTask.getDropoff())) {
-						carriedBox = null;
-						// TODO: Drop off Box
-					}
-				}
+//				if (targetReached(path.get(0))) {
+//					path.remove(0);
+//				}
+//				if (currentTask != null) {
+//					if (targetReached(currentTask.getPickup())) {
+//						carriedBox = currentTask.getBox();
+//						// TODO: Pick up Box
+//					}
+//					if (targetReached(currentTask.getDropoff())) {
+//						carriedBox = null;
+//						// TODO: Drop off Box
+//					}
+//				}
 			}
 		}
 	};

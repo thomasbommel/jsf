@@ -1,5 +1,7 @@
 package factory.shared.interfaces;
 
+import java.util.List;
+
 import factory.shared.FactoryEvent;
 import factory.shared.enums.SubsystemStatus;
 
@@ -9,6 +11,6 @@ public interface Monitorable {
 
 	SubsystemStatus getStatus();
 
-	boolean isReady();
+	List<Placeable> getPlaceables();
 
 }
