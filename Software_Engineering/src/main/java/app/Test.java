@@ -1,5 +1,6 @@
 package app;
 
+import app.gui.SubsystemMenu;
 import factory.shared.FactoryEvent;
 import factory.shared.Position;
 import factory.shared.enums.EventKind;
@@ -7,7 +8,7 @@ import factory.shared.enums.SubsystemStatus;
 import factory.shared.interfaces.Monitorable;
 import factory.subsystems.agv.AgvTask;
 
-public class Test implements Monitorable {
+class Test implements Monitorable {
 
 	public static void main(String[] args) {
 		Test thiz = new Test();
@@ -53,5 +54,30 @@ public class Test implements Monitorable {
 		// TODO Auto-generated method stub
 		return null;
 	}
+
+	@Override
+	public void start() {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void stop() {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public String getName() {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public SubsystemMenu getCurrentSubsystemMenu() {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
 
 }

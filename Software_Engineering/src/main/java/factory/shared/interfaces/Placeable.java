@@ -17,6 +17,8 @@ public interface Placeable {
 			g.drawRect(0, 0, 40, 40);
 			g.drawString("getDrawable()", 0, 0);
 		};
-	};		
+	};	
+	
+	
 	
 }

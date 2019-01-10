@@ -7,7 +7,7 @@ import java.util.List;
 
 import factory.shared.interfaces.Placeable;
 
-public class FactoryPanel extends GUIPanel {
+class FactoryPanel extends GUIPanel {
 
 	private List<Placeable> objectsToDraw;
 

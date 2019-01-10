@@ -16,17 +16,28 @@ public class FactoryApplication implements Stoppable {
 	public FactoryApplication() {
 		this.monitor = new MonitoringSystem();
 		
-		AbstractSubsystem testSubsystem = createTestSubsystem();
-		this.monitor.addToSubsystemList(testSubsystem);
+		AbstractSubsystem testSubsystem1 = createTestSubsystem("TEST 1",100);
+		AbstractSubsystem testSubsystem2 = createTestSubsystem("TEST 2",200);
+		this.monitor.addToSubsystemList(testSubsystem1);
+		this.monitor.setCurrentSubsystemToShow(testSubsystem1);
+		this.monitor.addToSubsystemList(testSubsystem2);
 	}
 
 	//TODO remove
-	private AbstractSubsystem createTestSubsystem() {
-		return new AbstractSubsystem(this.monitor) {
-			int x = 0;
+	private AbstractSubsystem createTestSubsystem(String name, int y) {
+		return new AbstractSubsystem(this.monitor,name) {
+			private boolean run = false;
+			private int x = 0;
+			
+			
 			@Override
 			public Position getPosition() {
-				return new Position(x++	,200);
+				update();
+				return new Position(x%y	,y);
+			}
+			
+			private void update() {
+				if(run) x++;
 			}
 			
 			@Override
@@ -45,8 +56,18 @@ public class FactoryApplication implements Stoppable {
 			public Consumer<Graphics> drawPlaceable() {
 				return g -> {
 					g.drawRect(0, 0, 80, 30);
-					g.drawString("it works", 10,20);
+					g.drawString(getName(), 10,20);
 				};
+			}
+
+			@Override
+			public void start() {
+				run = true;
+			}
+
+			@Override
+			public void stop() {
+				run = false;
 			}
 	
 		};
@@ -58,6 +79,10 @@ public class FactoryApplication implements Stoppable {
 
 	public void stop() {
 		this.monitor.start();
+	}
+
+	public MonitoringInterface getMonitor() {
+		return monitor;
 	}
 
 }

@@ -6,7 +6,7 @@ import java.awt.event.ActionListener;
 import javax.swing.JPanel;
 import javax.swing.Timer;
 
-public class UpdateTimer extends Timer {
+class UpdateTimer extends Timer {
 
 	public UpdateTimer(final JPanel panelToUpdate, int fps) {
 		super(getDelayInMillisForFps(fps), new JPanelUpdateActionListener(panelToUpdate));

@@ -7,22 +7,27 @@ import javax.swing.JPanel;
 import javax.swing.WindowConstants;
 
 import factory.shared.interfaces.Stoppable;
+import factory.subsystems.AbstractSubsystem;
+import factory.subsystems.monitoring.interfaces.MonitoringInterface;
 
-public class UserInterface implements Stoppable {
+class UserInterface implements Stoppable {
 
 	private int fps;
+	private MonitoringInterface monitor;
 
 	private JFrame frame;
 	private JPanel contentPane;
 
 	private FactoryPanel factoryPanel;
 	private MenuPanel menuPanel;
+	private MenuBarPanel menuBar;
 
-	private JPanel menuBar;
 
-	public UserInterface(int fps) {
+
+	public UserInterface(int fps, MonitoringInterface monitor) {
 		super();
 		this.fps = fps;
+		this.monitor = monitor;
 		initUI();
 	}
 
@@ -51,7 +56,7 @@ public class UserInterface implements Stoppable {
 	}
 
 	private void initMenuBar() {
-		this.menuBar = new JPanel();
+		this.menuBar = new MenuBarPanel(this.fps, this.monitor);
 		this.menuBar.setBounds(0, 0, 800, 50);
 		this.menuBar.setBackground(new Color(150,150,150));
 		this.contentPane.add(this.menuBar);
@@ -64,7 +69,7 @@ public class UserInterface implements Stoppable {
 	}
 
 	private void initDefaultMenuPanel() {
-		this.menuPanel = new MenuPanel(this.fps);
+		this.menuPanel = new MenuPanel(this.fps, this.monitor);
 		this.menuPanel.setBackground(Color.LIGHT_GRAY);
 		this.menuPanel.setBounds(800, 0, 400, 800);
 		this.contentPane.add(menuPanel);
@@ -85,5 +90,12 @@ public class UserInterface implements Stoppable {
 	public void setMenuPanel(MenuPanel menuPanel) {
 		this.menuPanel = menuPanel;
 	}
+
+	public void setCurrentSubsystem(AbstractSubsystem subsystem) {
+		this.menuPanel.setCurrentSubSystem(subsystem);
+	}
+
+	
+	
 
 }

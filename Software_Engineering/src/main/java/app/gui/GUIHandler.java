@@ -2,19 +2,20 @@ package app.gui;
 
 import factory.shared.interfaces.Placeable;
 import factory.shared.interfaces.Stoppable;
+import factory.subsystems.AbstractSubsystem;
 import factory.subsystems.monitoring.interfaces.MonitoringInterface;
 
 public class GUIHandler implements Stoppable{
 
 	private static final int FPS = 30;
 	
-	private MonitoringInterface monitoringSystem;
+	private MonitoringInterface monitor;
 	private UserInterface ui;
 
-	public GUIHandler(MonitoringInterface monitoringSystem) {
+	public GUIHandler(MonitoringInterface monitor) {
 		super();
-		this.monitoringSystem = monitoringSystem;
-		this.ui = new UserInterface(FPS);
+		this.monitor = monitor;
+		this.ui = new UserInterface(FPS, this.monitor);
 	}
 
 	public void start() {
@@ -31,6 +32,10 @@ public class GUIHandler implements Stoppable{
 
 	public void setMenuPanel(MenuPanel menuPanel) {
 		this.ui.setMenuPanel(menuPanel);
+	}
+	
+	public void setCurrentSubsystem(AbstractSubsystem subsystem) {
+		this.ui.getMenuPanel().setCurrentSubSystem(subsystem);
 	}
 	
 }
