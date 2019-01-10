@@ -1,10 +1,18 @@
 package factory.shared;
 
 public abstract class Task {
-
+	private static int currentId = 1;
+	
+	private final int id;
+	
+	public Task()
+	{
+		this.id = currentId;
+		currentId++;
+	}
+	
 	public long getId() {
-		// TODO Auto-generated method stub
-		return 0;
+		return id;
 	}
 
 }
