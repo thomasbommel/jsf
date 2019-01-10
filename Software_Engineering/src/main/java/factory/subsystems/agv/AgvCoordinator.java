@@ -12,10 +12,14 @@ import factory.subsystems.monitoring.interfaces.MonitoringInterface;
 public class AgvCoordinator extends AbstractSubsystem implements AgvMonitorInterface{
 	
 	private final List<Forklift> forklifts = new LinkedList<>();
+	private SubsystemStatus status = SubsystemStatus.WAITING;
+	private boolean ready = false;
 	
 	public AgvCoordinator(MonitoringInterface mon)
 	{
 		super(mon);
+		status = SubsystemStatus.RUNNING;
+		ready = true;
 	}
 	
 	public void addForklift(Forklift forklift)
@@ -35,13 +39,11 @@ public class AgvCoordinator extends AbstractSubsystem implements AgvMonitorInter
 
 	@Override
 	public SubsystemStatus getStatus() {
-		// TODO Auto-generated method stub
-		return null;
+		return status;
 	}
 
 	@Override
 	public boolean isReady() {
-		// TODO Auto-generated method stub
-		return false;
+		return ready;
 	}
 }
