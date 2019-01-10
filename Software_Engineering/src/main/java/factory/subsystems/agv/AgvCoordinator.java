@@ -3,19 +3,19 @@ package factory.subsystems.agv;
 import java.util.LinkedList;
 import java.util.List;
 
-import factory.shared.FactoryEvent;
+import factory.shared.AbstractSubsystem;
 import factory.shared.Task;
+import factory.shared.enums.SubsystemStatus;
 import factory.subsystems.agv.interfaces.AgvMonitorInterface;
 import factory.subsystems.monitoring.interfaces.MonitoringInterface;
 
-public class AgvCoordinator implements AgvMonitorInterface{
+public class AgvCoordinator extends AbstractSubsystem implements AgvMonitorInterface{
 	
 	private final List<Forklift> forklifts = new LinkedList<>();
-	private final MonitoringInterface monitoring;
 	
 	public AgvCoordinator(MonitoringInterface mon)
 	{
-		monitoring = mon;
+		super(mon);
 	}
 	
 	public void addForklift(Forklift forklift)
@@ -29,13 +29,19 @@ public class AgvCoordinator implements AgvMonitorInterface{
 	}
 
 	@Override
-	public void notifyMonitoringSystem(Task task, FactoryEvent event) {
-		// TODO: Clarify these Interfaces
-		monitoring.handleEvent(event);
+	public List<Forklift> getForklifts() {
+		return forklifts;
 	}
 
 	@Override
-	public List<Forklift> getForklifts() {
-		return forklifts;
+	public SubsystemStatus getStatus() {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public boolean isReady() {
+		// TODO Auto-generated method stub
+		return false;
 	}
 }

@@ -6,21 +6,9 @@ import factory.subsystems.agv.Forklift;
 
 import java.util.List;
 
-import factory.shared.FactoryEvent;
-
 public interface AgvMonitorInterface extends Monitorable{
 
-	void submitTask(Task task);
-	
-	Task getCurrentTask();
-	
-	
-	/**
-	 * notifies the monitoring system about the given event 
-	 * @param task
-	 * @param event
-	 */
-	void notifyMonitoringSystem(Task task, FactoryEvent event);
+	void submitTask(Task task);	
 	
 	/**
 	 * returns a list of all forklifts

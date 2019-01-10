@@ -3,9 +3,6 @@ package factory.subsystems.agv;
 import java.awt.Graphics;
 import java.awt.Graphics2D;
 import java.awt.Image;
-import java.awt.Point;
-import java.awt.event.WindowAdapter;
-import java.awt.event.WindowEvent;
 import java.util.LinkedList;
 import java.util.List;
 
