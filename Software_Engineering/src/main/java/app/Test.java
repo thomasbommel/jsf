@@ -11,9 +11,6 @@ import factory.shared.enums.Material;
 import factory.shared.enums.SubsystemStatus;
 import factory.shared.interfaces.Monitorable;
 import factory.subsystems.agv.AgvTask;
-import factory.subsystems.monitoring.MonitoringSystem;
-import factory.subsystems.warehouse.WarehouseSystem;
-import factory.subsystems.warehouse.WarehouseTask;
 
 /**
  * TODO Temporary test class, to be removed later
@@ -26,12 +23,6 @@ public class Test implements Monitorable {
 		System.out.println("------------------------------------- DATABASE TESTING -------------------------------------");
 		
 		testDatabase();
-		
-		System.out.println();
-		System.out.println("------------------------------------- WAREHOUSETASK TESTING -------------------------------------");
-		
-		WarehouseSystem ws = new WarehouseSystem(new MonitoringSystem());
-		ws.receiveTask(new WarehouseTask()).simulateTaskDone();
 		
 		System.out.println();
 		System.out.println("------------------------------------- EVENT TESTING -------------------------------------");

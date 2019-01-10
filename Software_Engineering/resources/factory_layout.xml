@@ -16,10 +16,10 @@
 
 	<warehouse>
 		<storagesite>
-			<position>x,y</position>
-			<size>x,y</size>
-			<inputboxposition>x,y</inputboxposition>
-			<outputboxposition>x,y</outputboxposition>
+			<position>a,b</position>
+			<size>c,d</size>
+			<inputboxposition>e,f</inputboxposition>
+			<outputboxposition>g,h</outputboxposition>
 		</storagesite>
 	</warehouse>
 	

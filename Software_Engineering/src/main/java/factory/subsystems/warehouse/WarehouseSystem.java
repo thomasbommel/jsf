@@ -2,6 +2,11 @@ package factory.subsystems.warehouse;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
+
+import org.w3c.dom.Element;
+import org.w3c.dom.Node;
+import org.w3c.dom.NodeList;
 
 import factory.shared.AbstractSubsystem;
 import factory.shared.FactoryEvent;
@@ -15,10 +20,14 @@ public class WarehouseSystem extends AbstractSubsystem implements WarehouseMonit
 	
 	private final List<StorageSite> storageSites = new ArrayList<>();
 
-	public WarehouseSystem(MonitoringInterface monitor) {
+	public WarehouseSystem(MonitoringInterface monitor, Element xmlWarehouseElem) {
 		super(monitor);
+		Objects.requireNonNull(xmlWarehouseElem);
 		
-		storageSites.add(new StorageSite(this, 1));	//TODO: replace with actual list initialization via layout.xml
+		NodeList storageSiteNodes = xmlWarehouseElem.getChildNodes();
+		for (int i = 0; i < storageSiteNodes.getLength(); i++) {
+			storageSites.add(new StorageSite(this, i, (Element) storageSiteNodes.item(i)));
+		}
 	}
 
 	@Override

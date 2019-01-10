@@ -7,7 +7,6 @@ import java.sql.SQLException;
 import java.util.Map;
 
 import factory.shared.enums.Material;
-import factory.subsystems.warehouse.StorageSite;
 
 public class StorageSiteTable extends DatabaseTable {
 	
@@ -15,9 +14,9 @@ public class StorageSiteTable extends DatabaseTable {
 	
 	private final String tableName;
 	
-	public StorageSiteTable(StorageSite storageSite) {
+	public StorageSiteTable(int storageSiteId) {
 		super();
-		this.tableName = "StorageSite_" + storageSite.getId();
+		this.tableName = "StorageSite_" + storageSiteId;
 	}
 
 	@Override

@@ -1,14 +1,27 @@
 package factory.subsystems.warehouse;
 
-public class StorageSite {
+import java.util.Objects;
 
+import org.w3c.dom.Element;
+
+import database.Database;
+import database.StorageSiteTable;
+
+public class StorageSite {
+	
 	private final WarehouseSystem warehouseSystem;
+	private final StorageSiteTable dbTable;
 	private final int id;
 
-	public StorageSite(WarehouseSystem warehouseSystem, int id) {
-		super();
+	public StorageSite(WarehouseSystem warehouseSystem, int id, Element xmlWarehouseElem) {
+		Objects.requireNonNull(warehouseSystem);
+		Objects.requireNonNull(xmlWarehouseElem);
+		
 		this.warehouseSystem = warehouseSystem;
 		this.id = id;
+		
+		this.dbTable = new StorageSiteTable(id);
+		Database.INSTANCE.addTable(dbTable);
 	}
 
 	public int getId() {

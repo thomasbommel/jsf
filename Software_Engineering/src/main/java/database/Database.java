@@ -9,30 +9,34 @@ import java.util.List;
 
 import javax.swing.JOptionPane;
 
-import factory.subsystems.warehouse.StorageSite;
-
 public class Database {
 
 	private static final String URL = "jdbc:derby:database";
 	
 	public static final Database INSTANCE = new Database();			//singleton
 	
-	private final List<DatabaseTable> TABLES = new ArrayList<>();
+	private final List<DatabaseTable> tables = new ArrayList<>();
 	
-	private final Connection connection;
+	private Connection connection;
 	
 	{ 
 		//TODO: rather than initializing the list here statically, add a table for each StorageSite when the layout.xml is being processed
-		TABLES.add(new StorageSiteTable(new StorageSite(null, 1)));
-		TABLES.add(new TransactionsTable());
+		addTable(new TransactionsTable());
 	}
 	
 	//TODO: only for current testing, remove this method later
 	public List<DatabaseTable> getTables() {
-		return TABLES;
+		return tables;
 	}
 	
-	private Database() {
+	public synchronized void addTable(DatabaseTable table) {
+		tables.add(table);
+	}
+	
+	/**
+	 * Initializes the connection to the database. Call this after all tables have been added.
+	 */
+	public void initialize() {
 		try {
 			Connection c = null;
 			try {
@@ -42,7 +46,7 @@ public class Database {
 				//create new database
 				c = DriverManager.getConnection(URL + ";create=true");
 				Statement creationStatement = c.createStatement();
-				for (DatabaseTable table : TABLES) {
+				for (DatabaseTable table : tables) {
 					System.out.println(table.getCreationString());
 					creationStatement.addBatch(table.getCreationString());
 				}
@@ -57,7 +61,7 @@ public class Database {
 				System.exit(1);
 			}
 			
-			for (DatabaseTable table : TABLES) {
+			for (DatabaseTable table : tables) {
 				table.prepareStatements(connection);
 			}
 		} catch (SQLException e) {
@@ -70,7 +74,7 @@ public class Database {
 	 * Utility method for testing purposes
 	 */
 	public void printToConsole(){
-		for (DatabaseTable table : TABLES) {
+		for (DatabaseTable table : tables) {
 			table.printToConsole();
 		}
 	}
