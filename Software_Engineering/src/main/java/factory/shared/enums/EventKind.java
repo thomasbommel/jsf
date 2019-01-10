@@ -1,6 +1,7 @@
 package factory.shared.enums;
 
 import factory.shared.Task;
+import factory.subsystems.agv.Forklift;
 
 /**
  * The kind of a FactoryEvent.<br>
@@ -21,6 +22,7 @@ public enum EventKind {
 	
 	
 	//------------------------------- Warehouse Notifications -------------------------------
+	WAREHOUSE_TASK_COMPLETED		(EventSeverity.NORMAL,Task.class),
 	
 	//---------------------------------- Warehouse Errors -----------------------------------
 	
@@ -30,8 +32,8 @@ public enum EventKind {
 	AGV_CONTAINER_DELIVERED 		(EventSeverity.NORMAL,Task.class),
 	
 	//------------------------------------- AGV Errors --------------------------------------
-	AGV_FORKLIFT_DAMAGED 		(EventSeverity.ERROR),
-	AGV_FORKLIFT_COLLISION 		(EventSeverity.ERROR),
+	AGV_FORKLIFT_DAMAGED 		(EventSeverity.ERROR,Forklift.class),
+	AGV_FORKLIFT_COLLISION 		(EventSeverity.ERROR,Forklift.class,Forklift.class),
 	
 	
 	//------------------------------- Monitoring Notifications ------------------------------

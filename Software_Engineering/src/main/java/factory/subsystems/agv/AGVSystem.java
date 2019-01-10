@@ -1,5 +1,7 @@
 package factory.subsystems.agv;
 
+import java.util.List;
+
 import factory.shared.Position;
 import factory.shared.Task;
 import factory.shared.enums.SubsystemStatus;
@@ -53,5 +55,11 @@ public class AGVSystem extends AbstractSubsystem implements AgvMonitorInterface 
 	public void stop() {
 		// TODO Auto-generated method stub
 		
+	}
+
+	@Override
+	public List<Forklift> getForklifts() {
+		// TODO Auto-generated method stub
+		return null;
 	}
 }

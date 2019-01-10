@@ -1,5 +1,4 @@
 package factory.subsystems.monitoring;
-
 import java.util.ArrayList;
 import java.util.List;
 import java.util.logging.Level;
@@ -22,12 +21,45 @@ public class MonitoringSystem implements MonitoringInterface {
 	private List<AbstractSubsystem> testList = new ArrayList<>(); // TODO replace by one list for each type of subsystem
 	private GUIHandler handler;
 	private ErrorEventHandler errorHandler;
+	
+	
 
 	public MonitoringSystem() {
 		this.handler = new GUIHandler(this);
 		this.errorHandler = new ErrorEventHandler(this);
 	}
+	
+	@Override
+	public synchronized void handleEvent(FactoryEvent event) {
+		try {
+			LOGGER.log(Level.INFO, String.format("handling event %s ...", event));
+			Monitorable source = event.getSource();
+			EventKind eventKind = event.getKind();
+			EventSeverity severity = eventKind.severity;
+			switch (severity) {
+			case GLOBAL_EROR:
+				this.getErrorHandler().handleGlobalError(event);
+				this.setStatus(SubsystemStatus.BROKEN);
+				break;
+			case ERROR:
+				getErrorHandler().handleError(source, eventKind);
+				break;
+			case IMPORTANT:
+				break;
+			case INFO:
+				break;
+			case NORMAL:
+				break;
+			default:
+				break;
+			}
+		} catch (Exception ex) {
+			handleEventHandlingException(event, ex);
+		}
+	}
 
+
+	
 	@Override
 	public void addToSubsystemList(AbstractSubsystem subsystem) {
 		getTestSubSystemList().add(subsystem);
@@ -60,34 +92,6 @@ public class MonitoringSystem implements MonitoringInterface {
 		this.setStatus(SubsystemStatus.STOPPED);
 	}
 
-	@Override
-	public synchronized void handleEvent(FactoryEvent event) {
-		try {
-			LOGGER.log(Level.INFO, String.format("handling event %s ...", event));
-			Monitorable source = event.getSource();
-			EventKind eventKind = event.getKind();
-			EventSeverity severity = eventKind.severity;
-			switch (severity) {
-			case GLOBAL_EROR:
-				this.getErrorHandler().handleGlobalError(event);
-				this.setStatus(SubsystemStatus.BROKEN);
-				break;
-			case ERROR:
-				getErrorHandler().handleError(source, eventKind);
-				break;
-			case IMPORTANT:
-				break;
-			case INFO:
-				break;
-			case NORMAL:
-				break;
-			default:
-				break;
-			}
-		} catch (Exception ex) {
-			handleEventHandlingException(event, ex);
-		}
-	}
 
 	/**
 	 * if the
