@@ -1,0 +1,34 @@
+<factory> 
+	<name>Factory</name>
+	<size>x,y</size>
+	<shippingboxposition>x,y</shippingboxposition>
+	
+	<assemblylines>
+		<assemblyline>
+			<position>x,y</position>
+			<direction>+x</direction>
+		</assemblyline>
+		<assemblyline>
+			<position>x,y</position>
+			<direction>+x</direction>
+		</assemblyline>
+	</assemblylines>
+
+	<warehouse>
+		<storagesite>
+			<position>a,b</position>
+			<size>c,d</size>
+			<inputboxposition>e,f</inputboxposition>
+			<outputboxposition>g,h</outputboxposition>
+		</storagesite>
+	</warehouse>
+	
+	<forklifts>
+		<forklift>
+			<position>x,y</position>
+		</forklift>
+		<forklift>
+			<position>x,y</position>
+		</forklift>
+	</forklifts>
+</factory>

@@ -2,19 +2,20 @@ package factory.subsystems.warehouse.interfaces;
 
 import java.util.List;
 
-import factory.shared.Task;
 import factory.shared.enums.Material;
 import factory.shared.interfaces.Monitorable;
+import factory.subsystems.warehouse.StorageSite;
+import factory.subsystems.warehouse.WarehouseTask;
 
 public interface WarehouseMonitorInterface extends Monitorable {
 
-	int getAmount(Material material);
+	int getContainerAmount(Material material);
 	
 	/**
-	 * @param material
-	 * @return the created Task
+	 * @param task
+	 * @return the StorageSite which will perform the Task
 	 */
-	public Task prepareMaterial(Material material, int availablePreparationTime);
+	public StorageSite receiveTask(WarehouseTask task);
 	
 	//TODO change type
 	public List<String> getTransactions();
