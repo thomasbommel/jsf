@@ -32,8 +32,8 @@ public enum EventKind {
 	AGV_CONTAINER_DELIVERED 		(EventSeverity.NORMAL,Task.class),
 	
 	//------------------------------------- AGV Errors --------------------------------------
-	AGV_FORKLIFT_DAMAGED 		(EventSeverity.ERROR,Forklift.class),
-	AGV_FORKLIFT_COLLISION 		(EventSeverity.ERROR,Forklift.class,Forklift.class),
+	AGV_FORKLIFT_DAMAGED 			(EventSeverity.ERROR,Forklift.class),
+	AGV_FORKLIFT_COLLISION 			(EventSeverity.ERROR,Forklift.class, Forklift.class),
 	
 	
 	//------------------------------- Monitoring Notifications ------------------------------

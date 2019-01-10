@@ -1,9 +1,11 @@
 package factory.shared;
 
 import java.awt.Graphics;
+import java.util.List;
 import java.util.function.Consumer;
 
 import factory.shared.enums.SubsystemStatus;
+import factory.shared.interfaces.Placeable;
 import factory.shared.interfaces.Stoppable;
 import factory.subsystems.AbstractSubsystem;
 import factory.subsystems.monitoring.MonitoringSystem;
@@ -41,12 +43,6 @@ public class FactoryApplication implements Stoppable {
 			}
 
 			@Override
-			public boolean isReady() {
-				// TODO Auto-generated method stub
-				return false;
-			}
-
-			@Override
 			public SubsystemStatus getStatus() {
 				// TODO Auto-generated method stub
 				return null;
@@ -68,6 +64,12 @@ public class FactoryApplication implements Stoppable {
 			@Override
 			public void stop() {
 				run = false;
+			}
+
+			@Override
+			public List<Placeable> getPlaceables() {
+				// TODO Auto-generated method stub
+				return null;
 			}
 
 		};

@@ -14,6 +14,7 @@ import factory.shared.Position;
 import factory.shared.enums.EventKind;
 import factory.shared.enums.Material;
 import factory.shared.enums.SubsystemStatus;
+import factory.shared.interfaces.Placeable;
 import factory.subsystems.monitoring.interfaces.MonitoringInterface;
 import factory.subsystems.warehouse.interfaces.WarehouseMonitorInterface;
 
@@ -25,7 +26,7 @@ public class WarehouseSystem extends AbstractSubsystem implements WarehouseMonit
 		super(monitor);
 		Objects.requireNonNull(xmlWarehouseElem);
 		
-		NodeList storageSiteNodes = xmlWarehouseElem.getChildNodes();
+		NodeList storageSiteNodes = xmlWarehouseElem.getElementsByTagName("storagesite");
 		for (int i = 0; i < storageSiteNodes.getLength(); i++) {
 			storageSites.add(new StorageSite(this, i, (Element) storageSiteNodes.item(i)));
 		}
@@ -34,11 +35,6 @@ public class WarehouseSystem extends AbstractSubsystem implements WarehouseMonit
 	@Override
 	public SubsystemStatus getStatus() {
 		return SubsystemStatus.RUNNING;		// TODO 
-	}
-
-	@Override
-	public boolean isReady() {
-		return true;	// TODO 
 	}
 
 	@Override
@@ -79,6 +75,12 @@ public class WarehouseSystem extends AbstractSubsystem implements WarehouseMonit
 
 	@Override
 	public List<String> getTransactions() {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public List<Placeable> getPlaceables() {
 		// TODO Auto-generated method stub
 		return null;
 	}

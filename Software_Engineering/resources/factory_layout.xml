@@ -21,6 +21,11 @@
 			<inputboxposition>e,f</inputboxposition>
 			<outputboxposition>g,h</outputboxposition>
 		</storagesite>
+		<storagesite>
+			<position>i,j</position>
+			<size>k,l</size>
+			<inputboxposition>m,n</inputboxposition>
+			<outputboxposition>o,p</outputboxposition></storagesite>
 	</warehouse>
 	
 	<forklifts>

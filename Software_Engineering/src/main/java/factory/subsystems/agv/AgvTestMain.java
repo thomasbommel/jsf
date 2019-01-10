@@ -72,9 +72,9 @@ public class AgvTestMain{
 		private void doDrawing(Graphics g)
 		{
 			Graphics2D g2 = (Graphics2D) g;
-			g2.translate( (int)Math.round(f.getPosition().getPositionX()), (int)Math.round(f.getPosition().getPositionY()));
+			g2.translate( (int)Math.round(f.getPosition().xPos), (int)Math.round(f.getPosition().yPos));
 			Position vec = f.getVec();
-			Double angle = Math.PI - Math.atan2(vec.getPositionX(), vec.getPositionY());
+			Double angle = Math.PI - Math.atan2(vec.xPos, vec.yPos);
 			System.out.println(angle);
 			g2.rotate(angle);
 			g.drawImage(forkliftImage, -60, -60, 120, 120, null);

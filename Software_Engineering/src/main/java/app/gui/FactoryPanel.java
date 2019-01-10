@@ -27,8 +27,8 @@ class FactoryPanel extends GUIPanel {
 	}
 
 	private void drawPlaceableOnGraphics(Graphics g, Placeable placeable) {
-		int posX = placeable.getPosition().getPositionX();
-		int posY = placeable.getPosition().getPositionY();
+		int posX = placeable.getPosition().xPos;
+		int posY = placeable.getPosition().yPos;
 		
 		g.translate(posX, posY);
 		placeable.drawPlaceable().accept(g);

@@ -5,6 +5,7 @@ import java.util.List;
 import factory.shared.Position;
 import factory.shared.Task;
 import factory.shared.enums.SubsystemStatus;
+import factory.shared.interfaces.Placeable;
 import factory.subsystems.AbstractSubsystem;
 import factory.subsystems.agv.interfaces.AgvMonitorInterface;
 import factory.subsystems.monitoring.interfaces.MonitoringInterface;
@@ -21,11 +22,7 @@ public class AGVSystem extends AbstractSubsystem implements AgvMonitorInterface 
 		return null;
 	}
 
-	@Override
-	public boolean isReady() {
-		// TODO Auto-generated method stub
-		return false;
-	}
+
 
 	@Override
 	public void submitTask(Task task) {
@@ -59,6 +56,12 @@ public class AGVSystem extends AbstractSubsystem implements AgvMonitorInterface 
 
 	@Override
 	public List<Forklift> getForklifts() {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public List<Placeable> getPlaceables() {
 		// TODO Auto-generated method stub
 		return null;
 	}

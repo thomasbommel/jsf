@@ -1,5 +1,7 @@
 package factory.shared.interfaces;
 
+import java.util.List;
+
 import app.gui.SubsystemMenu;
 import factory.shared.FactoryEvent;
 import factory.shared.enums.SubsystemStatus;
@@ -12,7 +14,7 @@ public interface Monitorable extends Placeable, Stoppable{
 
 	SubsystemStatus getStatus();
 
-	boolean isReady();
+	List<Placeable> getPlaceables();
 	
 	SubsystemMenu getCurrentSubsystemMenu();
 

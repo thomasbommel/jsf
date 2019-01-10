@@ -5,35 +5,59 @@ package factory.shared;
  */
 public class Position {
 
-	private int positionX;
-	private int positionY;
-
-	public Position(int positionX, int positionY) {
-		super();
-		this.positionX = positionX;
-		this.positionY = positionY;
+	public int xPos, yPos;
+	public int xSize, ySize;
+	
+	public Position(int xPos, int yPos) {
+		this(xPos, yPos, 1, 1);
 	}
-
-	public int getPositionX() {
-		return positionX;
+	
+	public Position(int xPos, int yPos, int xSize, int ySize) {
+		this.xPos = xPos;
+		this.yPos = yPos;
+		this.xSize = xSize;
+		this.ySize = ySize;
 	}
-
-	public void setPositionX(int positionX) {
-		this.positionX = positionX;
+	
+	@Override
+	public boolean equals(Object other) {
+		if (other == null || !(other instanceof Position)) {
+			return false;
+		}
+		Position pos2 = (Position) other;
+		
+		return xPos == pos2.xPos && yPos == pos2.yPos && xSize == pos2.xSize && ySize == pos2.ySize;
 	}
-
-	public int getPositionY() {
-		return positionY;
-	}
-
-	public void setPositionY(int positionY) {
-		this.positionY = positionY;
-	}
-
+	
 	@Override
 	public String toString() {
-		return "Position [positionX=" + positionX + ", positionY=" + positionY + "]";
+		return String.format("(Pos: %d, %d | Size: %d %d)", xPos, yPos, xSize, ySize);
 	}
-
 	
+	//----------------------------------------------------- STATIC METHODS -----------------------------------------------------
+	
+	public static Position addPosition(Position pos1, Position pos2) {
+		return new Position(pos1.xPos + pos2.xPos, pos1.yPos + pos2.yPos);
+	}
+	
+	public static Position subtractPosition(Position pos1, Position pos2) {
+		return new Position(pos1.xPos - pos2.xPos, pos1.yPos - pos2.yPos);
+	}
+	
+	public static Position multiply(Position pos, int factor) {
+		return new Position(pos.xPos * factor, pos.yPos * factor);
+	}
+	
+	public static Position divide(Position pos, int div) {
+		return new Position(pos.xPos / div, pos.yPos / div);
+	}
+	
+	/**
+	 * @return Euclidean distance of Position (xPos and yPos)
+	 */
+	public static double length(Position pos) {
+		return Math.sqrt(pos.xPos * pos.xPos + pos.yPos * pos.yPos);
+	}
+	
+
 }
